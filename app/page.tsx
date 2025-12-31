@@ -1,0 +1,228 @@
+"use client"
+
+import { useLanguage } from "@/lib/language-context"
+import Image from "next/image"
+import Link from "next/link"
+// AGREGADO: 'Beaker' para el icono de Tester
+import { ArrowRight, Calendar, Sparkles, Shield, Scroll, Image as ImageIcon, Beaker } from "lucide-react"
+
+export default function HomePage() {
+  const { t, language } = useLanguage()
+
+  const latestNews = [
+    {
+      id: 1,
+      tag: language === "es" ? "Manifiesto" : "Manifesto",
+      title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
+      date: "2025-12-31",
+      image: "/portada-home.jpg",
+      href: "/legal/discover/articles/manifesto"
+    },
+    {
+      id: 2,
+      tag: "Dev Diary",
+      title: language === "es" ? "Cómo se construye un bloque" : "How a Block is Built",
+      date: "2025-12-31",
+      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg",
+      href: "/legal/discover/articles/design-philosophy"
+    },
+    {
+      id: 3,
+      tag: "Art & Lore",
+      title: language === "es" ? "El arte como narrativa" : "Art as Narrative",
+      date: "2025-12-31",
+      image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
+      href: "/legal/discover/articles/art-narrative"
+    }
+  ]
+
+  return (
+    <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white">
+      
+      {/* --- 1. HERO SECTION --- */}
+      <section className="relative h-[95vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/dark-gothic-castle-shrouded-in-mist-and-fog-atmosp.jpg" 
+            alt="Vestigios Universe Atmosphere"
+            fill
+            className="object-cover opacity-60 animate-pulse-slow" 
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-6xl mt-20">
+          <p className="text-red-500 font-bold tracking-[0.3em] uppercase mb-4 text-sm md:text-base animate-fade-in-up">
+            {language === "es" ? "Estrategia Gótica TCG" : "Gothic Strategy TCG"}
+          </p>
+          
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8 text-white font-serif drop-shadow-2xl">
+            {t("home.hero.title")}
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-gray-300 font-light tracking-wide max-w-3xl mx-auto mb-10 text-pretty">
+            {t("home.hero.subtitle")}
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+             <Link 
+               href="/project"
+               className="px-10 py-4 bg-red-800 hover:bg-red-700 text-white font-bold uppercase tracking-widest text-sm transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)]"
+             >
+               {t("nav.project")}
+             </Link>
+             <Link 
+               href="/legal/discover/rules"
+               className="px-10 py-4 border border-white/30 hover:bg-white/10 text-white font-bold uppercase tracking-widest text-sm transition-all backdrop-blur-sm"
+             >
+               {language === "es" ? "Aprender a Jugar" : "Learn to Play"}
+             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* --- 2. LATEST NEWS --- */}
+      <section className="py-24 px-4 max-w-7xl mx-auto border-t border-white/10">
+         <div className="flex items-end justify-between mb-12">
+            <div>
+                <h2 className="text-4xl font-serif font-bold text-white mb-2">
+                    {language === "es" ? "Últimas Noticias" : "Latest News"}
+                </h2>
+                <div className="h-1 w-20 bg-red-800" />
+            </div>
+            <Link href="/legal/discover/articles" className="hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm uppercase font-bold tracking-wider">
+                {language === "es" ? "Ver todo" : "View All"} <ArrowRight className="w-4 h-4" />
+            </Link>
+         </div>
+
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {latestNews.map((news) => (
+                <Link key={news.id} href={news.href} className="group block bg-zinc-900/50 border border-white/5 hover:border-red-900/50 transition-all duration-300 rounded-sm overflow-hidden">
+                    <div className="relative h-56 w-full overflow-hidden">
+                        <Image 
+                            src={news.image} 
+                            alt={news.title} 
+                            fill 
+                            className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute top-4 left-4 bg-black/80 px-3 py-1 text-xs font-mono text-white border border-white/10 uppercase tracking-wider">
+                            {news.tag}
+                        </div>
+                    </div>
+                    <div className="p-6">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
+                            <Calendar className="w-3 h-3" /> {news.date}
+                        </div>
+                        <h3 className="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors leading-tight">
+                            {news.title}
+                        </h3>
+                    </div>
+                </Link>
+            ))}
+         </div>
+         
+         <div className="mt-8 text-center md:hidden">
+            <Link href="/legal/discover/articles" className="text-sm text-gray-400 underline decoration-red-900 underline-offset-4">
+                {language === "es" ? "Ver todos los artículos" : "View all articles"}
+            </Link>
+         </div>
+      </section>
+
+      {/* --- 3. PROJECT SHOWCASE --- */}
+      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
+            
+            <div className="order-2 md:order-1">
+                <div className="flex items-center gap-2 text-red-500 mb-4">
+                    <Sparkles className="w-5 h-5" />
+                    <span className="text-xs font-bold uppercase tracking-widest">{t("nav.project")}</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-bold font-serif text-white mb-6 leading-none">
+                    {t("project.title")}
+                </h2>
+                <p className="text-lg text-gray-400 mb-8 font-light leading-relaxed">
+                    {t("home.intro.text")}
+                </p>
+                
+                <div className="grid grid-cols-2 gap-6 mb-10 border-t border-white/10 pt-8">
+                    <div>
+                        <p className="text-3xl font-bold text-white">5</p>
+                        <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Facciones" : "Factions"}</p>
+                    </div>
+                    <div>
+                        <p className="text-3xl font-bold text-white">200+</p>
+                        <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Cartas Base" : "Base Cards"}</p>
+                    </div>
+                </div>
+
+                <Link 
+                   href="/project"
+                   className="inline-flex items-center gap-3 text-white border-b border-red-600 pb-1 hover:text-red-500 transition-colors font-bold uppercase text-sm tracking-widest"
+                >
+                    {language === "es" ? "Explorar el Universo" : "Explore the Universe"} <ArrowRight className="w-4 h-4" />
+                </Link>
+            </div>
+
+            <div className="order-1 md:order-2 flex justify-center relative group">
+                 <div className="absolute inset-0 bg-red-600/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                 <Image
+                    src="/dark-gothic-trading-card-game-cards-blood-and-shad.jpg"
+                    alt="Card Preview"
+                    width={400}
+                    height={600}
+                    className="object-contain relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-1"
+                 />
+            </div>
+
+        </div>
+      </section>
+
+      {/* --- 4. QUICK LINKS (ACTUALIZADO: AHORA SON 4 COLUMNAS) --- */}
+      <section className="py-24 px-4 border-t border-white/5">
+        <div className="max-w-7xl mx-auto text-center mb-16">
+            <h2 className="text-3xl font-serif font-bold text-white mb-4">
+                {language === "es" ? "Comienza tu Viaje" : "Start Your Journey"}
+            </h2>
+            <p className="text-gray-400">
+                {language === "es" ? "Todo lo que necesitas para dominar la oscuridad." : "Everything you need to master the darkness."}
+            </p>
+        </div>
+
+        {/* CAMBIO DE GRID: Ahora soporta 4 columnas en pantallas grandes (lg:grid-cols-4) */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <Link href="/legal/discover/formats" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
+                <Shield className="w-10 h-10 text-gray-400 group-hover:text-red-500 mx-auto mb-4 transition-colors" />
+                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Formatos" : "Formats"}</h3>
+                <p className="text-sm text-gray-500">{language === "es" ? "Competitivo y Sellado" : "Competitive & Sealed"}</p>
+            </Link>
+            
+            <Link href="/legal/discover/rules" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
+                <Scroll className="w-10 h-10 text-gray-400 group-hover:text-amber-500 mx-auto mb-4 transition-colors" />
+                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Reglas" : "Rules"}</h3>
+                <p className="text-sm text-gray-500">{language === "es" ? "Aprende lo básico" : "Learn the basics"}</p>
+            </Link>
+
+            <Link href="/legal/discover/wallpapers" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
+                <ImageIcon className="w-10 h-10 text-gray-400 group-hover:text-purple-500 mx-auto mb-4 transition-colors" />
+                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Galería" : "Gallery"}</h3>
+                <p className="text-sm text-gray-500">{language === "es" ? "Arte y Wallpapers" : "Art & Wallpapers"} </p>
+            </Link>
+
+            {/* NUEVA TARJETA: BETA TESTER */}
+            <Link href="/join-tester" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
+                <Beaker className="w-10 h-10 text-gray-400 group-hover:text-green-500 mx-auto mb-4 transition-colors" />
+                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Beta Tester" : "Beta Tester"}</h3>
+                <p className="text-sm text-gray-500">{language === "es" ? "Solicitar acceso" : "Request access"} </p>
+            </Link>
+
+        </div>
+      </section>
+
+    </div>
+  )
+}
