@@ -25,6 +25,7 @@ export function Footer() {
     { href: "/legal/discover/rules", label: t("footer.rules") },
     { href: "/legal/discover/podcasts", label: t("footer.podcasts") },
     { href: "/legal/discover/wallpapers", label: t("footer.wallpapers") },
+    // Enlace destacado a Beta Tester
     { href: "/join-tester", label: language === "es" ? "Beta Tester" : "Beta Tester" },
   ]
 
@@ -135,8 +136,15 @@ export function Footer() {
               </a>
             </div>
 
-            {/* Enlaces extra (Solo Contacto) */}
+            {/* Enlaces extra */}
             <ul className="space-y-3">
+                {/* Enlace a Nosotros */}
+                <li>
+                  <Link href="/legal/about" className="text-sm text-gray-500 hover:text-red-400 transition-colors font-light block">
+                    {language === "es" ? "Nosotros" : "About Us"}
+                  </Link>
+                </li>
+                {/* Contacto */}
                 <li>
                   <Link href="/contact" className="text-sm text-gray-500 hover:text-red-400 transition-colors font-light block">
                     {t("nav.contact")}
