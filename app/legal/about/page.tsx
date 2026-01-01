@@ -42,7 +42,8 @@ export default function AboutPage() {
       icon: <Feather className="w-6 h-6 text-red-500" />
     },
     {
-      name: " Claudio "Ruki" ",
+      // AQUÍ ESTABA EL ERROR: Usamos comillas simples afuera para poder usar comillas dobles adentro
+      name: 'Claudio "Ruki"', 
       role: language === "es" ? "Director de Diseño y Balance" : "Design & Balance Director",
       desc: language === "es" 
         ? "Responsable del balance del juego, supervisión de testers, control de calidad, ajustes de cartas, metajuego y evolución del diseño en futuras expansiones y proyectos." 
@@ -70,7 +71,7 @@ export default function AboutPage() {
             </p>
         </div>
 
-        {/* TEAM GRID - Adaptado para 5 miembros */}
+        {/* TEAM GRID */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
             {team.map((member, i) => (
                 <div key={i} className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:border-red-900/50 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
