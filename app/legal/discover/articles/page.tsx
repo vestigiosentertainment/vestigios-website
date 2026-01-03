@@ -8,15 +8,15 @@ import { Calendar, User, ArrowRight } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // ARTÍCULO 1 (Destacado - NUEVO: Entrevista Garrido)
+  // ARTÍCULO 1 (Destacado - CORREGIDO NOMBRE COMPLETO)
   const featuredArticle = {
-    title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
+    title: language === "es" ? "Diseñando el Abismo: Entrevista con Jonathan Garrido" : "Designing the Abyss: Interview with Jonathan Garrido",
     excerpt: language === "es" 
         ? "“Vestigios no es un juego que se juega… es un mundo al que se entra.” Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
         : "“Vestigios is not a game you play… it is a world you enter.” Our Game Director talks about no-return combat, meta balance, and the ambitious transition to MMO.",
     date: "2026-01-02",
     author: "Editorial",
-    image: "/respectful-handshake-dark-atmosphere-gothic.jpg", // Puedes cambiar esta imagen por una del equipo si tienes
+    image: "/respectful-handshake-dark-atmosphere-gothic.jpg", 
     category: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
     href: "/legal/discover/articles/interview-jonathan-garrido"
   }
@@ -25,7 +25,7 @@ export default function ArticlesPage() {
   const articles = [
     {
         id: 1,
-        // ARTÍCULO: MANIFIESTO (Movido desde Destacado)
+        // ARTÍCULO: MANIFIESTO
         title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
         excerpt: language === "es" 
             ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
@@ -60,7 +60,7 @@ export default function ArticlesPage() {
       author: "Art Director",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
       category: "Art & Lore",
-      href: "/legal/discover/articles/art-narrative" // Nota: Asegúrate de crear esta página si aún no existe
+      href: "/legal/discover/articles/art-narrative" 
     },
     {
       id: 4,
