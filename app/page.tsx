@@ -3,15 +3,24 @@
 import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 import Link from "next/link"
-// AGREGADO: 'Beaker' para el icono de Tester
 import { ArrowRight, Calendar, Sparkles, Shield, Scroll, Image as ImageIcon, Beaker } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
 
+  // NOTICIAS ACTUALIZADAS (La entrevista es la más nueva)
   const latestNews = [
     {
       id: 1,
+      // NUEVO: Entrevista J. Garrido
+      tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+      title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
+      date: "2026-01-02",
+      image: "/respectful-handshake-dark-atmosphere-gothic.jpg", // Usa la misma imagen que en artículos
+      href: "/legal/discover/articles/interview-jonathan-garrido"
+    },
+    {
+      id: 2,
       tag: language === "es" ? "Manifiesto" : "Manifesto",
       title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
       date: "2025-12-31",
@@ -19,20 +28,12 @@ export default function HomePage() {
       href: "/legal/discover/articles/manifesto"
     },
     {
-      id: 2,
+      id: 3,
       tag: "Dev Diary",
       title: language === "es" ? "Cómo se construye un bloque" : "How a Block is Built",
       date: "2025-12-31",
       image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg",
       href: "/legal/discover/articles/design-philosophy"
-    },
-    {
-      id: 3,
-      tag: "Art & Lore",
-      title: language === "es" ? "El arte como narrativa" : "Art as Narrative",
-      date: "2025-12-31",
-      image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/art-narrative"
     }
   ]
 
@@ -181,7 +182,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 4. QUICK LINKS (ACTUALIZADO: AHORA SON 4 COLUMNAS) --- */}
+      {/* --- 4. QUICK LINKS --- */}
       <section className="py-24 px-4 border-t border-white/5">
         <div className="max-w-7xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-white mb-4">
@@ -192,7 +193,6 @@ export default function HomePage() {
             </p>
         </div>
 
-        {/* CAMBIO DE GRID: Ahora soporta 4 columnas en pantallas grandes (lg:grid-cols-4) */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <Link href="/legal/discover/formats" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
@@ -213,7 +213,6 @@ export default function HomePage() {
                 <p className="text-sm text-gray-500">{language === "es" ? "Arte y Wallpapers" : "Art & Wallpapers"} </p>
             </Link>
 
-            {/* NUEVA TARJETA: BETA TESTER */}
             <Link href="/join-tester" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
                 <Beaker className="w-10 h-10 text-gray-400 group-hover:text-green-500 mx-auto mb-4 transition-colors" />
                 <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Beta Tester" : "Beta Tester"}</h3>
