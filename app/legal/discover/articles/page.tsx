@@ -8,29 +8,42 @@ import { Calendar, User, ArrowRight } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // ARTÍCULO 1 (Destacado)
+  // ARTÍCULO 1 (Destacado - NUEVO: Entrevista Garrido)
   const featuredArticle = {
-    title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
+    title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
     excerpt: language === "es" 
-        ? "Durante años, los juegos de cartas han convertido al jugador en una billetera ambulante. Nosotros rompemos esa lógica. No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
-        : "For years, card games have turned players into walking wallets. We break that logic. We don't want you to win because you paid; we want you to win because you played better. Discover our ethical economy system.",
-    date: "2025-12-31",
-    author: "Founder",
-    image: "/portada-home.jpg",
-    category: language === "es" ? "Manifiesto" : "Manifesto",
-    href: "/legal/discover/articles/manifesto"
+        ? "“Vestigios no es un juego que se juega… es un mundo al que se entra.” Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
+        : "“Vestigios is not a game you play… it is a world you enter.” Our Game Director talks about no-return combat, meta balance, and the ambitious transition to MMO.",
+    date: "2026-01-02",
+    author: "Editorial",
+    image: "/respectful-handshake-dark-atmosphere-gothic.jpg", // Puedes cambiar esta imagen por una del equipo si tienes
+    category: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+    href: "/legal/discover/articles/interview-jonathan-garrido"
   }
 
-  // LISTA DE ARTÍCULOS SECUNDARIOS (Ahora son 3)
+  // LISTA DE ARTÍCULOS SECUNDARIOS
   const articles = [
+    {
+        id: 1,
+        // ARTÍCULO: MANIFIESTO (Movido desde Destacado)
+        title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
+        excerpt: language === "es" 
+            ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
+            : "We don't want you to win because you paid; we want you to win because you played better. Discover our ethical economy system.",
+        date: "2025-12-31",
+        author: "Founder",
+        image: "/portada-home.jpg",
+        category: language === "es" ? "Manifiesto" : "Manifesto",
+        href: "/legal/discover/articles/manifesto"
+    },
     {
       id: 2,
       // ARTÍCULO: DISEÑO
-      title: language === "es" ? "Cómo se construye un bloque: Cuando la historia guía al juego" : "How a Block is Built: When Story Guides the Game",
+      title: language === "es" ? "Cómo se construye un bloque: La historia guía al juego" : "How a Block is Built: Story Guides the Game",
       excerpt: language === "es"
-        ? "¿Esto está bien pensado? En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica. Descubre por qué aquí las reglas no explican el mundo, sino que el mundo explica las reglas."
-        : "Is this well thought out? In Vestigios, we don't design arbitrary mechanics. Each expansion is a historical wound. Discover why here, the rules don't explain the world—the world explains the rules.",
-      date: "2025-12-31",
+        ? "En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica. Descubre por qué aquí el mundo explica las reglas."
+        : "In Vestigios, we don't design arbitrary mechanics. Each expansion is a historical wound. Discover why here the world explains the rules.",
+      date: "2025-12-30",
       author: "Lead Designer",
       image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg", 
       category: "Dev Diary",
@@ -39,24 +52,24 @@ export default function ArticlesPage() {
     {
       id: 3,
       // ARTÍCULO: ARTE
-      title: language === "es" ? "El arte como narrativa: Por qué cada carta es una escena" : "Art as Narrative: Why Every Card is a Scene",
+      title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
       excerpt: language === "es"
-        ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia. Descubre por qué nuestras cartas no muestran poses, sino decisiones, y cómo cada ilustración narra lo que las palabras callan."
-        : "In many games, art is decoration. In Vestigios, it is a second stolen from a story. Discover why our cards don't show poses, but decisions, and how each illustration tells what words keep silent.",
-      date: "2025-12-31",
+        ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia. Descubre cómo cada ilustración narra lo que las palabras callan."
+        : "In many games, art is decoration. In Vestigios, it is a second stolen from a story. Discover how each illustration tells what words keep silent.",
+      date: "2025-12-28",
       author: "Art Director",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
       category: "Art & Lore",
-      href: "/legal/discover/articles/art-narrative"
+      href: "/legal/discover/articles/art-narrative" // Nota: Asegúrate de crear esta página si aún no existe
     },
     {
       id: 4,
-      // ARTÍCULO: ÉTICA (NUEVO)
+      // ARTÍCULO: ÉTICA
       title: language === "es" ? "La ética de Vestigios Entertainment" : "The Ethics of Vestigios Entertainment",
       excerpt: language === "es"
-        ? "¿Me van a exprimir? Vestigios no fue creado por un departamento de marketing, sino por jugadores. No diseñamos para explotar, diseñamos para durar. Conoce nuestra promesa de honestidad y responsabilidad indie."
-        : "Will they squeeze me? Vestigios was not created by a marketing department, but by players. We don't design to exploit, we design to last. Learn about our promise of honesty and indie responsibility.",
-      date: "2025-12-31",
+        ? "Vestigios no fue creado por un departamento de marketing, sino por jugadores. No diseñamos para explotar, diseñamos para durar."
+        : "Vestigios was not created by a marketing department, but by players. We don't design to exploit, we design to last.",
+      date: "2025-12-25",
       author: "Studio Head",
       image: "/respectful-handshake-dark-atmosphere-gothic.jpg", 
       category: "Studio Values",
@@ -83,7 +96,7 @@ export default function ArticlesPage() {
           <div className="h-0.5 w-full bg-gradient-to-r from-red-900 via-red-900/20 to-transparent opacity-50" />
         </div>
 
-        {/* DESTACADO (MANIFIESTO) */}
+        {/* DESTACADO (ENTREVISTA) */}
         <div className="relative h-[450px] md:h-[550px] w-full rounded-sm overflow-hidden group mb-20 border border-white/10 shadow-2xl">
             <Image
                 src={featuredArticle.image}
@@ -94,12 +107,12 @@ export default function ArticlesPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             <div className="absolute bottom-0 left-0 p-8 md:p-16 max-w-4xl">
                 <div className="flex items-center gap-4 mb-4">
-                    <span className="inline-block px-3 py-1 bg-red-900/80 text-white text-xs font-bold uppercase tracking-wider border-l-2 border-red-500">
+                    <span className="inline-block px-3 py-1 bg-blue-900/80 text-blue-100 text-xs font-bold uppercase tracking-wider border-l-2 border-blue-500">
                         {featuredArticle.category}
                     </span>
                     <span className="text-gray-400 text-xs font-mono">{featuredArticle.date}</span>
                 </div>
-                <h2 className="text-3xl md:text-6xl font-bold font-serif mb-6 leading-tight group-hover:text-red-100 transition-colors text-balance">
+                <h2 className="text-3xl md:text-6xl font-bold font-serif mb-6 leading-tight group-hover:text-blue-100 transition-colors text-balance">
                     {featuredArticle.title}
                 </h2>
                 <p className="text-lg md:text-xl text-gray-200 mb-8 font-light max-w-2xl text-pretty leading-relaxed border-l-4 border-white/20 pl-6">
@@ -114,7 +127,7 @@ export default function ArticlesPage() {
             </div>
         </div>
 
-        {/* GRID SECUNDARIA (3 ARTÍCULOS) */}
+        {/* GRID SECUNDARIA (ARTÍCULOS ANTERIORES) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <article 
