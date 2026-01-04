@@ -18,7 +18,7 @@ export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // Se ha actualizado el href para apuntar al ARTÍCULO de noticia, no al lore directo
+  // Mantenemos el enlace al ARTÍCULO de noticia (la presentación de Meliza).
   const latestNews = [
     {
       id: 1,
@@ -26,7 +26,7 @@ export default function HomePage() {
       title: language === "es" ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" : "Awakening History: Meliza Castillo Presents the Official Lore",
       date: "2026-01-04",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/lore-debut" // <--- AHORA APUNTA A LA NOTICIA
+      href: "/legal/discover/articles/lore-debut" // Lleva al artículo de anuncio
     },
     {
       id: 2,
@@ -140,7 +140,7 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. SECCIÓN: LORE / GÉNESIS (MINIMALISTA) --- */}
+      {/* --- 3. SECCIÓN: LORE / GÉNESIS (CORREGIDO) --- */}
       <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
@@ -157,10 +157,10 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* Solo el Botón - Apuntando al Lore directo para lectura rápida */}
+            {/* BOTÓN CORREGIDO: Ahora apunta a /lore/genesis */}
             <div className="flex justify-center">
                 <Link 
-                    href="/legal/discover/lore/genesis" 
+                    href="/lore/genesis" 
                     className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-10 py-5 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
                 >
                     {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
