@@ -1,10 +1,9 @@
-// UBICACIÓN: app/lore/genesis/page.tsx
 
 "use client"
 
-import { useLanguage } from "@/lib/language-context" // Asumo que tienes esto disponible
+import { useLanguage } from "@/lib/language-context"
 import Link from "next/link"
-import { ArrowLeft, Clock, Share2 } from "lucide-react"
+import { ArrowLeft, Clock, Share2, Skull } from "lucide-react"
 
 export default function GenesisLorePage() {
   const { language } = useLanguage()
@@ -33,7 +32,7 @@ export default function GenesisLorePage() {
                 {language === "es" ? "La Gran Fractura" : "The Great Fracture"}
             </h1>
             <div className="flex justify-center items-center gap-6 text-sm text-gray-500 font-sans">
-                <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> 3 min read</span>
+                <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> 5 min read</span>
                 <span className="w-1 h-1 bg-gray-700 rounded-full" />
                 <span>{language === "es" ? "Historia Principal" : "Main Storyline"}</span>
             </div>
@@ -42,9 +41,10 @@ export default function GenesisLorePage() {
         {/* Separador */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
-        {/* Cuerpo del Texto - Aquí tu Directora de Lore escribirá */}
+        {/* Cuerpo del Texto */}
         <div className="prose prose-invert prose-lg mx-auto prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-red-500 prose-strong:text-white">
             
+            {/* --- SECCIÓN 1: EL ORIGEN --- */}
             <p className="lead text-2xl text-white italic opacity-90 mb-10 border-l-4 border-red-800 pl-6 py-2">
                {language === "es" 
                 ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."'
@@ -53,28 +53,80 @@ export default function GenesisLorePage() {
 
             <p>
                 {language === "es" 
-                 ? "En el vacío primordial, no existía el tiempo ni la materia, solo la unidad absoluta. Sin embargo, la perfección estática engendra un deseo: el deseo de ser más."
-                 : "In the primordial void, neither time nor matter existed, only absolute unity. However, static perfection begets a desire: the desire to be more."}
-            </p>
-
-            <h3>{language === "es" ? "El Icor Divino" : "The Divine Ichor"}</h3>
-
-            <p>
-                {language === "es" 
                  ? <>Gracias a su <strong className="text-red-400">icor</strong>, derramado sobre la superficie, la vida fue posible: una existencia nutrida por vestigios aún más pequeños y limitados, codiciados por aquellos que conocen el secreto de la vida.</>
                  : <>Thanks to its <strong className="text-red-400">ichor</strong>, spilled upon the surface, life was made possible: an existence nourished by even smaller and limited vestiges, coveted by those who know the secret of life.</>}
             </p>
 
+            {/* Separador interno decorativo */}
+            <div className="flex justify-center my-12 opacity-50">
+                <Skull className="w-6 h-6 text-red-900" />
+            </div>
+
+            {/* --- SECCIÓN 2: LA JERARQUÍA --- */}
+            <h2>{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
+
+            {/* VAMPIROS */}
+            <h3>{language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}</h3>
             <p>
-               {language === "es" 
-                ? "Estos fragmentos no son meros restos; son llaves. Llaves que abren puertas que quizás debieron permanecer cerradas eternamente. Las facciones ahora luchan no por territorio, sino por la esencia misma de la creación."
-                : "These fragments are not mere remnants; they are keys. Keys that unlock doors that perhaps should have remained eternally closed. The factions now fight not for territory, but for the very essence of creation."}
+                {language === "es"
+                 ? "Señores de la Sangre o «vampiros», como son vulgarmente llamados. Son aristócratas de piel pálida que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+                 : "Lords of Blood, or 'vampires' as they are vulgarly called. They are pale-skinned aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
             </p>
 
-            {/* Espacio para más contenido futuro */}
-            <div className="my-12 p-8 bg-zinc-900/50 border border-dashed border-zinc-700 text-center rounded-lg">
-                <p className="text-zinc-500 italic text-sm">
-                    {language === "es" ? "[Imagen o Ilustración Antigua Aquí]" : "[Ancient Image or Illustration Here]"}
+            {/* CAZADORES */}
+            <h3>{language === "es" ? "Los Cazadores" : "The Hunters"}</h3>
+            <p>
+                {language === "es"
+                 ? "Maestros del acero y la pólvora. Fueron hombres que miraron demasiado tiempo al abismo hasta que este les devolvió la mirada. Vendieron su alma por la fuerza para matar y se volvieron adictos a la cacería, perdiendo su humanidad con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
+                 : "Masters of steel and gunpowder. They were men who stared too long into the abyss until the abyss stared back. They sold their souls for the strength to kill and became addicted to the hunt, losing their humanity with every prey that falls beneath their hands. Their bloodlust rivals that of the monsters they pursue."}
+            </p>
+
+            {/* BRUJAS */}
+            <h3>{language === "es" ? "Las Brujas" : "The Witches"}</h3>
+            <p>
+                {language === "es"
+                 ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor; susurran secretos que pueden derribar imperios mortales o condenar almas, dispuestas a vender la cordura de otros por una gota de influencia, poder o mero goce personal."
+                 : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder; they whisper secrets that can topple mortal empires or damn souls, willing to sell the sanity of others for a drop of influence, power, or mere personal pleasure."}
+            </p>
+            <blockquote className="border-l-red-900 text-gray-400 italic">
+                {language === "es"
+                 ? "Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
+                 : "You will never know where their loyalty lies, but of one thing you can be certain: their whims will always take priority."}
+            </blockquote>
+
+            {/* ZOMBIES */}
+            <h3>{language === "es" ? "Los Zombis (La Bruma)" : "The Zombies (The Mist)"}</h3>
+            <p>
+                {language === "es"
+                 ? "Aquellos perdidos y desesperados que buscan consuelo sin saber que incluso la fe es una mentira. Como corderos al matadero, con la esperanza de salvación o de llenar el vacío de sus corazones, se dirigen a la Dama de la Bruma: una diosa autoproclamada que, en el horror más silencioso, convertirá sus cuerpos en cascarones huecos y obedientes."
+                 : "Those lost and desperate souls seeking solace, unaware that even faith is a lie. Like lambs to the slaughter, hoping for salvation or to fill the void in their hearts, they flock to the Lady of the Mist: a self-proclaimed goddess who, in the quietest horror, turns their bodies into hollow, obedient shells."}
+            </p>
+            <p>
+                {language === "es"
+                 ? "Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles en el oscuro éter sin saber en qué se convertirán."
+                 : "They are converted into mindless pilgrims, fanatical worshippers of a lie, while their torn, ownerless souls scream unseen in the dark ether, not knowing what they will become."}
+            </p>
+
+            {/* LICANTROPOS */}
+            <h3>{language === "es" ? "Los Licántropos" : "The Werewolves"}</h3>
+            <p>
+                {language === "es"
+                 ? "Hijos de la luna reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
+                 : "Children of the moon reduced to simple slaves with broken wills, their howl silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed."}
+            </p>
+
+            {/* HUMANOS */}
+            <h3>{language === "es" ? "Los Humanos" : "The Humans"}</h3>
+            <p>
+                {language === "es"
+                 ? "Ignorantes y ciegos ante una guerra que se libra desde las sombras, se envenenan lentamente con reliquias de un poder que no comprenden mientras las agujas del reloj marcan, implacables, su hora final."
+                 : "Ignorant and blind to a war waged from the shadows, they slowly poison themselves with relics of a power they do not understand, while the clock hands tick, relentless, toward their final hour."}
+            </p>
+
+            {/* Espacio para imagen futura */}
+            <div className="mt-16 pt-8 border-t border-dashed border-white/10 text-center">
+                <p className="text-zinc-600 text-sm font-mono uppercase tracking-widest">
+                    {language === "es" ? "Fin del Registro" : "End of Record"}
                 </p>
             </div>
 
@@ -83,7 +135,9 @@ export default function GenesisLorePage() {
         {/* Footer del Lore */}
         <div className="mt-20 pt-10 border-t border-white/10 flex justify-between items-center">
             <div className="text-sm text-gray-500">
-                Next Chapter: <span className="text-white ml-2 hover:underline cursor-pointer">The First Awakening</span>
+                 <Link href="/project" className="hover:text-red-500 transition-colors">
+                    {language === "es" ? "Ver Facciones" : "View Factions"}
+                 </Link>
             </div>
             <button className="p-3 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white">
                 <Share2 className="w-5 h-5" />
