@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -17,7 +18,7 @@ export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // Se ha agregado el debut del Lore como noticia principal
+  // Se ha actualizado el href para apuntar al ARTÍCULO de noticia, no al lore directo
   const latestNews = [
     {
       id: 1,
@@ -25,7 +26,7 @@ export default function HomePage() {
       title: language === "es" ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" : "Awakening History: Meliza Castillo Presents the Official Lore",
       date: "2026-01-04",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/lore/genesis" // Enlace actualizado
+      href: "/legal/discover/articles/lore-debut" // <--- AHORA APUNTA A LA NOTICIA
     },
     {
       id: 2,
@@ -156,7 +157,7 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* Solo el Botón - Apuntando a la nueva ruta */}
+            {/* Solo el Botón - Apuntando al Lore directo para lectura rápida */}
             <div className="flex justify-center">
                 <Link 
                     href="/legal/discover/lore/genesis" 
