@@ -100,7 +100,7 @@ export default function LoreDebutNewsPage() {
         {/* CALL TO ACTION (Botón Gigante al Lore) */}
         <div className="mt-16 mb-20">
             <Link 
-                href="/legal/discover/lore/genesis" 
+                href="/lore/genesis" 
                 className="group relative block w-full p-8 md:p-12 bg-gradient-to-r from-red-950/40 to-black border border-red-900/30 rounded-lg overflow-hidden hover:border-red-500/50 transition-all duration-300"
             >
                 {/* Background Hover Effect */}
