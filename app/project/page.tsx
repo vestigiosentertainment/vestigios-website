@@ -4,29 +4,54 @@ import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 
 export default function ProjectPage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
-  // ASIGNACIÓN DE IMÁGENES SEGÚN TU SOLICITUD
-  const factions = [
+  // DATOS DE FACCIONES ACTUALIZADOS CON LOS NUEVOS RESÚMENES
+  const factionsData = [
     { 
       id: "vampire", 
-      image: "/0.jpeg" // Vampiros
+      role: language === "es" ? "Los Eternos" : "The Eternal",
+      title: language === "es" ? "Vampiros" : "Vampires",
+      desc: language === "es" 
+        ? "Aristócratas de piel pálida que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+        : "Pale aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, amassing time, power, wealth, and secrets.",
+      image: "/0.jpeg" 
     }, 
     { 
       id: "werewolf", 
-      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg" // Licántropos
+      role: language === "es" ? "Hijos de la Luna" : "Moon Children",
+      title: language === "es" ? "Licántropos" : "Werewolves",
+      desc: language === "es"
+        ? "Reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
+        : "Reduced to simple slaves with broken wills, their howls silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed.",
+      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg" 
     }, 
     { 
       id: "hunter", 
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" // Cazadores
+      role: language === "es" ? "Maestros del Acero" : "Masters of Steel",
+      title: language === "es" ? "Cazadores" : "Hunters",
+      desc: language === "es"
+        ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza para matar y se volvieron adictos a la cacería, perdiendo su humanidad con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
+        : "Masters of steel and gunpowder. Men who sold their souls for the strength to kill and became addicted to the hunt, losing their humanity with every prey that falls by their hands. Their bloodlust rivals that of the monsters they hunt.",
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
     }, 
     { 
       id: "witch", 
-      image: "/ancient-book-open-with-mystical-light-dark-library.jpg" // Brujas
+      role: language === "es" ? "Comerciantes de Hechizos" : "Spell Merchants",
+      title: language === "es" ? "Brujas" : "Witches",
+      desc: language === "es"
+        ? "Sus servicios son comprados por el mejor postor; susurran secretos que pueden derribar imperios o condenar almas. Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
+        : "Their services are bought by the highest bidder; they whisper secrets that can topple empires or damn souls. You will never know where their loyalty lies, but you can be certain their whims will always take priority.",
+      image: "/ancient-book-open-with-mystical-light-dark-library.jpg" 
     }, 
     { 
       id: "zombie", 
-      image: "/respectful-handshake-dark-atmosphere-gothic.jpg" // Zombies/Bruma
+      role: language === "es" ? "Los Perdidos" : "The Lost",
+      title: language === "es" ? "La Bruma" : "The Mist",
+      desc: language === "es"
+        ? "Los perdidos y desesperados van como corderos al matadero ante una diosa autoproclamada. Son convertidos en peregrinos sin mente, fanáticos de una mentira, mientras sus almas arrancadas gritan invisibles en el oscuro éter sin saber en qué se convertirán."
+        : "The lost and desperate go like lambs to the slaughter before a self-proclaimed goddess. They are turned into mindless pilgrims, fanatics of a lie, while their torn souls scream unseen in the dark ether, not knowing what they will become.",
+      image: "/respectful-handshake-dark-atmosphere-gothic.jpg" 
     }, 
   ]
 
@@ -111,7 +136,7 @@ export default function ProjectPage() {
           </div>
         </div>
 
-        {/* --- SECCIÓN: FACCIONES (ESTILO ZIG-ZAG) --- */}
+        {/* --- SECCIÓN: FACCIONES (TEXTOS ACTUALIZADOS) --- */}
         <div className="mb-24">
           <div className="text-center mb-32">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tight font-serif">
@@ -124,7 +149,7 @@ export default function ProjectPage() {
           </div>
 
           <div className="space-y-32">
-            {factions.map((faction, index) => {
+            {factionsData.map((faction, index) => {
               const isEven = index % 2 === 0
               
               return (
@@ -141,7 +166,7 @@ export default function ProjectPage() {
                       
                       <Image
                         src={faction.image}
-                        alt={t(`project.factions.${faction.id}.title`)}
+                        alt={faction.title}
                         fill
                         className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)] rounded-lg group-hover:scale-[1.02] transition-transform duration-700 ease-out"
                       />
@@ -152,15 +177,15 @@ export default function ProjectPage() {
                   <div className="flex-1 w-full text-center md:text-left">
                     <div className="space-y-6 max-w-lg mx-auto md:mx-0">
                       <span className="inline-block py-1 px-3 border border-red-900/50 rounded text-red-500 font-mono text-xs uppercase tracking-[0.2em]">
-                        {t(`project.factions.${faction.id}.role`)}
+                        {faction.role}
                       </span>
 
                       <h3 className="text-4xl md:text-5xl font-bold text-white font-serif leading-tight">
-                        {t(`project.factions.${faction.id}.title`)}
+                        {faction.title}
                       </h3>
 
                       <p className="text-lg text-gray-400 leading-relaxed font-light text-pretty">
-                        {t(`project.factions.${faction.id}.desc`)}
+                        {faction.desc}
                       </p>
 
                       <div className={`pt-4 flex ${!isEven && "md:justify-end"} md:justify-start justify-center`}>
