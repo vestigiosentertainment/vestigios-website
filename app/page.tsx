@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react" // NUEVO: Para manejar el estado del leer más
 import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 import Link from "next/link"
@@ -11,13 +10,11 @@ import {
   Shield, 
   Scroll, 
   Image as ImageIcon, 
-  Beaker, 
-  ChevronDown // NUEVO: Icono para el botón
+  Beaker 
 } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
-  const [isLoreExpanded, setIsLoreExpanded] = useState(false) // NUEVO: Estado del Lore
 
   // NOTICIAS ACTUALIZADAS
   const latestNews = [
@@ -141,7 +138,7 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. NUEVA SECCIÓN: LORE / GÉNESIS --- */}
+      {/* --- 3. SECCIÓN: LORE / GÉNESIS (ENLACE EXTERNO) --- */}
       <section className="relative py-24 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
@@ -159,37 +156,22 @@ export default function HomePage() {
 
             <div className="prose prose-invert prose-lg mx-auto">
                 {/* Texto visible (Gancho) */}
-                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-serif italic mb-6">
+                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-serif italic mb-10">
                     {language === "es" 
-                     ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."'
-                     : '"Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself."'}
+                     ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo..."'
+                     : '"Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself..."'}
                 </p>
 
-                {/* Texto Oculto (Animación) */}
-                <div 
-                    className={`grid transition-all duration-700 ease-in-out ${
-                        isLoreExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'
-                    }`}
-                >
-                    <div className="overflow-hidden">
-                        <p className="text-lg text-gray-400 leading-relaxed font-light max-w-2xl mx-auto">
-                            {language === "es" 
-                             ? <>Gracias a su <strong className="text-red-400 font-serif">icor</strong>, derramado sobre la superficie, la vida fue posible: una existencia nutrida por vestigios aún más pequeños y limitados, codiciados por aquellos que conocen el secreto de la vida.</>
-                             : <>Thanks to its <strong className="text-red-400 font-serif">ichor</strong>, spilled upon the surface, life was made possible: an existence nourished by even smaller and limited vestiges, coveted by those who know the secret of life.</>}
-                        </p>
-                    </div>
+                {/* Botón Link a la nueva página */}
+                <div className="flex justify-center">
+                    <Link 
+                        href="/lore/genesis"
+                        className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-8 py-4 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
+                    >
+                        {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 text-red-500" />
+                    </Link>
                 </div>
-
-                {/* Botón Leer Más */}
-                <button 
-                    onClick={() => setIsLoreExpanded(!isLoreExpanded)}
-                    className="mt-8 group inline-flex items-center gap-2 text-white/60 hover:text-red-500 uppercase tracking-widest text-xs font-bold transition-all border border-white/10 px-6 py-3 rounded-full hover:border-red-500/50 hover:bg-red-500/10"
-                >
-                    {isLoreExpanded 
-                        ? (language === "es" ? "Cerrar Lectura" : "Read Less") 
-                        : (language === "es" ? "Leer Historia Completa" : "Read Full Story")}
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isLoreExpanded ? 'rotate-180' : ''}`} />
-                </button>
             </div>
         </div>
       </section>
