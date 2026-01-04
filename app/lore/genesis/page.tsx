@@ -1,9 +1,8 @@
-
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
 import Link from "next/link"
-import { ArrowLeft, Clock, Share2, Skull } from "lucide-react"
+import { ArrowLeft, Clock, Share2, Skull, Feather } from "lucide-react"
 
 export default function GenesisLorePage() {
   const { language } = useLanguage()
@@ -42,7 +41,8 @@ export default function GenesisLorePage() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
         {/* Cuerpo del Texto */}
-        <div className="prose prose-invert prose-lg mx-auto prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-red-500 prose-strong:text-white">
+        {/* Nota: 'prose' maneja los párrafos, pero hemos estilizado los H3 manualmente abajo para diferenciarlos */}
+        <div className="prose prose-invert prose-lg mx-auto prose-p:leading-relaxed prose-strong:text-white">
             
             {/* --- SECCIÓN 1: EL ORIGEN --- */}
             <p className="lead text-2xl text-white italic opacity-90 mb-10 border-l-4 border-red-800 pl-6 py-2">
@@ -63,10 +63,15 @@ export default function GenesisLorePage() {
             </div>
 
             {/* --- SECCIÓN 2: LA JERARQUÍA --- */}
-            <h2>{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
+            <h2 className="text-3xl text-white font-bold text-center mb-8">{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
 
+            {/* ESTILO DE MINI-TÍTULOS PERSONALIZADO */}
+            {/* Usamos font-sans y tracking amplio para diferenciarlos drásticamente del cuerpo del texto serif */}
+            
             {/* VAMPIROS */}
-            <h3>{language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                I. {language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Señores de la Sangre o «vampiros», como son vulgarmente llamados. Son aristócratas de piel pálida que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
@@ -74,7 +79,9 @@ export default function GenesisLorePage() {
             </p>
 
             {/* CAZADORES */}
-            <h3>{language === "es" ? "Los Cazadores" : "The Hunters"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                II. {language === "es" ? "Los Cazadores" : "The Hunters"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Maestros del acero y la pólvora. Fueron hombres que miraron demasiado tiempo al abismo hasta que este les devolvió la mirada. Vendieron su alma por la fuerza para matar y se volvieron adictos a la cacería, perdiendo su humanidad con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
@@ -82,20 +89,24 @@ export default function GenesisLorePage() {
             </p>
 
             {/* BRUJAS */}
-            <h3>{language === "es" ? "Las Brujas" : "The Witches"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                III. {language === "es" ? "Las Brujas" : "The Witches"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor; susurran secretos que pueden derribar imperios mortales o condenar almas, dispuestas a vender la cordura de otros por una gota de influencia, poder o mero goce personal."
                  : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder; they whisper secrets that can topple mortal empires or damn souls, willing to sell the sanity of others for a drop of influence, power, or mere personal pleasure."}
             </p>
-            <blockquote className="border-l-red-900 text-gray-400 italic">
+            <blockquote className="border-l-red-900 text-gray-400 italic bg-white/5 p-4 my-6 rounded-r-lg">
                 {language === "es"
                  ? "Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
                  : "You will never know where their loyalty lies, but of one thing you can be certain: their whims will always take priority."}
             </blockquote>
 
             {/* ZOMBIES */}
-            <h3>{language === "es" ? "Los Zombis (La Bruma)" : "The Zombies (The Mist)"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                IV. {language === "es" ? "Los Zombis (La Bruma)" : "The Zombies (The Mist)"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Aquellos perdidos y desesperados que buscan consuelo sin saber que incluso la fe es una mentira. Como corderos al matadero, con la esperanza de salvación o de llenar el vacío de sus corazones, se dirigen a la Dama de la Bruma: una diosa autoproclamada que, en el horror más silencioso, convertirá sus cuerpos en cascarones huecos y obedientes."
@@ -108,7 +119,9 @@ export default function GenesisLorePage() {
             </p>
 
             {/* LICANTROPOS */}
-            <h3>{language === "es" ? "Los Licántropos" : "The Werewolves"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                V. {language === "es" ? "Los Licántropos" : "The Werewolves"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Hijos de la luna reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
@@ -116,23 +129,41 @@ export default function GenesisLorePage() {
             </p>
 
             {/* HUMANOS */}
-            <h3>{language === "es" ? "Los Humanos" : "The Humans"}</h3>
+            <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
+                VI. {language === "es" ? "Los Humanos" : "The Humans"}
+            </h3>
             <p>
                 {language === "es"
                  ? "Ignorantes y ciegos ante una guerra que se libra desde las sombras, se envenenan lentamente con reliquias de un poder que no comprenden mientras las agujas del reloj marcan, implacables, su hora final."
                  : "Ignorant and blind to a war waged from the shadows, they slowly poison themselves with relics of a power they do not understand, while the clock hands tick, relentless, toward their final hour."}
             </p>
 
-            {/* Espacio para imagen futura */}
-            <div className="mt-16 pt-8 border-t border-dashed border-white/10 text-center">
-                <p className="text-zinc-600 text-sm font-mono uppercase tracking-widest">
+            {/* FIRMA DE LA DIRECTORA */}
+            <div className="mt-24 mb-12 flex flex-col items-end">
+                <div className="w-16 h-1 bg-red-900 mb-6"></div>
+                <div className="text-right">
+                    <p className="font-serif italic text-2xl text-white mb-2 flex items-center justify-end gap-3">
+                        Meliza Castillo <Feather className="w-5 h-5 text-red-500 opacity-60" />
+                    </p>
+                    <p className="text-xs text-red-500 font-sans font-bold uppercase tracking-widest opacity-80">
+                        {language === "es" ? "Directora Narrativa y Lore" : "Narrative & Lore Director"}
+                    </p>
+                    <p className="text-[10px] text-gray-600 font-sans uppercase tracking-widest mt-1">
+                        Vestigios de Sangre
+                    </p>
+                </div>
+            </div>
+
+            {/* Fin del Registro (Visualmente más sutil ahora que está la firma) */}
+            <div className="pt-8 border-t border-dashed border-white/5 text-center">
+                <p className="text-zinc-700 text-xs font-mono uppercase tracking-[0.3em]">
                     {language === "es" ? "Fin del Registro" : "End of Record"}
                 </p>
             </div>
 
         </div>
 
-        {/* Footer del Lore */}
+        {/* Footer de Navegación */}
         <div className="mt-20 pt-10 border-t border-white/10 flex justify-between items-center">
             <div className="text-sm text-gray-500">
                  <Link href="/project" className="hover:text-red-500 transition-colors">
