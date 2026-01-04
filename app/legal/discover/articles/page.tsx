@@ -8,7 +8,7 @@ import { Calendar, User, ArrowRight, Feather } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // ARTÍCULO 1 (NUEVO DESTACADO - LORE DE MELIZA CASTILLO)
+  // ARTÍCULO 1 (DESTACADO)
   const featuredArticle = {
     title: language === "es" 
         ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" 
@@ -27,7 +27,6 @@ export default function ArticlesPage() {
   const articles = [
     {
       id: 0,
-      // ARTÍCULO: JONATHAN GARRIDO
       title: language === "es" ? "Diseñando el Abismo: Entrevista con Jonathan Garrido" : "Designing the Abyss: Interview with Jonathan Garrido",
       excerpt: language === "es" 
           ? "Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
@@ -40,7 +39,6 @@ export default function ArticlesPage() {
     },
     {
         id: 1,
-        // ARTÍCULO: MANIFIESTO
         title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
         excerpt: language === "es" 
             ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
@@ -53,7 +51,6 @@ export default function ArticlesPage() {
     },
     {
       id: 2,
-      // ARTÍCULO: DISEÑO
       title: language === "es" ? "Cómo se construye un bloque: La historia guía al juego" : "How a Block is Built: Story Guides the Game",
       excerpt: language === "es"
         ? "En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica."
@@ -66,14 +63,13 @@ export default function ArticlesPage() {
     },
     {
       id: 3,
-      // ARTÍCULO: ARTE
       title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
       excerpt: language === "es"
         ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
         : "In many games, art is decoration. In Vestigios, it is a second stolen from a story.",
       date: "2025-12-28",
       author: "Art Director",
-      image: "/03.jpg", // Imagen actualizada
+      image: "/03.jpg", 
       category: "Art & Lore",
       href: "/legal/discover/articles/art-narrative" 
     }
@@ -98,19 +94,18 @@ export default function ArticlesPage() {
           <div className="h-0.5 w-full bg-gradient-to-r from-red-900 via-red-900/20 to-transparent opacity-50" />
         </div>
 
-        {/* DESTACADO (LORE MELIZA CASTILLO) - TAMAÑO AJUSTADO */}
-        {/* Se redujo la altura de h-[500px]/600px a h-[400px]/500px */}
+        {/* DESTACADO */}
         <div className="relative h-[400px] md:h-[500px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
             <Image
                 src={featuredArticle.image}
                 alt="Featured Article"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-50"
+                // AQUI AGREGAMOS object-top PARA EL DESTACADO TAMBIÉN
+                className="object-cover object-top transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             
-            {/* Etiqueta Especial "NUEVO" */}
             <div className="absolute top-8 left-8">
                  <span className="animate-pulse px-3 py-1 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-lg shadow-red-900/50">
                     {language === "es" ? "Nuevo Lanzamiento" : "New Release"}
@@ -144,14 +139,13 @@ export default function ArticlesPage() {
             </div>
         </div>
 
-        {/* GRID SECUNDARIA (ARTÍCULOS ANTERIORES) */}
+        {/* GRID SECUNDARIA */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <article 
               key={article.id} 
               className="group flex flex-col bg-white/5 border border-white/10 rounded-sm overflow-hidden hover:border-white/30 transition-all duration-300 h-full"
             >
-              {/* TAMAÑO AJUSTADO: Se redujo de h-56 a h-48 */}
               <div className="relative h-48 w-full overflow-hidden">
                 <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/80 text-xs font-mono text-gray-300 border border-white/10 uppercase tracking-wider">
                     {article.category}
@@ -162,7 +156,9 @@ export default function ArticlesPage() {
                     alt={article.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                    // --- AQUÍ ESTÁ EL CAMBIO CLAVE ---
+                    // Agregamos 'object-top' para que enfoque la parte superior (las caras)
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                     />
                 </div>
               </div>
