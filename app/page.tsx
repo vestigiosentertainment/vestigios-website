@@ -10,16 +10,25 @@ import {
   Shield, 
   Scroll, 
   Image as ImageIcon, 
-  Beaker 
+  Beaker
 } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
+  // Se ha agregado el debut del Lore como noticia principal
   const latestNews = [
     {
       id: 1,
+      tag: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
+      title: language === "es" ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" : "Awakening History: Meliza Castillo Presents the Official Lore",
+      date: "2026-01-04",
+      image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
+      href: "/legal/discover/lore/genesis" // Enlace actualizado
+    },
+    {
+      id: 2,
       tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
       title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
       date: "2026-01-02",
@@ -27,20 +36,12 @@ export default function HomePage() {
       href: "/legal/discover/articles/interview-jonathan-garrido"
     },
     {
-      id: 2,
+      id: 3,
       tag: language === "es" ? "Manifiesto" : "Manifesto",
       title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
       date: "2025-12-31",
       image: "/portada-home.jpg",
       href: "/legal/discover/articles/manifesto"
-    },
-    {
-      id: 3,
-      tag: "Dev Diary",
-      title: language === "es" ? "Cómo se construye un bloque" : "How a Block is Built",
-      date: "2025-12-31",
-      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg",
-      href: "/legal/discover/articles/design-philosophy"
     }
   ]
 
@@ -155,10 +156,10 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* Solo el Botón */}
+            {/* Solo el Botón - Apuntando a la nueva ruta */}
             <div className="flex justify-center">
                 <Link 
-                    href="/lore/genesis"
+                    href="/legal/discover/lore/genesis" 
                     className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-10 py-5 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
                 >
                     {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
