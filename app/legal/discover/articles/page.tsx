@@ -14,20 +14,20 @@ export default function ArticlesPage() {
         ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" 
         : "Awakening History: Meliza Castillo Presents the Official Lore",
     excerpt: language === "es" 
-        ? "El silencio se ha roto. Hoy debuta el registro oficial del universo de Vestigios. Nuestra Directora Narrativa abre los archivos prohibidos sobre el Génesis, la Gran Fractura y la Jerarquía de la Noche. Entra y descubre el origen." 
-        : "The silence has been broken. Today marks the debut of the official record of the Vestigios universe. Our Narrative Director opens the forbidden archives regarding Genesis, the Great Fracture, and the Hierarchy of the Night. Enter and discover the origin.",
+        ? "El silencio se ha roto. Hoy debuta el registro oficial del universo de Vestigios. Nuestra Directora Narrativa abre los archivos prohibidos sobre el Génesis. Entra y descubre el origen." 
+        : "The silence has been broken. Today marks the debut of the official record of the Vestigios universe. Our Narrative Director opens the forbidden archives regarding Genesis. Enter and discover the origin.",
     date: "2026-01-04", // Fecha de hoy
     author: "Meliza Castillo",
-    image: "/ancient-book-open-with-mystical-light-dark-library.jpg", // Imagen acorde a "Lore/Libros"
+    image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
     category: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
-    href: "/legal/discover/lore/genesis" // ENLACE A LA PÁGINA DEL LORE
+    href: "/legal/discover/articles/lore-debut" // ENLACE A LA NOTICIA (NO AL LORE DIRECTO)
   }
 
   // LISTA DE ARTÍCULOS SECUNDARIOS
   const articles = [
     {
       id: 0,
-      // ARTÍCULO: JONATHAN GARRIDO (Movido aquí desde destacados)
+      // ARTÍCULO: JONATHAN GARRIDO
       title: language === "es" ? "Diseñando el Abismo: Entrevista con Jonathan Garrido" : "Designing the Abyss: Interview with Jonathan Garrido",
       excerpt: language === "es" 
           ? "Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
@@ -66,14 +66,14 @@ export default function ArticlesPage() {
     },
     {
       id: 3,
-      // ARTÍCULO: ARTE (Nota: Cambié la imagen para no repetir la del libro)
+      // ARTÍCULO: ARTE
       title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
       excerpt: language === "es"
         ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
         : "In many games, art is decoration. In Vestigios, it is a second stolen from a story.",
       date: "2025-12-28",
       author: "Art Director",
-      image: "/dark-fantasy-painting-canvas.jpg", // Placeholder sugerido para diferenciar
+      image: "/dark-fantasy-painting-canvas.jpg", 
       category: "Art & Lore",
       href: "/legal/discover/articles/art-narrative" 
     }
@@ -99,7 +99,7 @@ export default function ArticlesPage() {
         </div>
 
         {/* DESTACADO (LORE MELIZA CASTILLO) */}
-        <div className="relative h-[450px] md:h-[550px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
+        <div className="relative h-[500px] md:h-[600px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
             <Image
                 src={featuredArticle.image}
                 alt="Featured Article"
@@ -115,7 +115,7 @@ export default function ArticlesPage() {
                  </span>
             </div>
 
-            <div className="absolute bottom-0 left-0 p-8 md:p-16 max-w-4xl">
+            <div className="absolute bottom-0 left-0 p-6 md:p-12 w-full md:max-w-4xl">
                 <div className="flex items-center gap-4 mb-4">
                     <span className="inline-block px-3 py-1 bg-red-900/80 text-red-100 text-xs font-bold uppercase tracking-wider border-l-2 border-red-500">
                         {featuredArticle.category}
@@ -124,17 +124,21 @@ export default function ArticlesPage() {
                         {featuredArticle.date} <span className="text-red-500">•</span> {featuredArticle.author}
                     </span>
                 </div>
-                <h2 className="text-3xl md:text-6xl font-bold font-serif mb-6 leading-tight group-hover:text-red-100 transition-colors text-balance">
+                
+                {/* TÍTULO AJUSTADO: Más pequeño para evitar cortes */}
+                <h2 className="text-2xl md:text-5xl font-bold font-serif mb-4 leading-tight group-hover:text-red-100 transition-colors text-balance">
                     {featuredArticle.title}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-200 mb-8 font-light max-w-2xl text-pretty leading-relaxed border-l-4 border-red-900/50 pl-6">
+                
+                <p className="text-base md:text-lg text-gray-200 mb-8 font-light max-w-2xl text-pretty leading-relaxed border-l-4 border-red-900/50 pl-4 hidden md:block">
                     {featuredArticle.excerpt}
                 </p>
+
                 <Link 
                   href={featuredArticle.href}
-                  className="inline-flex items-center gap-3 text-white font-bold tracking-widest uppercase text-sm border border-red-500/50 bg-red-900/20 px-8 py-3 hover:bg-red-900 hover:border-red-500 transition-all shadow-lg"
+                  className="inline-flex items-center gap-3 text-white font-bold tracking-widest uppercase text-xs md:text-sm border border-red-500/50 bg-red-900/20 px-6 py-3 hover:bg-red-900 hover:border-red-500 transition-all shadow-lg"
                 >
-                    {language === "es" ? "Leer Lore" : "Read Lore"} <Feather className="w-4 h-4" />
+                    {language === "es" ? "Leer Noticia" : "Read News"} <Feather className="w-4 h-4" />
                 </Link>
             </div>
         </div>
@@ -150,7 +154,6 @@ export default function ArticlesPage() {
                 <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/80 text-xs font-mono text-gray-300 border border-white/10 uppercase tracking-wider">
                     {article.category}
                 </div>
-                {/* Fallback visual si no hay imagen específica, para evitar error 404 en placeholders */}
                 <div className="w-full h-full bg-zinc-900">
                     <Image
                     src={article.image}
