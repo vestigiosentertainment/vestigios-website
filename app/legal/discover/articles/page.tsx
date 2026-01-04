@@ -20,7 +20,7 @@ export default function ArticlesPage() {
     author: "Meliza Castillo",
     image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
     category: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
-    href: "/legal/discover/articles/lore-debut" // ENLACE A LA NOTICIA (NO AL LORE DIRECTO)
+    href: "/legal/discover/articles/lore-debut" // ENLACE A LA NOTICIA
   }
 
   // LISTA DE ARTÍCULOS SECUNDARIOS
@@ -66,14 +66,14 @@ export default function ArticlesPage() {
     },
     {
       id: 3,
-      // ARTÍCULO: ARTE
+      // ARTÍCULO: ARTE (IMAGEN ACTUALIZADA)
       title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
       excerpt: language === "es"
         ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
         : "In many games, art is decoration. In Vestigios, it is a second stolen from a story.",
       date: "2025-12-28",
       author: "Art Director",
-      image: "/dark-fantasy-painting-canvas.jpg", 
+      image: "/03.jpg", // <--- IMAGEN ACTUALIZADA AQUI
       category: "Art & Lore",
       href: "/legal/discover/articles/art-narrative" 
     }
