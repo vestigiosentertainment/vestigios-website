@@ -1,22 +1,32 @@
 "use client"
 
+import { useState } from "react" // NUEVO: Para manejar el estado del leer más
 import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Calendar, Sparkles, Shield, Scroll, Image as ImageIcon, Beaker } from "lucide-react"
+import { 
+  ArrowRight, 
+  Calendar, 
+  Sparkles, 
+  Shield, 
+  Scroll, 
+  Image as ImageIcon, 
+  Beaker, 
+  ChevronDown // NUEVO: Icono para el botón
+} from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
+  const [isLoreExpanded, setIsLoreExpanded] = useState(false) // NUEVO: Estado del Lore
 
-  // NOTICIAS ACTUALIZADAS (La entrevista es la más nueva)
+  // NOTICIAS ACTUALIZADAS
   const latestNews = [
     {
       id: 1,
-      // NUEVO: Entrevista J. Garrido
       tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
       title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
       date: "2026-01-02",
-      image: "/respectful-handshake-dark-atmosphere-gothic.jpg", // Usa la misma imagen que en artículos
+      image: "/respectful-handshake-dark-atmosphere-gothic.jpg",
       href: "/legal/discover/articles/interview-jonathan-garrido"
     },
     {
@@ -131,8 +141,61 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. PROJECT SHOWCASE --- */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+      {/* --- 3. NUEVA SECCIÓN: LORE / GÉNESIS --- */}
+      <section className="relative py-24 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
+        {/* Fondo decorativo sutil */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+            <div className="mb-8">
+                <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
+                    Lore
+                </span>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold text-white">
+                    {language === "es" ? "La Gran Fractura (Génesis)" : "The Great Fracture (Genesis)"}
+                </h2>
+                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto mt-6" />
+            </div>
+
+            <div className="prose prose-invert prose-lg mx-auto">
+                {/* Texto visible (Gancho) */}
+                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-serif italic mb-6">
+                    {language === "es" 
+                     ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."'
+                     : '"Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself."'}
+                </p>
+
+                {/* Texto Oculto (Animación) */}
+                <div 
+                    className={`grid transition-all duration-700 ease-in-out ${
+                        isLoreExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                >
+                    <div className="overflow-hidden">
+                        <p className="text-lg text-gray-400 leading-relaxed font-light max-w-2xl mx-auto">
+                            {language === "es" 
+                             ? <>Gracias a su <strong className="text-red-400 font-serif">icor</strong>, derramado sobre la superficie, la vida fue posible: una existencia nutrida por vestigios aún más pequeños y limitados, codiciados por aquellos que conocen el secreto de la vida.</>
+                             : <>Thanks to its <strong className="text-red-400 font-serif">ichor</strong>, spilled upon the surface, life was made possible: an existence nourished by even smaller and limited vestiges, coveted by those who know the secret of life.</>}
+                        </p>
+                    </div>
+                </div>
+
+                {/* Botón Leer Más */}
+                <button 
+                    onClick={() => setIsLoreExpanded(!isLoreExpanded)}
+                    className="mt-8 group inline-flex items-center gap-2 text-white/60 hover:text-red-500 uppercase tracking-widest text-xs font-bold transition-all border border-white/10 px-6 py-3 rounded-full hover:border-red-500/50 hover:bg-red-500/10"
+                >
+                    {isLoreExpanded 
+                        ? (language === "es" ? "Cerrar Lectura" : "Read Less") 
+                        : (language === "es" ? "Leer Historia Completa" : "Read Full Story")}
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-500 ${isLoreExpanded ? 'rotate-180' : ''}`} />
+                </button>
+            </div>
+        </div>
+      </section>
+
+      {/* --- 4. PROJECT SHOWCASE --- */}
+      <section className="py-32 bg-zinc-950 relative overflow-hidden border-t border-white/5">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
@@ -182,7 +245,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 4. QUICK LINKS --- */}
+      {/* --- 5. QUICK LINKS --- */}
       <section className="py-24 px-4 border-t border-white/5">
         <div className="max-w-7xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-white mb-4">
