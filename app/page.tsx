@@ -138,40 +138,32 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. SECCIÓN: LORE / GÉNESIS (ENLACE EXTERNO) --- */}
-      <section className="relative py-24 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
+      {/* --- 3. SECCIÓN: LORE / GÉNESIS (MINIMALISTA) --- */}
+      <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-            <div className="mb-8">
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
+            {/* Títulos */}
+            <div className="mb-12">
                 <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
                     Lore
                 </span>
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-white">
-                    {language === "es" ? "La Gran Fractura (Génesis)" : "The Great Fracture (Genesis)"}
+                <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-8 leading-tight">
+                    {language === "es" ? "Génesis: La Fractura Primordial" : "Genesis: The Primordial Fracture"}
                 </h2>
-                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto mt-6" />
+                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            <div className="prose prose-invert prose-lg mx-auto">
-                {/* Texto visible (Gancho) */}
-                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-serif italic mb-10">
-                    {language === "es" 
-                     ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo..."'
-                     : '"Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself..."'}
-                </p>
-
-                {/* Botón Link a la nueva página */}
-                <div className="flex justify-center">
-                    <Link 
-                        href="/lore/genesis"
-                        className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-8 py-4 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
-                    >
-                        {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 text-red-500" />
-                    </Link>
-                </div>
+            {/* Solo el Botón */}
+            <div className="flex justify-center">
+                <Link 
+                    href="/lore/genesis"
+                    className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-10 py-5 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
+                >
+                    {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 text-red-500" />
+                </Link>
             </div>
         </div>
       </section>
