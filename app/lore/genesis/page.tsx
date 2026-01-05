@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -44,7 +43,7 @@ export default function GenesisLorePage() {
         {/* Cuerpo del Texto */}
         <div className="prose prose-invert prose-lg mx-auto prose-p:leading-relaxed prose-strong:text-white">
             
-            {/* --- SECCIÓN 1: EL ORIGEN (ACTUALIZADA) --- */}
+            {/* --- SECCIÓN 1: EL ORIGEN --- */}
             {language === "es" ? (
               <>
                 <p className="lead text-xl text-white italic opacity-90 mb-8 border-l-4 border-red-800 pl-6 py-2">
@@ -103,8 +102,8 @@ export default function GenesisLorePage() {
             </h3>
             <p>
                 {language === "es"
-                 ? "Señores de la Sangre o «vampiros», como son vulgarmente llamados. Son aristócratas de piel pálida que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
-                 : "Lords of Blood, or 'vampires' as they are vulgarly called. They are pale-skinned aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
+                 ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+                 : "Pale aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
             </p>
 
             {/* CAZADORES */}
@@ -113,8 +112,13 @@ export default function GenesisLorePage() {
             </h3>
             <p>
                 {language === "es"
-                 ? "Maestros del acero y la pólvora. Fueron hombres que miraron demasiado tiempo al abismo hasta que este les devolvió la mirada. Vendieron su alma por la fuerza para matar y se volvieron adictos a la cacería, perdiendo su humanidad con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
-                 : "Masters of steel and gunpowder. They were men who stared too long into the abyss until the abyss stared back. They sold their souls for the strength to kill and became addicted to the hunt, losing their humanity with every prey that falls beneath their hands. Their bloodlust rivals that of the monsters they pursue."}
+                 ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza de matar y se volvieron adictos a la cacería, perdiendo algo valioso con cada presa que cae bajo sus manos."
+                 : "Masters of steel and gunpowder. They were men who sold their souls for the strength to kill and became addicted to the hunt, losing something valuable with every prey that falls beneath their hands."}
+            </p>
+            <p>
+                {language === "es"
+                 ? "Su sed de sangre rivaliza con la de los monstruos que persiguen."
+                 : "Their bloodlust rivals that of the monsters they pursue."}
             </p>
 
             {/* BRUJAS */}
@@ -123,8 +127,8 @@ export default function GenesisLorePage() {
             </h3>
             <p>
                 {language === "es"
-                 ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor; susurran secretos que pueden derribar imperios mortales o condenar almas, dispuestas a vender la cordura de otros por una gota de influencia, poder o mero goce personal."
-                 : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder; they whisper secrets that can topple mortal empires or damn souls, willing to sell the sanity of others for a drop of influence, power, or mere personal pleasure."}
+                 ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor."
+                 : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder."}
             </p>
             <blockquote className="border-l-red-900 text-gray-400 italic bg-white/5 p-4 my-6 rounded-r-lg">
                 {language === "es"
@@ -138,13 +142,13 @@ export default function GenesisLorePage() {
             </h3>
             <p>
                 {language === "es"
-                 ? "Aquellos perdidos y desesperados que buscan consuelo sin saber que incluso la fe es una mentira. Como corderos al matadero, con la esperanza de salvación o de llenar el vacío de sus corazones, se dirigen a la Dama de la Bruma: una diosa autoproclamada que, en el horror más silencioso, convertirá sus cuerpos en cascarones huecos y obedientes."
-                 : "Those lost and desperate souls seeking solace, unaware that even faith is a lie. Like lambs to the slaughter, hoping for salvation or to fill the void in their hearts, they flock to the Lady of the Mist: a self-proclaimed goddess who, in the quietest horror, turns their bodies into hollow, obedient shells."}
+                 ? "Los perdidos y desesperados, en su búsqueda de consuelo, van como corderos al matadero ante una diosa autoproclamada, con la esperanza de salvación."
+                 : "The lost and desperate, in their search for solace, go like lambs to the slaughter before a self-proclaimed goddess, hoping for salvation."}
             </p>
             <p>
                 {language === "es"
-                 ? "Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles en el oscuro éter sin saber en qué se convertirán."
-                 : "They are converted into mindless pilgrims, fanatical worshippers of a lie, while their torn, ownerless souls scream unseen in the dark ether, not knowing what they will become."}
+                 ? "Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles sin saber en qué se convertirán."
+                 : "They are converted into mindless pilgrims, fanatical worshippers of a lie, while their torn, ownerless souls scream unseen, not knowing what they will become."}
             </p>
 
             {/* LICANTROPOS */}
