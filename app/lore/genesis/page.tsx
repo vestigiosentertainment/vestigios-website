@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -93,17 +94,33 @@ export default function GenesisLorePage() {
                 <Skull className="w-6 h-6 text-red-900" />
             </div>
 
+            {/* --- SECCIÓN 1.5: EL MUNDO ACTUAL (1880) --- */}
+            {language === "es" ? (
+                <div className="mb-12">
+                    <p>
+                        Nos encontramos en un 1880 en decadencia. Este mundo es esclavo de la industrialización masiva y de avances —tanto tecnológicos como científicos— que rozan, muchas veces, la herejía. Es un reino de adoquines húmedos y chimeneas humeantes que decoran el horizonte. Aquí, la sociedad no es un orden, sino una pirámide de depredadores.
+                    </p>
+                </div>
+            ) : (
+                <div className="mb-12">
+                    <p>
+                        We find ourselves in a decaying 1880. This world is a slave to massive industrialization and advancements—both technological and scientific—that often border on heresy. It is a realm of damp cobblestones and smoking chimneys decorating the horizon. Here, society is not an order, but a pyramid of predators.
+                    </p>
+                </div>
+            )}
+
+
             {/* --- SECCIÓN 2: LA JERARQUÍA --- */}
             <h2 className="text-3xl text-white font-bold text-center mb-8">{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
 
-            {/* VAMPIROS */}
+            {/* VAMPIROS (Corregido con la coma) */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 I. {language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}
             </h3>
             <p>
                 {language === "es"
-                 ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
-                 : "Pale aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
+                 ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras, como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+                 : "Pale aristocrats who have cheated death and rule from the shadows, as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
             </p>
 
             {/* CAZADORES */}
