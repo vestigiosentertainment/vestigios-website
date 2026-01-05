@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -41,21 +42,52 @@ export default function GenesisLorePage() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
         {/* Cuerpo del Texto */}
-        {/* Nota: 'prose' maneja los párrafos, pero hemos estilizado los H3 manualmente abajo para diferenciarlos */}
         <div className="prose prose-invert prose-lg mx-auto prose-p:leading-relaxed prose-strong:text-white">
             
-            {/* --- SECCIÓN 1: EL ORIGEN --- */}
-            <p className="lead text-2xl text-white italic opacity-90 mb-10 border-l-4 border-red-800 pl-6 py-2">
-               {language === "es" 
-                ? '"Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."'
-                : '"Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself."'}
-            </p>
-
-            <p>
-                {language === "es" 
-                 ? <>Gracias a su <strong className="text-red-400">icor</strong>, derramado sobre la superficie, la vida fue posible: una existencia nutrida por vestigios aún más pequeños y limitados, codiciados por aquellos que conocen el secreto de la vida.</>
-                 : <>Thanks to its <strong className="text-red-400">ichor</strong>, spilled upon the surface, life was made possible: an existence nourished by even smaller and limited vestiges, coveted by those who know the secret of life.</>}
-            </p>
+            {/* --- SECCIÓN 1: EL ORIGEN (ACTUALIZADA) --- */}
+            {language === "es" ? (
+              <>
+                <p className="lead text-xl text-white italic opacity-90 mb-8 border-l-4 border-red-800 pl-6 py-2">
+                  "Antes de todo lo que conocemos —incluso antes de que este mundo existiera, cuando todo era uno—, yacía en el estéril universo un cristal colosal, gélido y semitraslúcido, que albergaba un corazón ardiente y palpitante de oro y carmín: un corazón que fluía como el magma."
+                </p>
+                <p>
+                  Era una prisión perfecta donde el secreto de la vida y la creación permanecía atrapado en silencio. Algunos lo llamaron <strong className="text-red-400">«Vestigio Primordial»</strong>, otros <strong className="text-red-400">«Vestigio Madre»</strong>.
+                </p>
+                <p>
+                  Pero al corazón no le bastaba con existir; no había nacido para la quietud. Su deseo era claro: expansión, trascendencia.
+                </p>
+                <p>
+                  La superficie del cristal se veteó de grietas que brillaban con una luz cegadora mientras, desde su núcleo, exudaban ríos furiosos de oro líquido. Y luego, una detonación tan violenta que el sonido llegó mucho después del impacto: un gemido titánico y sordo que habría hecho vibrar los dientes y los huesos de cualquier ser a sistemas solares de distancia.
+                </p>
+                <p>
+                  El icor de su interior se expandió como una flor abriéndose en un parpadeo febril. El choque térmico entre el núcleo ardiente y el vacío creó relámpagos y esquirlas del tamaño de continentes que fueron disparadas hacia la negrura. Estos fueron los <strong className="text-white">«vestigios elementales»</strong>, núcleos de mundos por nacer. Tras ellos cayeron los <strong className="text-white">«vestigios menores»</strong> sembrándose en la tierra; algunos se rompieron al contacto con la superficie, sangrando sobre el suelo y haciendo florecer la vida.
+                </p>
+                <p className="text-red-100/80 border-t border-red-900/30 pt-4 mt-6">
+                  Fue como ver a una estrella devorarse a sí misma: un estallido de azul ártico y oro infernal pintando el lienzo de la nada.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="lead text-xl text-white italic opacity-90 mb-8 border-l-4 border-red-800 pl-6 py-2">
+                  "Before everything we know—even before this world existed, when all was one—there lay in the sterile universe a colossal crystal, frigid and semi-translucent, housing a burning, beating heart of gold and carmine: a heart that flowed like magma."
+                </p>
+                <p>
+                  It was a perfect prison where the secret of life and creation remained trapped in silence. Some called it the <strong className="text-red-400">"Primordial Vestige,"</strong> others the <strong className="text-red-400">"Mother Vestige."</strong>
+                </p>
+                <p>
+                  But mere existence was not enough for the heart; it was not born for stillness. Its desire was clear: expansion, transcendence.
+                </p>
+                <p>
+                  The crystal's surface became veined with cracks shining with blinding light while, from its core, furious rivers of liquid gold exuded. And then, a detonation so violent that the sound arrived long after the impact: a titanic, dull moan that would have rattled the teeth and bones of any being solar systems away.
+                </p>
+                <p>
+                  The ichor within expanded like a flower opening in a feverish blink. The thermal shock between the burning core and the void created lightning and continent-sized shards that were shot into the blackness. These were the <strong className="text-white">"elemental vestiges,"</strong> cores of worlds yet to be born. Following them fell the <strong className="text-white">"minor vestiges,"</strong> seeding themselves into the earth; some broke upon contact with the surface, bleeding onto the ground and causing life to bloom.
+                </p>
+                <p className="text-red-100/80 border-t border-red-900/30 pt-4 mt-6">
+                  It was like watching a star devour itself: a burst of arctic blue and infernal gold painting the canvas of nothingness.
+                </p>
+              </>
+            )}
 
             {/* Separador interno decorativo */}
             <div className="flex justify-center my-12 opacity-50">
@@ -65,9 +97,6 @@ export default function GenesisLorePage() {
             {/* --- SECCIÓN 2: LA JERARQUÍA --- */}
             <h2 className="text-3xl text-white font-bold text-center mb-8">{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
 
-            {/* ESTILO DE MINI-TÍTULOS PERSONALIZADO */}
-            {/* Usamos font-sans y tracking amplio para diferenciarlos drásticamente del cuerpo del texto serif */}
-            
             {/* VAMPIROS */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 I. {language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}
@@ -154,7 +183,7 @@ export default function GenesisLorePage() {
                 </div>
             </div>
 
-            {/* Fin del Registro (Visualmente más sutil ahora que está la firma) */}
+            {/* Fin del Registro */}
             <div className="pt-8 border-t border-dashed border-white/5 text-center">
                 <p className="text-zinc-700 text-xs font-mono uppercase tracking-[0.3em]">
                     {language === "es" ? "Fin del Registro" : "End of Record"}
