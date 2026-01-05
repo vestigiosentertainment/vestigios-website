@@ -13,7 +13,7 @@ export default function ProjectPage() {
       role: language === "es" ? "Los Eternos" : "The Eternal",
       title: language === "es" ? "Vampiros" : "Vampires",
       desc: language === "es" 
-        ? "Aristócratas de piel pálida que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+        ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
         : "Pale aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, amassing time, power, wealth, and secrets.",
       image: "/0.jpeg" 
     }, 
@@ -22,8 +22,8 @@ export default function ProjectPage() {
       role: language === "es" ? "Hijos de la Luna" : "Moon Children",
       title: language === "es" ? "Licántropos" : "Werewolves",
       desc: language === "es"
-        ? "Reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
-        : "Reduced to simple slaves with broken wills, their howls silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed.",
+        ? "Hijos de la luna reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
+        : "Children of the moon reduced to simple slaves with broken wills, whose howl has been silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed.",
       image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg" 
     }, 
     { 
@@ -31,8 +31,8 @@ export default function ProjectPage() {
       role: language === "es" ? "Maestros del Acero" : "Masters of Steel",
       title: language === "es" ? "Cazadores" : "Hunters",
       desc: language === "es"
-        ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza para matar y se volvieron adictos a la cacería, perdiendo su humanidad con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
-        : "Masters of steel and gunpowder. Men who sold their souls for the strength to kill and became addicted to the hunt, losing their humanity with every prey that falls by their hands. Their bloodlust rivals that of the monsters they hunt.",
+        ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza de matar y se volvieron adictos a la cacería, perdiendo algo valioso con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
+        : "Masters of steel and gunpowder. They were men who sold their souls for the strength to kill and became addicted to the hunt, losing something valuable with every prey that falls by their hands. Their bloodlust rivals that of the monsters they pursue.",
       image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
     }, 
     { 
@@ -40,17 +40,17 @@ export default function ProjectPage() {
       role: language === "es" ? "Comerciantes de Hechizos" : "Spell Merchants",
       title: language === "es" ? "Brujas" : "Witches",
       desc: language === "es"
-        ? "Sus servicios son comprados por el mejor postor; susurran secretos que pueden derribar imperios o condenar almas. Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
-        : "Their services are bought by the highest bidder; they whisper secrets that can topple empires or damn souls. You will never know where their loyalty lies, but you can be certain their whims will always take priority.",
+        ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor. Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
+        : "Merchants of spells, dark favors, and betrayals. Their services are bought by the highest bidder. You will never know where their loyalty lies, but you can be certain that their whims will always take priority.",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg" 
     }, 
     { 
       id: "zombie", 
       role: language === "es" ? "Los Perdidos" : "The Lost",
-      title: language === "es" ? "La Bruma" : "The Mist",
+      title: language === "es" ? "Zombis" : "Zombies", // Actualizado el título de "La Bruma" a "Zombis" para coincidir con tu texto, o puedes dejarlo como estaba si prefieres.
       desc: language === "es"
-        ? "Los perdidos y desesperados van como corderos al matadero ante una diosa autoproclamada. Son convertidos en peregrinos sin mente, fanáticos de una mentira, mientras sus almas arrancadas gritan invisibles en el oscuro éter sin saber en qué se convertirán."
-        : "The lost and desperate go like lambs to the slaughter before a self-proclaimed goddess. They are turned into mindless pilgrims, fanatics of a lie, while their torn souls scream unseen in the dark ether, not knowing what they will become.",
+        ? "Los perdidos y desesperados, en su búsqueda de consuelo, van como corderos al matadero ante una diosa autoproclamada, con la esperanza de salvación. Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles sin saber en qué se convertirán."
+        : "The lost and desperate, in their search for solace, go like lambs to the slaughter before a self-proclaimed goddess, hoping for salvation. They are turned into mindless pilgrims, fanatical worshippers of a lie, while their torn and ownerless souls scream unseen, not knowing what they will become.",
       image: "/respectful-handshake-dark-atmosphere-gothic.jpg" 
     }, 
   ]
