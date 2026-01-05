@@ -6,7 +6,25 @@ import Image from "next/image"
 export default function ProjectPage() {
   const { t, language } = useLanguage()
 
-  // DATOS DE FACCIONES ACTUALIZADOS CON LOS NUEVOS RESÚMENES
+  // 1. DATOS DE LORE (HISTORIA) ACTUALIZADOS
+  const loreData = [
+    {
+      date: language === "es" ? "Génesis" : "Genesis",
+      title: language === "es" ? "La Gran Fractura" : "The Great Fracture",
+      desc: language === "es"
+        ? "Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."
+        : "Before everything we know, when all was one, a heart's longing to transcend caused it to explode, shaping the worlds with fragments of itself."
+    },
+    {
+      date: "1880",
+      title: language === "es" ? "El Mundo Actual" : "The Current World",
+      desc: language === "es"
+        ? "Nos encontramos en un 1880 en decadencia. Este mundo es esclavo de la industrialización masiva y avances tanto tecnológicos como científicos que rozan muchas veces la herejía. Es un reino de adoquines húmedos y chimeneas humeantes que decoran el horizonte. Aquí la sociedad no es un orden, sino una pirámide de depredadores."
+        : "We find ourselves in a decaying 1880. This world is a slave to massive industrialization and technological and scientific advancements that often border on heresy. It is a realm of damp cobblestones and smoking chimneys decorating the horizon. Here, society is not an order, but a pyramid of predators."
+    }
+  ]
+
+  // 2. DATOS DE FACCIONES (Ya actualizados anteriormente)
   const factionsData = [
     { 
       id: "vampire", 
@@ -47,7 +65,7 @@ export default function ProjectPage() {
     { 
       id: "zombie", 
       role: language === "es" ? "Los Perdidos" : "The Lost",
-      title: language === "es" ? "Zombis" : "Zombies", // Actualizado el título de "La Bruma" a "Zombis" para coincidir con tu texto, o puedes dejarlo como estaba si prefieres.
+      title: language === "es" ? "Zombis" : "Zombies",
       desc: language === "es"
         ? "Los perdidos y desesperados, en su búsqueda de consuelo, van como corderos al matadero ante una diosa autoproclamada, con la esperanza de salvación. Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles sin saber en qué se convertirán."
         : "The lost and desperate, in their search for solace, go like lambs to the slaughter before a self-proclaimed goddess, hoping for salvation. They are turned into mindless pilgrims, fanatical worshippers of a lie, while their torn and ownerless souls scream unseen, not knowing what they will become.",
@@ -72,7 +90,6 @@ export default function ProjectPage() {
 
         {/* --- HERO IMAGE (Ambiente General) --- */}
         <div className="relative h-[50vh] md:h-[70vh] mb-24 rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
-          {/* Usamos la imagen del cazador/ruinas como portada de ambiente gótico */}
           <Image 
             src="/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
             alt="Vestigios of Blood Universe" 
@@ -113,30 +130,44 @@ export default function ProjectPage() {
           </div>
 
           <div className="space-y-24 relative border-l border-white/10 ml-4 md:ml-1/2 pl-8 md:pl-0">
-             {/* ERA 1 */}
+             
+             {/* ERA 1: LA GRAN FRACTURA */}
              <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
                 <div className="md:text-right md:pr-12">
-                   <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">{t("project.lore.era1.date")}</span>
-                   <h3 className="text-3xl font-bold text-white mb-4 font-serif">{t("project.lore.era1.title")}</h3>
-                   <p className="text-gray-400 leading-relaxed">{t("project.lore.era1.desc")}</p>
+                   <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">
+                     {loreData[0].date}
+                   </span>
+                   <h3 className="text-3xl font-bold text-white mb-4 font-serif">
+                     {loreData[0].title}
+                   </h3>
+                   <p className="text-gray-400 leading-relaxed">
+                     {loreData[0].desc}
+                   </p>
                 </div>
                 <div className="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.8)] mt-2 md:mt-0" />
              </div>
 
-             {/* ERA 2 */}
+             {/* ERA 2: EL MUNDO ACTUAL */}
              <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
                 <div className="hidden md:block"></div>
                 <div className="md:pl-12">
-                   <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">{t("project.lore.era2.date")}</span>
-                   <h3 className="text-3xl font-bold text-white mb-4 font-serif">{t("project.lore.era2.title")}</h3>
-                   <p className="text-gray-400 leading-relaxed">{t("project.lore.era2.desc")}</p>
+                   <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">
+                     {loreData[1].date}
+                   </span>
+                   <h3 className="text-3xl font-bold text-white mb-4 font-serif">
+                     {loreData[1].title}
+                   </h3>
+                   <p className="text-gray-400 leading-relaxed">
+                     {loreData[1].desc}
+                   </p>
                 </div>
                  <div className="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.8)] mt-2 md:mt-0" />
              </div>
+
           </div>
         </div>
 
-        {/* --- SECCIÓN: FACCIONES (TEXTOS ACTUALIZADOS) --- */}
+        {/* --- SECCIÓN: FACCIONES --- */}
         <div className="mb-24">
           <div className="text-center mb-32">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tight font-serif">
@@ -161,7 +192,6 @@ export default function ProjectPage() {
                   {/* [ IMAGEN ] */}
                   <div className="flex-1 w-full flex justify-center">
                     <div className="relative w-full max-w-md aspect-[3/4] md:max-w-lg group">
-                      {/* Aura roja detrás */}
                       <div className="absolute inset-0 bg-red-900/20 blur-2xl -z-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                       
                       <Image
