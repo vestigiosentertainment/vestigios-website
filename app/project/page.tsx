@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -13,26 +14,26 @@ export default function ProjectPage() {
       title: language === "es" ? "La Gran Fractura" : "The Great Fracture",
       desc: language === "es"
         ? "Antes de todo lo que conocemos, cuando todo era uno, el anhelo de un corazón por trascender hizo que este explotara y diera forma a los mundos con fragmentos de sí mismo."
-        : "Before everything we know, when all was one, a heart's longing to transcend caused it to explode, shaping the worlds with fragments of itself."
+        : "Before everything we know, when all was one, the yearning of a heart to transcend caused it to explode and shape the worlds with fragments of itself."
     },
     {
       date: "1880",
       title: language === "es" ? "El Mundo Actual" : "The Current World",
       desc: language === "es"
-        ? "Nos encontramos en un 1880 en decadencia. Este mundo es esclavo de la industrialización masiva y avances tanto tecnológicos como científicos que rozan muchas veces la herejía. Es un reino de adoquines húmedos y chimeneas humeantes que decoran el horizonte. Aquí la sociedad no es un orden, sino una pirámide de depredadores."
-        : "We find ourselves in a decaying 1880. This world is a slave to massive industrialization and technological and scientific advancements that often border on heresy. It is a realm of damp cobblestones and smoking chimneys decorating the horizon. Here, society is not an order, but a pyramid of predators."
+        ? "Nos encontramos en un 1880 en decadencia. Este mundo es esclavo de la industrialización masiva y de avances —tanto tecnológicos como científicos— que rozan, muchas veces, la herejía. Es un reino de adoquines húmedos y chimeneas humeantes que decoran el horizonte. Aquí, la sociedad no es un orden, sino una pirámide de depredadores."
+        : "We find ourselves in a decaying 1880. This world is a slave to massive industrialization and advancements—both technological and scientific—that often border on heresy. It is a realm of damp cobblestones and smoking chimneys decorating the horizon. Here, society is not an order, but a pyramid of predators."
     }
   ]
 
-  // 2. DATOS DE FACCIONES (Ya actualizados anteriormente)
+  // 2. DATOS DE FACCIONES (Actualizados y Corregidos)
   const factionsData = [
     { 
       id: "vampire", 
       role: language === "es" ? "Los Eternos" : "The Eternal",
       title: language === "es" ? "Vampiros" : "Vampires",
       desc: language === "es" 
-        ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
-        : "Pale aristocrats who have cheated death and rule from the shadows as if the world were their chessboard. They built their empires on the blood of the earth, amassing time, power, wealth, and secrets.",
+        ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras, como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
+        : "Pale aristocrats who have cheated death and rule from the shadows, as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets.",
       image: "/0.jpeg" 
     }, 
     { 
@@ -41,7 +42,7 @@ export default function ProjectPage() {
       title: language === "es" ? "Licántropos" : "Werewolves",
       desc: language === "es"
         ? "Hijos de la luna reducidos a simples esclavos de voluntad rota, cuyo aullido ha sido silenciado. Su naturaleza salvaje ha sido encadenada con plata; son bestias de fuerza bruta, carne de yugo que carga con el precio del progreso y la codicia de sus amos."
-        : "Children of the moon reduced to simple slaves with broken wills, whose howl has been silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed.",
+        : "Children of the moon reduced to simple slaves with broken wills, their howl silenced. Their wild nature has been chained with silver; they are beasts of brute force, beasts of burden bearing the price of progress and their masters' greed.",
       image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg" 
     }, 
     { 
@@ -50,7 +51,7 @@ export default function ProjectPage() {
       title: language === "es" ? "Cazadores" : "Hunters",
       desc: language === "es"
         ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza de matar y se volvieron adictos a la cacería, perdiendo algo valioso con cada presa que cae bajo sus manos. Su sed de sangre rivaliza con la de los monstruos que persiguen."
-        : "Masters of steel and gunpowder. They were men who sold their souls for the strength to kill and became addicted to the hunt, losing something valuable with every prey that falls by their hands. Their bloodlust rivals that of the monsters they pursue.",
+        : "Masters of steel and gunpowder. They were men who sold their souls for the strength to kill and became addicted to the hunt, losing something valuable with every prey that falls beneath their hands. Their bloodlust rivals that of the monsters they pursue.",
       image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
     }, 
     { 
@@ -59,7 +60,7 @@ export default function ProjectPage() {
       title: language === "es" ? "Brujas" : "Witches",
       desc: language === "es"
         ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor. Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
-        : "Merchants of spells, dark favors, and betrayals. Their services are bought by the highest bidder. You will never know where their loyalty lies, but you can be certain that their whims will always take priority.",
+        : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder. You will never know where their loyalty lies, but of one thing you can be certain: their whims will always take priority.",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg" 
     }, 
     { 
@@ -68,7 +69,7 @@ export default function ProjectPage() {
       title: language === "es" ? "Zombis" : "Zombies",
       desc: language === "es"
         ? "Los perdidos y desesperados, en su búsqueda de consuelo, van como corderos al matadero ante una diosa autoproclamada, con la esperanza de salvación. Son convertidos en peregrinos sin mente, fanáticos adoradores de una mentira, mientras sus almas, arrancadas y sin dueño, gritan invisibles sin saber en qué se convertirán."
-        : "The lost and desperate, in their search for solace, go like lambs to the slaughter before a self-proclaimed goddess, hoping for salvation. They are turned into mindless pilgrims, fanatical worshippers of a lie, while their torn and ownerless souls scream unseen, not knowing what they will become.",
+        : "The lost and desperate, in their search for solace, go like lambs to the slaughter before a self-proclaimed goddess, hoping for salvation. They are converted into mindless pilgrims, fanatical worshippers of a lie, while their torn, ownerless souls scream unseen, not knowing what they will become.",
       image: "/respectful-handshake-dark-atmosphere-gothic.jpg" 
     }, 
   ]
@@ -130,9 +131,9 @@ export default function ProjectPage() {
           </div>
 
           <div className="space-y-24 relative border-l border-white/10 ml-4 md:ml-1/2 pl-8 md:pl-0">
-             
-             {/* ERA 1: LA GRAN FRACTURA */}
-             <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
+              
+              {/* ERA 1: LA GRAN FRACTURA */}
+              <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
                 <div className="md:text-right md:pr-12">
                    <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">
                      {loreData[0].date}
@@ -145,10 +146,10 @@ export default function ProjectPage() {
                    </p>
                 </div>
                 <div className="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.8)] mt-2 md:mt-0" />
-             </div>
+              </div>
 
-             {/* ERA 2: EL MUNDO ACTUAL */}
-             <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
+              {/* ERA 2: EL MUNDO ACTUAL */}
+              <div className="md:grid md:grid-cols-2 md:gap-16 items-center">
                 <div className="hidden md:block"></div>
                 <div className="md:pl-12">
                    <span className="text-red-600 font-mono text-sm tracking-widest uppercase block mb-2">
@@ -162,7 +163,7 @@ export default function ProjectPage() {
                    </p>
                 </div>
                  <div className="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.8)] mt-2 md:mt-0" />
-             </div>
+              </div>
 
           </div>
         </div>
