@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -113,31 +112,106 @@ export default function GenesisLorePage() {
             {/* --- SECCIÓN 2: LA JERARQUÍA --- */}
             <h2 className="text-3xl text-white font-bold text-center mb-8">{language === "es" ? "La Jerarquía de la Noche" : "The Hierarchy of the Night"}</h2>
 
-            {/* VAMPIROS (Corregido con la coma) */}
+            {/* ========================================== */}
+            {/* VAMPIROS (TEXTO EXTENDIDO) */}
+            {/* ========================================== */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 I. {language === "es" ? "Los Eternos (Vampiros)" : "The Eternals (Vampires)"}
             </h3>
-            <p>
-                {language === "es"
-                 ? "Pálidos aristócratas que han burlado la muerte y gobiernan desde las sombras, como si el mundo fuese su tablero de ajedrez. Construyeron sus imperios sobre la sangre de la tierra, acumulando tiempo, poder, riquezas y secretos."
-                 : "Pale aristocrats who have cheated death and rule from the shadows, as if the world were their chessboard. They built their empires on the blood of the earth, accumulating time, power, wealth, and secrets."}
-            </p>
+            
+            {language === "es" ? (
+                <div className="space-y-4">
+                    <p>
+                        Poseen muchos nombres, pero entre los que más han resonado a lo largo de la densa historia están Los Eternos y Señores de la Sangre. Sin embargo, hay un solo nombre que últimamente se escupe de las bocas que destilan ginebra, de las bocas en donde sus alientos delatan lo podrido de sus dientes e, incluso de bocas refinadas que beben té y que fuman buen tabaco; aquel nombre despojado de nobleza, vulgar y que no esconde ser un insulto con sabor a hierro y desprecio: vampiro.
+                    </p>
+                    <p>
+                        Son aristócratas de piel pálida y grisácea, donde la temperatura de sus cuerpos y la falta de pulso son la respuesta clara a que el soplo de la vida los ha abandonado ya hace quién sabe cuánto tiempo. Su burla a la muerte les ha hecho autoproclamarse herederos de un derecho divino, pero su corona es el peso de los siglos que han devorado su capacidad de asombro.
+                    </p>
+                    <p>
+                        Sus juegos de poder y refinada crueldad son, en realidad un intento ahogado de despertar un corazón que dejó de latir hace eras y de estimular sus nervios marchitos. La erosión del tiempo se refleja en sus pupilas como un abismo vítreo que crece con cada década: un vacío que consume luz y humanidad con un hambre que nada puede saciar.
+                    </p>
+                    <p>
+                        Gobiernan desde las sombras por una gélida y calculadora necesidad, moviendo los hilos de las naciones como si el mundo fuese su tablero de ajedrez. Han erigido sus imperios sobre la sangre de la tierra con la paciencia de quien no tiene la prisa por morir, cultivando y acumulando poder, riquezas y secretos. Saben muy bien que la paz no es más que un subproducto del terror que han sembrado en los cimientos del mundo.
+                    </p>
+                    <p className="italic text-gray-400 border-l-2 border-red-900/50 pl-4">
+                        Dicen que el Primer Maldito fue uno de ellos: una raíz podrida, la primera mancha del mundo. Y aunque todo lo que se sabe de él se basa en leyendas fragmentadas que el tiempo ha devorado, no se debe olvidar que las leyendas no son cuentos de cuna; son ecos de una verdad que se niega a morir y que siguen susurrando su nombre.
+                    </p>
+                </div>
+            ) : (
+                <div className="space-y-4">
+                    <p>
+                        They possess many names, but among those that have resonated most throughout dense history are The Eternals and Lords of Blood. However, there is only one name lately spat from mouths distilling gin, from mouths where breath betrays the rot of teeth, and even from refined mouths sipping tea and smoking fine tobacco; a name stripped of nobility, vulgar, hiding no insult, tasting of iron and contempt: vampire.
+                    </p>
+                    <p>
+                        They are aristocrats of pale, grayish skin, where their body temperature and lack of pulse are the clear answer that the breath of life abandoned them who knows how long ago. Their mockery of death has made them self-proclaimed heirs to a divine right, but their crown is the weight of centuries that have devoured their capacity for wonder.
+                    </p>
+                    <p>
+                        Their power games and refined cruelty are, in reality, a drowned attempt to awaken a heart that stopped beating eras ago and to stimulate withered nerves. The erosion of time is reflected in their pupils as a vitreous abyss growing with each decade: a void consuming light and humanity with a hunger nothing can sate.
+                    </p>
+                    <p>
+                        They rule from the shadows out of frigid, calculating necessity, pulling the strings of nations as if the world were their chessboard. They have erected their empires upon the blood of the earth with the patience of those in no rush to die, cultivating and accumulating power, wealth, and secrets. They know well that peace is but a byproduct of the terror they have sown in the world's foundations.
+                    </p>
+                    <p className="italic text-gray-400 border-l-2 border-red-900/50 pl-4">
+                        They say the First Cursed was one of them: a rotten root, the world's first stain. And although all that is known of him is based on fragmented legends devoured by time, one must not forget that legends are not lullabies; they are echoes of a truth refusing to die, still whispering his name.
+                    </p>
+                </div>
+            )}
 
-            {/* CAZADORES */}
+            {/* ========================================== */}
+            {/* CAZADORES (TEXTO EXTENDIDO) */}
+            {/* ========================================== */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 II. {language === "es" ? "Los Cazadores" : "The Hunters"}
             </h3>
-            <p>
-                {language === "es"
-                 ? "Maestros del acero y la pólvora. Fueron hombres que vendieron su alma por la fuerza de matar y se volvieron adictos a la cacería, perdiendo algo valioso con cada presa que cae bajo sus manos."
-                 : "Masters of steel and gunpowder. They were men who sold their souls for the strength to kill and became addicted to the hunt, losing something valuable with every prey that falls beneath their hands."}
-            </p>
-            <p>
-                {language === "es"
-                 ? "Su sed de sangre rivaliza con la de los monstruos que persiguen."
-                 : "Their bloodlust rivals that of the monsters they pursue."}
-            </p>
 
+            {language === "es" ? (
+                <div className="space-y-4">
+                    <p>
+                        Maestros del acero frío y la pólvora: hombres que miraron demasiado tiempo al abismo hasta que el abismo les devolvió la mirada echando raíces en sus propias venas. Vendieron su alma por la fuerza para matar, contrayendo una adicción febril: la cacería. Su sed de sangre rivaliza con la de los monstruos que persiguen.
+                    </p>
+                    <p>
+                        La destreza que poseen no reside solamente en la fuerza bruta, ni su habilidad casi divina con todo tipo de armas, sino en una inteligencia fría y calculadora. Son eruditos de lo macabro, con un conocimiento enciclopédico de anatomía y necropsia de las criaturas que acechan este mundo; incluso de aquellas que el resto ni siquiera ha visto en sus pesadillas más oscuras. Si bien su saber de la botánica y alquimia no es tan vasto, saben perfectamente que, en las manos correctas, cada recurso tiene un potencial y es útil.
+                    </p>
+                    <p>
+                        En combate, su visión táctica es sobrehumana. Se adaptan e improvisan con facilidad, por lo que tomarlos por sorpresa es sumamente difícil; guiados por un instinto que roza lo sobrenatural, cada paso que dan está milimétricamente evaluado. Asesinos a sueldo que no discriminan la naturaleza de su objetivo: mientras haya sangre que derramar y una buena paga, el contrato está sellado.
+                    </p>
+                    <p>
+                        Nadie sabe de dónde brotan tales atributos. Cuando los ven pasar con pasos firmes y pesados, y una mirada endurecida, en las calles, solo existen los rumores y mitos que susurran sobre rituales prohibidos, drogas o experimentos viles.
+                    </p>
+                    <p>
+                        Depredadores solitarios con una especialización obsesiva, poseen un ritual de ejecución que cada uno ha refinado como una extensión de su alma marchita: la elegancia de una garganta seccionada, o el horror de una bestia desgarrada sin control. Demasiado distintos, demasiado deformados.
+                    </p>
+                    <p className="text-red-200 border-t border-red-900/30 pt-4">
+                        Sin embargo, hay un temor que une a su estirpe, un horror más profundo que la misma muerte: el llamado de la sangre. Cuando un Cazador no regresa de una cacería, los suyos no lloran su cadáver. Saben que la matanza es un parásito que se alberga en la médula; es como una vil garrapata que clava sin piedad su hipóstomo mientras sus garras abrazan fervientemente sus vértebras, exigiendo tributos cada vez más brutales y frecuentes. Así sucumbiendo y extinguiendo su humanidad por completo quedando solo el hambre.
+                    </p>
+                </div>
+            ) : (
+                <div className="space-y-4">
+                    <p>
+                        Masters of cold steel and gunpowder: men who stared too long into the abyss until the abyss stared back, taking root in their very veins. They sold their souls for the strength to kill, contracting a feverish addiction: the hunt. Their bloodlust rivals that of the monsters they pursue.
+                    </p>
+                    <p>
+                        The dexterity they possess lies not only in brute force, nor in their almost divine skill with all manner of weapons, but in a cold and calculating intelligence. They are scholars of the macabre, with an encyclopedic knowledge of the anatomy and necropsy of the creatures stalking this world; even those the rest have not seen in their darkest nightmares. While their knowledge of botany and alchemy is not as vast, they know perfectly well that, in the right hands, every resource has potential and utility.
+                    </p>
+                    <p>
+                        In combat, their tactical vision is superhuman. They adapt and improvise with ease, making them extremely difficult to catch by surprise; guided by an instinct bordering on the supernatural, every step they take is calculated to the millimeter. Hired killers who do not discriminate regarding the nature of their target: as long as there is blood to spill and good pay, the contract is sealed.
+                    </p>
+                    <p>
+                        No one knows where such attributes spring from. When they are seen passing through the streets with heavy, firm steps and hardened gazes, there are only rumors and myths whispering of forbidden rituals, drugs, or vile experiments.
+                    </p>
+                    <p>
+                        Solitary predators with obsessive specialization, they possess an execution ritual that each has refined as an extension of their withered soul: the elegance of a severed throat, or the horror of a beast torn apart without control. Too distinct, too deformed.
+                    </p>
+                    <p className="text-red-200 border-t border-red-900/30 pt-4">
+                        However, there is a fear that unites their lineage, a horror deeper than death itself: the call of the blood. When a Hunter does not return from a hunt, his kin do not mourn his corpse. They know the slaughter is a parasite harbored in the marrow; like a vile tick driving its hypostome without mercy while its claws fervently embrace their vertebrae, demanding ever more brutal and frequent tributes. Thus succumbing and extinguishing their humanity completely, leaving only the hunger.
+                    </p>
+                </div>
+            )}
+
+            {/* ========================================== */}
+            {/* OTRAS FACCIONES (TEXTO BREVE ORIGINAL) */}
+            {/* ========================================== */}
+            
             {/* BRUJAS */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 III. {language === "es" ? "Las Brujas" : "The Witches"}
