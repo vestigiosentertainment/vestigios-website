@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -9,7 +8,7 @@ import { Calendar, User, ArrowRight, Feather } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // ARTÍCULO 1 (DESTACADO - NUEVO)
+  // --- ARTÍCULO DESTACADO (Meliza Castillo) ---
   const featuredArticle = {
     title: language === "es" 
         ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" 
@@ -24,15 +23,14 @@ export default function ArticlesPage() {
     href: "/legal/discover/articles/interview-meliza-castillo" 
   }
 
-  // LISTA DE ARTÍCULOS SECUNDARIOS
-  // Movemos el antiguo destacado (Lore) aquí, y bajamos los demás.
-  // Mantenemos 3 para una fila perfecta en Desktop.
+  // --- LISTA COMPLETA DE ARTÍCULOS ---
+  // Incluye: Lore Debut (antiguo destacado), Jonathan, Manifiesto, Diseño y Arte.
   const articles = [
     {
       id: 0,
       title: language === "es" 
-          ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" 
-          : "Awakening History: Meliza Castillo Presents the Official Lore",
+          ? "El despertar de la historia: Presentación del Lore Oficial" 
+          : "Awakening History: Official Lore Presentation",
       excerpt: language === "es" 
           ? "El silencio se ha roto. Hoy debuta el registro oficial del universo. Entra y descubre el origen de la Fractura." 
           : "The silence has been broken. Today marks the debut of the official universe record. Enter and discover the origin of the Fracture.",
@@ -65,6 +63,30 @@ export default function ArticlesPage() {
         image: "/portada-home.jpg",
         category: language === "es" ? "Manifiesto" : "Manifesto",
         href: "/legal/discover/articles/manifesto"
+    },
+    {
+      id: 3,
+      title: language === "es" ? "Cómo se construye un bloque: La historia guía al juego" : "How a Block is Built: Story Guides the Game",
+      excerpt: language === "es"
+        ? "En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica."
+        : "In Vestigios, we don't design arbitrary mechanics. Each expansion is a historical wound.",
+      date: "2025-12-30",
+      author: "Lead Designer",
+      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg", 
+      category: "Dev Diary",
+      href: "/legal/discover/articles/design-philosophy"
+    },
+    {
+      id: 4,
+      title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
+      excerpt: language === "es"
+        ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
+        : "In many games, art is decoration. In Vestigios, it is a second stolen from a story.",
+      date: "2025-12-28",
+      author: "Art Director",
+      image: "/03.jpg", 
+      category: "Art & Lore",
+      href: "/legal/discover/articles/art-narrative" 
     }
   ]
 
@@ -87,7 +109,7 @@ export default function ArticlesPage() {
           <div className="h-0.5 w-full bg-gradient-to-r from-red-900 via-red-900/20 to-transparent opacity-50" />
         </div>
 
-        {/* DESTACADO */}
+        {/* DESTACADO (MELIZA) */}
         <div className="relative h-[400px] md:h-[500px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
             <Image
                 src={featuredArticle.image}
@@ -131,7 +153,7 @@ export default function ArticlesPage() {
             </div>
         </div>
 
-        {/* GRID SECUNDARIA */}
+        {/* GRID SECUNDARIA (TODOS LOS ARTÍCULOS) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <article 
