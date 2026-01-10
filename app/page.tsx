@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -18,31 +17,33 @@ export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // Mantenemos el enlace al ARTÍCULO de noticia (la presentación de Meliza).
+  // ITEM 1: La nueva Entrevista a Meliza Castillo
+  // ITEM 2: El Debut del Lore (Anuncio)
+  // ITEM 3: Entrevista Jonathan Garrido
   const latestNews = [
+    {
+      id: 0,
+      tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+      title: language === "es" ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" : "Meliza Castillo: «Horror is not death, but what you become»",
+      date: "2026-01-10",
+      image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
+      href: "/legal/discover/articles/interview-meliza-castillo" // Enlace a la nueva entrevista
+    },
     {
       id: 1,
       tag: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
-      title: language === "es" ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" : "Awakening History: Meliza Castillo Presents the Official Lore",
+      title: language === "es" ? "El despertar de la historia: Presentación del Lore Oficial" : "Awakening History: Official Lore Presentation",
       date: "2026-01-04",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/lore-debut" // Lleva al artículo de anuncio
+      href: "/legal/discover/articles/lore-debut" // Enlace al anuncio
     },
     {
       id: 2,
-      tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+      tag: language === "es" ? "Dev Diary" : "Dev Diary",
       title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
       date: "2026-01-02",
       image: "/respectful-handshake-dark-atmosphere-gothic.jpg",
       href: "/legal/discover/articles/interview-jonathan-garrido"
-    },
-    {
-      id: 3,
-      tag: language === "es" ? "Manifiesto" : "Manifesto",
-      title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
-      date: "2025-12-31",
-      image: "/portada-home.jpg",
-      href: "/legal/discover/articles/manifesto"
     }
   ]
 
@@ -115,7 +116,7 @@ export default function HomePage() {
                             src={news.image} 
                             alt={news.title} 
                             fill 
-                            className="object-cover group-hover:scale-110 transition-transform duration-700"
+                            className="object-cover object-top group-hover:scale-110 transition-transform duration-700"
                         />
                         <div className="absolute top-4 left-4 bg-black/80 px-3 py-1 text-xs font-mono text-white border border-white/10 uppercase tracking-wider">
                             {news.tag}
@@ -140,7 +141,7 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. SECCIÓN: LORE / GÉNESIS (CORREGIDO) --- */}
+      {/* --- 3. SECCIÓN: LORE / GÉNESIS --- */}
       <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
@@ -157,7 +158,7 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* BOTÓN CORREGIDO: Ahora apunta a /lore/genesis */}
+            {/* Solo el Botón */}
             <div className="flex justify-center">
                 <Link 
                     href="/lore/genesis" 
@@ -210,11 +211,11 @@ export default function HomePage() {
             <div className="order-1 md:order-2 flex justify-center relative group">
                  <div className="absolute inset-0 bg-red-600/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                  <Image
-                    src="/dark-gothic-trading-card-game-cards-blood-and-shad.jpg"
-                    alt="Card Preview"
-                    width={400}
-                    height={600}
-                    className="object-contain relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-1"
+                   src="/dark-gothic-trading-card-game-cards-blood-and-shad.jpg"
+                   alt="Card Preview"
+                   width={400}
+                   height={600}
+                   className="object-contain relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-1"
                  />
             </div>
 
