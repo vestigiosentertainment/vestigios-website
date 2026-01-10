@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useLanguage } from "@/lib/language-context"
@@ -8,25 +9,41 @@ import { Calendar, User, ArrowRight, Feather } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // ARTÍCULO 1 (DESTACADO)
+  // ARTÍCULO 1 (DESTACADO - NUEVO)
   const featuredArticle = {
     title: language === "es" 
-        ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" 
-        : "Awakening History: Meliza Castillo Presents the Official Lore",
+        ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" 
+        : "Meliza Castillo: «Horror is not death, but what you become»",
     excerpt: language === "es" 
-        ? "El silencio se ha roto. Hoy debuta el registro oficial del universo de Vestigios. Nuestra Directora Narrativa abre los archivos prohibidos sobre el Génesis. Entra y descubre el origen." 
-        : "The silence has been broken. Today marks the debut of the official record of the Vestigios universe. Our Narrative Director opens the forbidden archives regarding Genesis. Enter and discover the origin.",
-    date: "2026-01-04", 
-    author: "Meliza Castillo",
+        ? "Una conversación profunda sobre la filosofía detrás del terror en Vestigios. Nuestra Directora Narrativa explica por qué buscamos incomodar el alma en lugar de solo asustar los ojos." 
+        : "A deep conversation about the philosophy behind the horror in Vestigios. Our Narrative Director explains why we seek to unsettling the soul rather than just scaring the eyes.",
+    date: "2026-01-10", 
+    author: "Editorial",
     image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
-    category: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
-    href: "/legal/discover/articles/lore-debut" 
+    category: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+    href: "/legal/discover/articles/interview-meliza-castillo" 
   }
 
   // LISTA DE ARTÍCULOS SECUNDARIOS
+  // Movemos el antiguo destacado (Lore) aquí, y bajamos los demás.
+  // Mantenemos 3 para una fila perfecta en Desktop.
   const articles = [
     {
       id: 0,
+      title: language === "es" 
+          ? "El despertar de la historia: Meliza Castillo presenta el Lore Oficial" 
+          : "Awakening History: Meliza Castillo Presents the Official Lore",
+      excerpt: language === "es" 
+          ? "El silencio se ha roto. Hoy debuta el registro oficial del universo. Entra y descubre el origen de la Fractura." 
+          : "The silence has been broken. Today marks the debut of the official universe record. Enter and discover the origin of the Fracture.",
+      date: "2026-01-04",
+      author: "Meliza Castillo",
+      image: "/ancient-book-open-with-mystical-light-dark-library.jpg", 
+      category: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
+      href: "/legal/discover/articles/lore-debut"
+    },
+    {
+      id: 1,
       title: language === "es" ? "Diseñando el Abismo: Entrevista con Jonathan Garrido" : "Designing the Abyss: Interview with Jonathan Garrido",
       excerpt: language === "es" 
           ? "Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
@@ -38,7 +55,7 @@ export default function ArticlesPage() {
       href: "/legal/discover/articles/interview-jonathan-garrido"
     },
     {
-        id: 1,
+        id: 2,
         title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
         excerpt: language === "es" 
             ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
@@ -48,30 +65,6 @@ export default function ArticlesPage() {
         image: "/portada-home.jpg",
         category: language === "es" ? "Manifiesto" : "Manifesto",
         href: "/legal/discover/articles/manifesto"
-    },
-    {
-      id: 2,
-      title: language === "es" ? "Cómo se construye un bloque: La historia guía al juego" : "How a Block is Built: Story Guides the Game",
-      excerpt: language === "es"
-        ? "En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica."
-        : "In Vestigios, we don't design arbitrary mechanics. Each expansion is a historical wound.",
-      date: "2025-12-30",
-      author: "Lead Designer",
-      image: "/chess-pieces-on-board-strategic-thinking-dark-goth.jpg", 
-      category: "Dev Diary",
-      href: "/legal/discover/articles/design-philosophy"
-    },
-    {
-      id: 3,
-      title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
-      excerpt: language === "es"
-        ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
-        : "In many games, art is decoration. In Vestigios, it is a second stolen from a story.",
-      date: "2025-12-28",
-      author: "Art Director",
-      image: "/03.jpg", 
-      category: "Art & Lore",
-      href: "/legal/discover/articles/art-narrative" 
     }
   ]
 
@@ -101,7 +94,6 @@ export default function ArticlesPage() {
                 alt="Featured Article"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                // AQUI AGREGAMOS object-top PARA EL DESTACADO TAMBIÉN
                 className="object-cover object-top transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -156,8 +148,6 @@ export default function ArticlesPage() {
                     alt={article.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    // --- AQUÍ ESTÁ EL CAMBIO CLAVE ---
-                    // Agregamos 'object-top' para que enfoque la parte superior (las caras)
                     className="object-cover object-top transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                     />
                 </div>
