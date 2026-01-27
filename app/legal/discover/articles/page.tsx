@@ -18,7 +18,7 @@ export default function ArticlesPage() {
         : "The founder of Vestigios breaks the silence. A manifesto on player justice, necessary darkness, and why thinking must be worth more than paying.",
     date: "2026-01-27", 
     author: "Editorial",
-    image: "/dark-throne-room-concept.jpg", // Asegúrate de que esta imagen imponga respeto
+    image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", // Imagen actualizada
     category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
     href: "/legal/discover/articles/interview-jonathan-torres" 
   }
