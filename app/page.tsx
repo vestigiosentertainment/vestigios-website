@@ -26,7 +26,7 @@ export default function HomePage() {
       tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
       title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
       date: "2026-01-27",
-      image: "/dark-throne-room-concept.jpg", // Asegúrate de que esta imagen coincida con la usada en ArticlesPage
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", // Imagen actualizada
       href: "/legal/discover/articles/interview-jonathan-torres" 
     },
     {
