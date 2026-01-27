@@ -17,33 +17,33 @@ export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // ITEM 1: La nueva Entrevista a Meliza Castillo
-  // ITEM 2: El Debut del Lore (Anuncio)
-  // ITEM 3: Entrevista Jonathan Garrido
+  // ITEM 1: Jonathan Torres (Fundador) - NUEVO DESTACADO
+  // ITEM 2: Meliza Castillo (Narrativa)
+  // ITEM 3: Lanzamiento del Lore
   const latestNews = [
     {
       id: 0,
+      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      date: "2026-01-27",
+      image: "/dark-throne-room-concept.jpg", // Asegúrate de que esta imagen coincida con la usada en ArticlesPage
+      href: "/legal/discover/articles/interview-jonathan-torres" 
+    },
+    {
+      id: 1,
       tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
       title: language === "es" ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" : "Meliza Castillo: «Horror is not death, but what you become»",
       date: "2026-01-10",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/interview-meliza-castillo" // Enlace a la nueva entrevista
+      href: "/legal/discover/articles/interview-meliza-castillo"
     },
     {
-      id: 1,
+      id: 2,
       tag: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
       title: language === "es" ? "El despertar de la historia: Presentación del Lore Oficial" : "Awakening History: Official Lore Presentation",
       date: "2026-01-04",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/lore-debut" // Enlace al anuncio
-    },
-    {
-      id: 2,
-      tag: language === "es" ? "Dev Diary" : "Dev Diary",
-      title: language === "es" ? "Diseñando el Abismo: Entrevista con J. Garrido" : "Designing the Abyss: Interview with J. Garrido",
-      date: "2026-01-02",
-      image: "/respectful-handshake-dark-atmosphere-gothic.jpg",
-      href: "/legal/discover/articles/interview-jonathan-garrido"
+      href: "/legal/discover/articles/lore-debut"
     }
   ]
 
@@ -126,7 +126,7 @@ export default function HomePage() {
                         <div className="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
                             <Calendar className="w-3 h-3" /> {news.date}
                         </div>
-                        <h3 className="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors leading-tight">
+                        <h3 className="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors leading-tight text-balance">
                             {news.title}
                         </h3>
                     </div>
