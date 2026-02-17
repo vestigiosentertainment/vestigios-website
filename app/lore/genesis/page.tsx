@@ -209,23 +209,47 @@ export default function GenesisLorePage() {
             )}
 
             {/* ========================================== */}
-            {/* OTRAS FACCIONES (TEXTO BREVE ORIGINAL) */}
+            {/* BRUJAS (TEXTO EXTENDIDO) */}
             {/* ========================================== */}
-            
-            {/* BRUJAS */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
                 III. {language === "es" ? "Las Brujas" : "The Witches"}
             </h3>
-            <p>
-                {language === "es"
-                 ? "Comerciantes de hechizos, favores oscuros y traiciones. Sus servicios son comprados por el mejor postor."
-                 : "Merchants of spells, dark favors, and betrayal. Their services are bought by the highest bidder."}
-            </p>
-            <blockquote className="border-l-red-900 text-gray-400 italic bg-white/5 p-4 my-6 rounded-r-lg">
-                {language === "es"
-                 ? "Nunca sabrás de qué lado está su lealtad, pero de lo que sí puedes estar seguro es de que sus caprichos siempre tendrán prioridad."
-                 : "You will never know where their loyalty lies, but of one thing you can be certain: their whims will always take priority."}
-            </blockquote>
+            
+            {language === "es" ? (
+                <div className="space-y-4">
+                    <p>
+                        Su poder no es un don, sino una mutilación consentida. El mito susurra pactos con demonios, pero la verdad es más cruda y visceral: cada bruja debe entregarse en un intercambio equivalente de agonía y esencia. No hay magia en sus manos que no haya sido comprada con un tributo de su propia carne. Por ello, sus servicios jamás se compran con fe.
+                    </p>
+                    <p>
+                        Negociar con ellas es caminar descalzo sobre el filo de una navaja tan afilada que te desangra por el simple hecho de sostenerte en pie. El precio de su ayuda parece siempre devorar más de lo que el desgraciado pretendía ofrecer. No buscan justicia ni equilibrio; solo saciar una ambición rancia y caprichos que nacen de los rincones más infectados de su deseo. Su intelecto no es solo una biblioteca, sino también un compendio de secretos capaces de derribar imperios o condenar un alma antes de que el corazón deje de latir.
+                    </p>
+                    <p>
+                        Si el origen de su poder es perturbador, la comunión con su familiar es una aberración biológica. No poseen mascotas, sino anclas de carne. En un acto de metamorfosis grotesca, el cuerpo de la bruja se deshace como cera bajo el fuego para recomponerse en la forma de su criatura vinculada. Es un espectáculo donde los huesos crujen y se observa cómo cada capa de tejido se forma hasta que la piel y pelaje lo cubren todo; una coreografía de horror donde la mujer se disuelve y, de sus restos, renace como bestia.
+                    </p>
+                    <p className="text-red-200 border-t border-red-900/30 pt-4">
+                        Se mueven con la misma elegancia entre radiantes palacios y callejones donde la oscuridad tiene dientes. En los salones de la alta alcurnia, su presencia es una total hipocresía: son una blasfemia silenciosa, un secreto a voces que nadie se atreve a nombrar en voz alta mientras se ajustan el corsé y fuman en sus pipas caras. Ocultas bajo la apariencia de consejeras, sirven a reyes y príncipes, recordándoles que el destino no ha dejado de ser una moneda caprichosa.
+                    </p>
+                </div>
+            ) : (
+                <div className="space-y-4">
+                    <p>
+                        Their power is not a gift, but a consented mutilation. Myth whispers of pacts with demons, but the truth is raw and visceral: each witch must surrender herself in an equivalent exchange of agony and essence. There is no magic in their hands that hasn't been bought with a tribute of their own flesh. Therefore, their services are never bought with faith.
+                    </p>
+                    <p>
+                        Negotiating with them is like walking barefoot on the edge of a razor so sharp that it bleeds you just by standing. The price of their help always seems to devour more than the wretched soul intended to offer. They do not seek justice or balance; only to satiate a rancid ambition and whims born from the most infected corners of their desire. Their intellect is not just a library, but also a compendium of secrets capable of tearing down empires or condemning a soul before the heart stops beating.
+                    </p>
+                    <p>
+                        If the origin of their power is disturbing, the communion with their familiar is a biological aberration. They do not possess pets, but anchors of flesh. In an act of grotesque metamorphosis, the witch's body melts like wax under fire to recompose itself into the shape of her linked creature. It is a spectacle where bones crack and one watches as each layer of tissue forms until skin and fur cover everything; a choreography of horror where the woman dissolves and, from her remains, is reborn as a beast.
+                    </p>
+                    <p className="text-red-200 border-t border-red-900/30 pt-4">
+                        They move with the same elegance between radiant palaces and alleys where the darkness has teeth. In the halls of high society, their presence is sheer hypocrisy: they are a silent blasphemy, an open secret no one dares name aloud while adjusting their corsets and smoking expensive pipes. Hidden under the guise of advisors, they serve kings and princes, reminding them that destiny has never ceased to be a capricious coin.
+                    </p>
+                </div>
+            )}
+
+            {/* ========================================== */}
+            {/* OTRAS FACCIONES (TEXTO BREVE ORIGINAL) */}
+            {/* ========================================== */}
 
             {/* ZOMBIES */}
             <h3 className="text-red-500 font-sans text-sm font-bold uppercase tracking-[0.2em] border-b border-red-900/30 pb-2 mt-12 mb-4">
