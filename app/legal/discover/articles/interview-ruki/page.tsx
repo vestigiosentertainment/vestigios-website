@@ -1,0 +1,1 @@
+interview-ruki/page.tsx
