@@ -8,26 +8,40 @@ import { Calendar, User, ArrowRight, Feather } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // --- ARTÍCULO DESTACADO DE LA SEMANA (JONATHAN TORRES) ---
+  // --- ARTÍCULO DESTACADO DE LA SEMANA (RUKI) ---
   const featuredArticle = {
     title: language === "es" 
-        ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" 
-        : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+        ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" 
+        : "Ruki: «We don't create cards to define a meta, we create a world»",
     excerpt: language === "es" 
-        ? "El fundador de Vestigios rompe el silencio. Un manifiesto sobre la justicia al jugador, la oscuridad necesaria y por qué pensar debe valer más que pagar." 
-        : "The founder of Vestigios breaks the silence. A manifesto on player justice, necessary darkness, and why thinking must be worth more than paying.",
-    date: "2026-01-27", 
+        ? "Nuestro Director de Diseño y Balance habla sobre llevar el juego al límite, el poder de la comunidad y la evolución del meta." 
+        : "Our Director of Design and Balance talks about pushing the game to the limit, community power, and the evolution of the meta.",
+    date: "2026-03-03", 
     author: "Editorial",
-    image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", // Imagen actualizada
-    category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-    href: "/legal/discover/articles/interview-jonathan-torres" 
+    image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
+    category: language === "es" ? "Diseño y Balance" : "Design & Balance",
+    href: "/legal/discover/articles/interview-ruki" 
   }
 
   // --- LISTA COMPLETA DE ARTÍCULOS ---
-  // Meliza pasa a ser el primero de la lista normal
+  // Jonathan pasa a ser el primero de la lista normal
   const articles = [
     {
       id: 0, 
+      title: language === "es" 
+        ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" 
+        : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      excerpt: language === "es" 
+        ? "El fundador de Vestigios rompe el silencio. Un manifiesto sobre la justicia al jugador, la oscuridad necesaria y por qué pensar debe valer más que pagar." 
+        : "The founder of Vestigios breaks the silence. A manifesto on player justice, necessary darkness, and why thinking must be worth more than paying.",
+      date: "2026-01-27", 
+      author: "Editorial",
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
+      category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+      href: "/legal/discover/articles/interview-jonathan-torres" 
+    },
+    {
+      id: 1, 
       title: language === "es" 
         ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" 
         : "Meliza Castillo: «Horror is not death, but what you become»",
@@ -41,7 +55,7 @@ export default function ArticlesPage() {
       href: "/legal/discover/articles/interview-meliza-castillo"
     },
     {
-      id: 1,
+      id: 2,
       title: language === "es" 
           ? "El despertar de la historia: Presentación del Lore Oficial" 
           : "Awakening History: Official Lore Presentation",
@@ -55,7 +69,7 @@ export default function ArticlesPage() {
       href: "/legal/discover/articles/lore-debut"
     },
     {
-      id: 2,
+      id: 3,
       title: language === "es" ? "Diseñando el Abismo: Entrevista con Jonathan Garrido" : "Designing the Abyss: Interview with Jonathan Garrido",
       excerpt: language === "es" 
           ? "Nuestro Director de Juego habla sobre el combate sin retorno, el balance del meta y la ambiciosa transición hacia el MMO." 
@@ -67,7 +81,7 @@ export default function ArticlesPage() {
       href: "/legal/discover/articles/interview-jonathan-garrido"
     },
     {
-        id: 3,
+        id: 4,
         title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
         excerpt: language === "es" 
             ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
@@ -79,7 +93,7 @@ export default function ArticlesPage() {
         href: "/legal/discover/articles/manifesto"
     },
     {
-      id: 4,
+      id: 5,
       title: language === "es" ? "Cómo se construye un bloque: La historia guía al juego" : "How a Block is Built: Story Guides the Game",
       excerpt: language === "es"
         ? "En Vestigios, no diseñamos mecánicas arbitrarias. Cada expansión es una herida histórica."
@@ -91,7 +105,7 @@ export default function ArticlesPage() {
       href: "/legal/discover/articles/design-philosophy"
     },
     {
-      id: 5,
+      id: 6,
       title: language === "es" ? "El arte como narrativa: Cada carta es una escena" : "Art as Narrative: Every Card is a Scene",
       excerpt: language === "es"
         ? "En muchos juegos, el arte es decoración. En Vestigios, es un segundo robado a una historia."
@@ -123,7 +137,7 @@ export default function ArticlesPage() {
           <div className="h-0.5 w-full bg-gradient-to-r from-red-900 via-red-900/20 to-transparent opacity-50" />
         </div>
 
-        {/* DESTACADO (FUNDADOR) */}
+        {/* DESTACADO (RUKI) */}
         <div className="relative h-[400px] md:h-[500px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
             <Image
                 src={featuredArticle.image}
@@ -162,7 +176,7 @@ export default function ArticlesPage() {
                   href={featuredArticle.href}
                   className="inline-flex items-center gap-3 text-white font-bold tracking-widest uppercase text-xs md:text-sm border border-red-500/50 bg-red-900/20 px-6 py-3 hover:bg-red-900 hover:border-red-500 transition-all shadow-lg"
                 >
-                    {language === "es" ? "Leer Manifiesto" : "Read Manifesto"} <Feather className="w-4 h-4" />
+                    {language === "es" ? "Leer Entrevista" : "Read Interview"} <Feather className="w-4 h-4" />
                 </Link>
             </div>
         </div>
