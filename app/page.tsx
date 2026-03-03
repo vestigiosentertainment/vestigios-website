@@ -17,33 +17,33 @@ export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // ITEM 1: Jonathan Torres (Fundador) - NUEVO DESTACADO
-  // ITEM 2: Meliza Castillo (Narrativa)
-  // ITEM 3: Lanzamiento del Lore
+  // ITEM 1: Ruki (Diseño y Balance) - NUEVO DESTACADO
+  // ITEM 2: Jonathan Torres (Fundador)
+  // ITEM 3: Meliza Castillo (Narrativa)
   const latestNews = [
     {
       id: 0,
-      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
-      date: "2026-01-27",
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", // Imagen actualizada
-      href: "/legal/discover/articles/interview-jonathan-torres" 
+      tag: language === "es" ? "Diseño y Balance" : "Design & Balance",
+      title: language === "es" ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" : "Ruki: «We don't create cards to define a meta, we create a world»",
+      date: "2026-03-03",
+      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", // Puedes cambiar esta imagen por una específica de Ruki si tienes
+      href: "/legal/discover/articles/interview-ruki" 
     },
     {
       id: 1,
-      tag: language === "es" ? "Entrevista Exclusiva" : "Exclusive Interview",
+      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      date: "2026-01-27",
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
+      href: "/legal/discover/articles/interview-jonathan-torres" 
+    },
+    {
+      id: 2,
+      tag: language === "es" ? "Entrevista Narrativa" : "Narrative Interview",
       title: language === "es" ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" : "Meliza Castillo: «Horror is not death, but what you become»",
       date: "2026-01-10",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
       href: "/legal/discover/articles/interview-meliza-castillo"
-    },
-    {
-      id: 2,
-      tag: language === "es" ? "Lanzamiento de Lore" : "Lore Debut",
-      title: language === "es" ? "El despertar de la historia: Presentación del Lore Oficial" : "Awakening History: Official Lore Presentation",
-      date: "2026-01-04",
-      image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/lore-debut"
     }
   ]
 
