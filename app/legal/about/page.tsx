@@ -54,8 +54,8 @@ export default function AboutPage() {
       name: "Álvaro Quezada",
       role: language === "es" ? "Director Comercial y Estrategia" : "Commercial & Strategy Director",
       desc: language === "es" 
-        ? "Ingeniero Comercial responsable de la viabilidad financiera, modelo de negocios y rentabilidad. Asegura que la visión del universo Vestigios se materialice, expanda y prospere en el mercado." 
-        : "Responsible for financial viability, business modeling, and studio profitability. Ensures the vision of the Vestigios universe materializes, expands, and thrives in the market.",
+        ? "Ingeniero Civil Industrial responsable de la viabilidad financiera, modelo de negocios y rentabilidad. Asegura que la visión del universo Vestigios se materialice, expanda y prospere en el mercado." 
+        : "Industrial Civil Engineer responsible for financial viability, business modeling, and studio profitability. Ensures the vision of the Vestigios universe materializes, expands, and thrives in the market.",
       icon: <TrendingUp className="w-6 h-6 text-emerald-500" />
     }
   ]
