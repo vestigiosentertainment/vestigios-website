@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context"
 import Link from "next/link"
-import { ArrowLeft, Crown, Palette, Gamepad2, Feather, Scale } from "lucide-react"
+import { ArrowLeft, Crown, Palette, Gamepad2, Feather, Scale, TrendingUp } from "lucide-react"
 
 export default function AboutPage() {
   const { language } = useLanguage()
@@ -49,6 +49,14 @@ export default function AboutPage() {
         ? "Responsable del balance del juego, supervisión de testers, control de calidad, ajustes de cartas, metajuego y evolución del diseño en futuras expansiones y proyectos." 
         : "Oversees game balance, testing teams, card tuning, metagame evolution and the long-term health of all future Vestigios games.",
       icon: <Scale className="w-6 h-6 text-green-500" />
+    },
+    {
+      name: "Álvaro Quezada",
+      role: language === "es" ? "Director Comercial y Estrategia" : "Commercial & Strategy Director",
+      desc: language === "es" 
+        ? "Ingeniero Comercial responsable de la viabilidad financiera, modelo de negocios y rentabilidad. Asegura que la visión del universo Vestigios se materialice, expanda y prospere en el mercado." 
+        : "Responsible for financial viability, business modeling, and studio profitability. Ensures the vision of the Vestigios universe materializes, expands, and thrives in the market.",
+      icon: <TrendingUp className="w-6 h-6 text-emerald-500" />
     }
   ]
 
