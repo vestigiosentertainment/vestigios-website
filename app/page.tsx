@@ -10,7 +10,8 @@ import {
   Shield, 
   Scroll, 
   Image as ImageIcon, 
-  Beaker
+  Beaker,
+  Play // Agregamos este icono opcional si deseas usarlo en el futuro
 } from "lucide-react"
 
 export default function HomePage() {
@@ -26,7 +27,7 @@ export default function HomePage() {
       tag: language === "es" ? "Diseño y Balance" : "Design & Balance",
       title: language === "es" ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" : "Ruki: «We don't create cards to define a meta, we create a world»",
       date: "2026-03-03",
-      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", // Puedes cambiar esta imagen por una específica de Ruki si tienes
+      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
       href: "/legal/discover/articles/interview-ruki" 
     },
     {
@@ -141,7 +142,36 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. SECCIÓN: LORE / GÉNESIS --- */}
+      {/* --- 3. SECCIÓN NUEVA: TRAILER / VIDEO --- */}
+      <section className="py-24 px-4 bg-zinc-950/50 border-t border-white/10 relative overflow-hidden">
+        {/* Resplandor rojo sutil de fondo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-12">
+                <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
+                    {language === "es" ? "Universo Vestigios" : "Vestigios Universe"}
+                </span>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
+                    {language === "es" ? "Descubre la Oscuridad" : "Discover the Darkness"}
+                </h2>
+                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
+            </div>
+
+            {/* Contenedor del Iframe de YouTube (Relación de aspecto 16:9) */}
+            <div className="max-w-5xl mx-auto relative w-full aspect-video rounded-sm overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(220,38,38,0.15)] group">
+                <iframe 
+                    src="https://www.youtube.com/embed/77APjIIEGmc?si=f29VTMOA4qNmX21G&rel=0&modestbranding=1" 
+                    title="Vestigios — Official Universe Introduction"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    className="absolute top-0 left-0 w-full h-full grayscale-[20%] transition-all duration-700 group-hover:grayscale-0"
+                ></iframe>
+            </div>
+        </div>
+      </section>
+
+      {/* --- 4. SECCIÓN: LORE / GÉNESIS --- */}
       <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
@@ -171,7 +201,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 4. PROJECT SHOWCASE --- */}
+      {/* --- 5. PROJECT SHOWCASE --- */}
       <section className="py-32 bg-zinc-950 relative overflow-hidden border-t border-white/5">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
         
@@ -222,7 +252,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 5. QUICK LINKS --- */}
+      {/* --- 6. QUICK LINKS --- */}
       <section className="py-24 px-4 border-t border-white/5">
         <div className="max-w-7xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-white mb-4">
