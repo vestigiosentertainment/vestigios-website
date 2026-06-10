@@ -11,16 +11,14 @@ import {
   Scroll, 
   Image as ImageIcon, 
   Beaker,
-  Play // Agregamos este icono opcional si deseas usarlo en el futuro
+  Play,
+  Layers // <-- Ícono nuevo agregado para la galería
 } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
 
   // NOTICIAS ACTUALIZADAS
-  // ITEM 1: Ruki (Diseño y Balance) - NUEVO DESTACADO
-  // ITEM 2: Jonathan Torres (Fundador)
-  // ITEM 3: Meliza Castillo (Narrativa)
   const latestNews = [
     {
       id: 0,
@@ -142,9 +140,8 @@ export default function HomePage() {
          </div>
       </section>
 
-      {/* --- 3. SECCIÓN NUEVA: TRAILER / VIDEO --- */}
+      {/* --- 3. SECCIÓN: TRAILER / VIDEO --- */}
       <section className="py-24 px-4 bg-zinc-950/50 border-t border-white/10 relative overflow-hidden">
-        {/* Resplandor rojo sutil de fondo */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
@@ -158,7 +155,6 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* Contenedor del Iframe de YouTube (Relación de aspecto 16:9) */}
             <div className="max-w-5xl mx-auto relative w-full aspect-video rounded-sm overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(220,38,38,0.15)] group">
                 <iframe 
                     src="https://www.youtube.com/embed/77APjIIEGmc?si=f29VTMOA4qNmX21G&rel=0&modestbranding=1" 
@@ -173,11 +169,9 @@ export default function HomePage() {
 
       {/* --- 4. SECCIÓN: LORE / GÉNESIS --- */}
       <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
-        {/* Fondo decorativo sutil */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-            {/* Títulos */}
             <div className="mb-12">
                 <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
                     Lore
@@ -188,7 +182,6 @@ export default function HomePage() {
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
             </div>
 
-            {/* Solo el Botón */}
             <div className="flex justify-center">
                 <Link 
                     href="/lore/genesis" 
@@ -248,12 +241,57 @@ export default function HomePage() {
                    className="object-contain relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-1"
                  />
             </div>
-
         </div>
       </section>
 
-      {/* --- 6. QUICK LINKS --- */}
-      <section className="py-24 px-4 border-t border-white/5">
+      {/* --- 6. NUEVA SECCIÓN: GALERÍA DE CARTAS (ESTILO MAGIC SPOILER) --- */}
+      <section className="relative py-24 border-t border-white/10 overflow-hidden bg-black">
+        {/* Decoración de fondo */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-full bg-gradient-to-b from-red-900/5 to-transparent pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+            <div className="flex items-center justify-center gap-2 text-red-500 mb-4">
+                <Layers className="w-6 h-6" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
+                {language === "es" ? "Galería de Cartas" : "Card Image Gallery"}
+            </h2>
+            <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
+                {language === "es" 
+                    ? "Explora el spoiler visual completo. Estudia las sinergias, descubre el arte oscuro y prepárate para construir tu mazo definitivo con las 230 cartas del set base." 
+                    : "Explore the full visual spoiler. Study synergies, discover the dark art, and prepare to build your ultimate deck with the 230 cards of the base set."}
+            </p>
+
+            {/* Abanico visual de cartas usando las imágenes que subiste */}
+            <div className="flex justify-center items-center -space-x-12 md:-space-x-8 mb-12 scale-75 md:scale-100">
+                {[1, 2, 3, 4, 5].map((num, idx) => (
+                    <div 
+                        key={num} 
+                        className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
+                    >
+                        {/* Usamos las imágenes reales que subiste */}
+                        <Image
+                            src={`/images/cards/${num}.JPG`}
+                            alt={`Card Preview ${num}`}
+                            fill
+                            unoptimized 
+                            className="object-cover"
+                        />
+                    </div>
+                ))}
+            </div>
+
+            <Link 
+                href="/cards" 
+                className="inline-flex items-center gap-3 px-12 py-5 bg-white/5 border border-white/20 hover:bg-white/10 hover:border-red-500 text-white font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-red-900/20"
+            >
+                {language === "es" ? "Ver las 230 Cartas" : "View all 230 Cards"}
+            </Link>
+        </div>
+      </section>
+
+      {/* --- 7. QUICK LINKS --- */}
+      <section className="py-24 px-4 border-t border-white/5 bg-zinc-950">
         <div className="max-w-7xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-serif font-bold text-white mb-4">
                 {language === "es" ? "Comienza tu Viaje" : "Start Your Journey"}
