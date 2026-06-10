@@ -16,13 +16,12 @@ export default function CardsPage() {
   const { language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
 
-  // Generamos el array del set base del 1 al 230
+  // Generamos el array del set base del 1 al 230 (.jpg en minúscula)
   const totalCards = 230
   const allCards = Array.from({ length: totalCards }, (_, i) => ({
     id: i + 1,
     name: language === "es" ? `Carta #${i + 1}` : `Card #${i + 1}`,
-    // 1. CAMBIO AQUÍ: .jpg a .JPG en mayúsculas para que el servidor Linux lo reconozca
-    image: `/images/cards/${i + 1}.JPG`
+    image: `/images/cards/${i + 1}.jpg`
   }))
 
   // Filtro funcional por número de carta
@@ -102,7 +101,7 @@ export default function CardsPage() {
                     src={card.image}
                     alt={card.name}
                     fill
-                    unoptimized // 2. CAMBIO AQUÍ: Desactiva el procesado pesado del servidor para no colapsarlo
+                    unoptimized // Desactiva el procesado pesado del servidor
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     loading="lazy"
