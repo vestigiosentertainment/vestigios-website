@@ -1,20 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 import Link from "next/link"
 import { 
   ArrowLeft, 
   Search, 
-  SlidersHorizontal, 
   Sparkles, 
-  Eye 
+  Eye,
+  X,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 
 export default function CardsPage() {
   const { language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
+  
+  // Estado para el Inspector de Cartas
+  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string } | null>(null)
 
   // Generamos el array del set base del 1 al 230 (.jpg en minúscula)
   const totalCards = 230
@@ -29,6 +34,35 @@ export default function CardsPage() {
     if (!searchQuery) return true
     return card.id.toString().includes(searchQuery)
   })
+
+  // Funciones para navegar dentro del Inspector
+  const handlePrevCard = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation() // Evita que se cierre el modal
+    if (!selectedCard) return
+    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
+    const prevIdx = currentIdx === 0 ? allCards.length - 1 : currentIdx - 1
+    setSelectedCard(allCards[prevIdx])
+  }
+
+  const handleNextCard = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation() // Evita que se cierre el modal
+    if (!selectedCard) return
+    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
+    const nextIdx = currentIdx === allCards.length - 1 ? 0 : currentIdx + 1
+    setSelectedCard(allCards[nextIdx])
+  }
+
+  // Atajos de teclado para el Inspector (Flechas y Escape)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedCard) return
+      if (e.key === "Escape") setSelectedCard(null)
+      if (e.key === "ArrowLeft") handlePrevCard()
+      if (e.key === "ArrowRight") handleNextCard()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [selectedCard])
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white pt-28 pb-24">
@@ -62,7 +96,7 @@ export default function CardsPage() {
           </p>
         </div>
 
-        {/* --- BARRA DE FILTROS (ESTILO MAGIC DIGITAL) --- */}
+        {/* --- BARRA DE FILTROS --- */}
         <div className="bg-zinc-950 border border-white/5 p-4 rounded-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between shadow-2xl">
           {/* Buscador */}
           <div className="relative w-full md:w-96">
@@ -87,22 +121,23 @@ export default function CardsPage() {
           </div>
         </div>
 
-        {/* --- CUADRÍCULA DE CARTAS (RESPONSIVE GRID MODIFICADO) --- */}
+        {/* --- CUADRÍCULA DE CARTAS (4 COLUMNAS) --- */}
         {filteredCards.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-12">
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                className="group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] flex flex-col"
+                onClick={() => setSelectedCard(card)} // <-- Abre el inspector al hacer clic
+                className="group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] flex flex-col cursor-pointer"
               >
-                {/* Contenedor de la carta con relación de aspecto TCG estándar (approx 2.5 x 3.5 o 1:1.4) */}
+                {/* Contenedor de la carta */}
                 <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950">
                   <Image
                     src={card.image}
                     alt={card.name}
                     fill
-                    unoptimized // Desactiva el procesado pesado del servidor
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     loading="lazy"
                   />
@@ -110,7 +145,7 @@ export default function CardsPage() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </div>
 
-                {/* Pie de la carta (ID y número de coleccionista) */}
+                {/* Pie de la carta */}
                 <div className="p-3 bg-zinc-950 border-t border-white/5 flex items-center justify-between mt-auto">
                   <span className="text-xs font-serif font-medium text-gray-300 group-hover:text-red-400 transition-colors">
                     {card.name}
@@ -138,6 +173,71 @@ export default function CardsPage() {
         )}
 
       </div>
+
+      {/* --- INSPECTOR OVERLAY (MODAL INTERACTIVO) --- */}
+      {selectedCard && (
+        <div 
+          onClick={() => setSelectedCard(null)} // Cierra al hacer clic en el fondo oscuro
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
+        >
+          {/* Botón de cerrar X */}
+          <button 
+            onClick={() => setSelectedCard(null)}
+            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors bg-zinc-900/50 rounded-full border border-white/10"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Contenedor central del Inspector */}
+          <div className="relative flex items-center justify-center max-w-4xl w-full">
+            
+            {/* Flecha Izquierda (Carta Anterior) */}
+            <button 
+              onClick={handlePrevCard}
+              className="absolute left-2 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+            </button>
+
+            {/* Visualizador de la Carta Ampliada */}
+            <div 
+              onClick={(e) => e.stopPropagation()} // Evita que el modal se cierre al hacer clic sobre la carta misma
+              className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.25)] flex flex-col"
+            >
+              <div className="relative flex-1 w-full h-full">
+                <Image
+                  src={selectedCard.image}
+                  alt={selectedCard.name}
+                  fill
+                  unoptimized
+                  className="object-cover"
+                  priority // Carga inmediata ya que es un elemento interactivo
+                />
+              </div>
+              
+              {/* Barra informativa inferior dentro del inspector */}
+              <div className="bg-zinc-950 px-6 py-4 border-t border-white/10 flex items-center justify-between">
+                <span className="font-serif text-lg font-bold text-white tracking-wide">
+                  {selectedCard.name}
+                </span>
+                <span className="font-mono text-xs text-red-500 tracking-widest bg-red-950/40 px-3 py-1 rounded-sm border border-red-900/30">
+                  ID: {selectedCard.id.toString().padStart(3, '0')} / {totalCards}
+                </span>
+              </div>
+            </div>
+
+            {/* Flecha Derecha (Carta Siguiente) */}
+            <button 
+              onClick={handleNextCard}
+              className="absolute right-2 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
+            >
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
