@@ -21,7 +21,8 @@ export default function CardsPage() {
   const allCards = Array.from({ length: totalCards }, (_, i) => ({
     id: i + 1,
     name: language === "es" ? `Carta #${i + 1}` : `Card #${i + 1}`,
-    image: `/images/cards/${i + 1}.jpg`
+    // 1. CAMBIO AQUÍ: .jpg a .JPG en mayúsculas para que el servidor Linux lo reconozca
+    image: `/images/cards/${i + 1}.JPG`
   }))
 
   // Filtro funcional por número de carta
@@ -101,9 +102,10 @@ export default function CardsPage() {
                     src={card.image}
                     alt={card.name}
                     fill
+                    unoptimized // 2. CAMBIO AQUÍ: Desactiva el procesado pesado del servidor para no colapsarlo
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy" // Rendimiento crítico para no saturar el navegador
+                    loading="lazy"
                   />
                   {/* Capa de brillo sutil en hover */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
