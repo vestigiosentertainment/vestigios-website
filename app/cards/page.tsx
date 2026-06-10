@@ -12,7 +12,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  AlertTriangle // <-- Nuevo ícono importado
+  AlertTriangle,
+  Lock // <-- Nuevo ícono para las cartas en espera
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -20,14 +21,17 @@ export default function CardsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   
   // Estado para el Inspector de Cartas
-  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string } | null>(null)
+  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string; isReleased: boolean } | null>(null)
 
-  // Generamos el array del set base del 1 al 230 (.jpg en minúscula)
+  // Configuración de liberación de cartas
   const totalCards = 230
+  const releasedCardsCount = 80 // <-- Cambia este número en el futuro para liberar más cartas
+
   const allCards = Array.from({ length: totalCards }, (_, i) => ({
     id: i + 1,
     name: language === "es" ? `Carta #${i + 1}` : `Card #${i + 1}`,
-    image: `/images/cards/${i + 1}.jpg`
+    image: `/images/cards/${i + 1}.jpg`,
+    isReleased: i < releasedCardsCount // <-- Propiedad que define si la carta es visible
   }))
 
   // Filtro funcional por número de carta
@@ -36,24 +40,26 @@ export default function CardsPage() {
     return card.id.toString().includes(searchQuery)
   })
 
-  // Funciones para navegar dentro del Inspector
+  // Funciones para navegar dentro del Inspector (solo entre cartas liberadas)
   const handlePrevCard = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation() // Evita que se cierre el modal
+    if (e) e.stopPropagation()
     if (!selectedCard) return
-    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
-    const prevIdx = currentIdx === 0 ? allCards.length - 1 : currentIdx - 1
-    setSelectedCard(allCards[prevIdx])
+    const releasedCards = allCards.filter(c => c.isReleased)
+    const currentIdx = releasedCards.findIndex(c => c.id === selectedCard.id)
+    const prevIdx = currentIdx === 0 ? releasedCards.length - 1 : currentIdx - 1
+    setSelectedCard(releasedCards[prevIdx])
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation() // Evita que se cierre el modal
+    if (e) e.stopPropagation()
     if (!selectedCard) return
-    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
-    const nextIdx = currentIdx === allCards.length - 1 ? 0 : currentIdx + 1
-    setSelectedCard(allCards[nextIdx])
+    const releasedCards = allCards.filter(c => c.isReleased)
+    const currentIdx = releasedCards.findIndex(c => c.id === selectedCard.id)
+    const nextIdx = currentIdx === releasedCards.length - 1 ? 0 : currentIdx + 1
+    setSelectedCard(releasedCards[nextIdx])
   }
 
-  // Atajos de teclado para el Inspector (Flechas y Escape)
+  // Atajos de teclado para el Inspector
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedCard) return
@@ -92,8 +98,8 @@ export default function CardsPage() {
           </h1>
           <p className="text-gray-400 max-w-2xl text-pretty font-light mb-6">
             {language === "es" 
-              ? "Explora la colección completa de la primera edición de Vestigios. Examina cada una de las 230 cartas diseñadas para sumergirte en la estrategia y el horror victoriano." 
-              : "Explore the complete collection of the first edition of Vestigios. Examine each of the 230 cards designed to immerse you in strategy and Victorian horror."}
+              ? `Explora la colección de la primera edición de Vestigios. Actualmente hemos revelado ${releasedCardsCount} de las ${totalCards} cartas que conformarán este set estratégico de horror victoriano.` 
+              : `Explore the collection of the first edition of Vestigios. We have currently revealed ${releasedCardsCount} of the ${totalCards} cards that will make up this strategic Victorian horror set.`}
           </p>
 
           {/* --- AVISO DE IMÁGENES DE REFERENCIA --- */}
@@ -126,7 +132,7 @@ export default function CardsPage() {
             <div className="flex items-center gap-1.5">
               <Eye className="w-4 h-4 text-red-500" />
               <span>
-                {language === "es" ? "Mostrando:" : "Showing:"} <strong className="text-white">{filteredCards.length}</strong> / {totalCards}
+                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{releasedCardsCount}</strong> / {totalCards}
               </span>
             </div>
           </div>
@@ -138,30 +144,45 @@ export default function CardsPage() {
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => setSelectedCard(card)} // <-- Abre el inspector al hacer clic
-                className="group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] flex flex-col cursor-pointer"
+                onClick={() => card.isReleased && setSelectedCard(card)}
+                className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 flex flex-col ${
+                  card.isReleased 
+                    ? "hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] cursor-pointer" 
+                    : "opacity-40 grayscale cursor-not-allowed"
+                }`}
               >
                 {/* Contenedor de la carta */}
-                <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950">
-                  <Image
-                    src={card.image}
-                    alt={card.name}
-                    fill
-                    unoptimized
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                  {/* Capa de brillo sutil en hover */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
+                  {card.isReleased ? (
+                    <>
+                      <Image
+                        src={card.image}
+                        alt={card.name}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    </>
+                  ) : (
+                    // Estado Bloqueado
+                    <div className="flex flex-col items-center gap-3 text-zinc-600">
+                      <Lock className="w-8 h-8" />
+                      <span className="text-xs font-mono uppercase tracking-widest">
+                        {language === "es" ? "En Espera" : "On Hold"}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Pie de la carta */}
                 <div className="p-3 bg-zinc-950 border-t border-white/5 flex items-center justify-between mt-auto">
-                  <span className="text-xs font-serif font-medium text-gray-300 group-hover:text-red-400 transition-colors">
-                    {card.name}
+                  <span className={`text-xs font-serif font-medium transition-colors ${card.isReleased ? "text-gray-300 group-hover:text-red-400" : "text-gray-600"}`}>
+                    {card.isReleased ? card.name : "???"}
                   </span>
-                  <span className="text-[10px] font-mono text-gray-500 tracking-wider">
+                  <span className={`text-[10px] font-mono tracking-wider ${card.isReleased ? "text-gray-500" : "text-gray-700"}`}>
                     {card.id.toString().padStart(3, '0')}/{totalCards}
                   </span>
                 </div>
@@ -188,10 +209,9 @@ export default function CardsPage() {
       {/* --- INSPECTOR OVERLAY (MODAL INTERACTIVO) --- */}
       {selectedCard && (
         <div 
-          onClick={() => setSelectedCard(null)} // Cierra al hacer clic en el fondo oscuro
+          onClick={() => setSelectedCard(null)} 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
         >
-          {/* Botón de cerrar X */}
           <button 
             onClick={() => setSelectedCard(null)}
             className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors bg-zinc-900/50 rounded-full border border-white/10"
@@ -199,10 +219,9 @@ export default function CardsPage() {
             <X className="w-6 h-6" />
           </button>
 
-          {/* Contenedor central del Inspector */}
           <div className="relative flex items-center justify-center max-w-4xl w-full">
             
-            {/* Flecha Izquierda (Carta Anterior) */}
+            {/* Flecha Izquierda */}
             <button 
               onClick={handlePrevCard}
               className="absolute left-2 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
@@ -210,9 +229,9 @@ export default function CardsPage() {
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
             </button>
 
-            {/* Visualizador de la Carta Ampliada */}
+            {/* Visualizador de la Carta */}
             <div 
-              onClick={(e) => e.stopPropagation()} // Evita que el modal se cierre al hacer clic sobre la carta misma
+              onClick={(e) => e.stopPropagation()}
               className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.25)] flex flex-col"
             >
               <div className="relative flex-1 w-full h-full">
@@ -222,11 +241,10 @@ export default function CardsPage() {
                   fill
                   unoptimized
                   className="object-cover"
-                  priority // Carga inmediata ya que es un elemento interactivo
+                  priority 
                 />
               </div>
               
-              {/* Barra informativa inferior dentro del inspector */}
               <div className="bg-zinc-950 px-6 py-4 border-t border-white/10 flex items-center justify-between">
                 <span className="font-serif text-lg font-bold text-white tracking-wide">
                   {selectedCard.name}
@@ -237,7 +255,7 @@ export default function CardsPage() {
               </div>
             </div>
 
-            {/* Flecha Derecha (Carta Siguiente) */}
+            {/* Flecha Derecha */}
             <button 
               onClick={handleNextCard}
               className="absolute right-2 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
