@@ -11,7 +11,8 @@ import {
   Eye,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  AlertTriangle // <-- Nuevo ícono importado
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -89,11 +90,21 @@ export default function CardsPage() {
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             {language === "es" ? "Spoiler Visual Base" : "Base Visual Spoiler"}
           </h1>
-          <p className="text-gray-400 max-w-2xl text-pretty font-light">
+          <p className="text-gray-400 max-w-2xl text-pretty font-light mb-6">
             {language === "es" 
               ? "Explora la colección completa de la primera edición de Vestigios. Examina cada una de las 230 cartas diseñadas para sumergirte en la estrategia y el horror victoriano." 
               : "Explore the complete collection of the first edition of Vestigios. Examine each of the 230 cards designed to immerse you in strategy and Victorian horror."}
           </p>
+
+          {/* --- AVISO DE IMÁGENES DE REFERENCIA --- */}
+          <div className="flex items-start gap-3 bg-red-950/20 border border-red-900/40 p-4 rounded-sm max-w-2xl backdrop-blur-sm">
+            <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+            <p className="text-sm text-red-200/80 font-mono leading-relaxed">
+              {language === "es"
+                ? "Nota importante: Las imágenes mostradas en esta galería son provisionales y sirven únicamente como referencia actual. El arte final está sujeto a cambios."
+                : "Important note: The images shown in this gallery are placeholders and serve only as a current reference. Final artwork is subject to change."}
+            </p>
+          </div>
         </div>
 
         {/* --- BARRA DE FILTROS --- */}
