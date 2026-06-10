@@ -12,7 +12,7 @@ import {
   Image as ImageIcon, 
   Beaker,
   Play,
-  Layers // <-- Ícono nuevo agregado para la galería
+  Layers
 } from "lucide-react"
 
 export default function HomePage() {
@@ -244,7 +244,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 6. NUEVA SECCIÓN: GALERÍA DE CARTAS (ESTILO MAGIC SPOILER) --- */}
+      {/* --- 6. GALERÍA DE CARTAS (ESTILO MAGIC SPOILER) --- */}
       <section className="relative py-24 border-t border-white/10 overflow-hidden bg-black">
         {/* Decoración de fondo */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-full bg-gradient-to-b from-red-900/5 to-transparent pointer-events-none" />
@@ -262,16 +262,15 @@ export default function HomePage() {
                     : "Explore the full visual spoiler. Study synergies, discover the dark art, and prepare to build your ultimate deck with the 230 cards of the base set."}
             </p>
 
-            {/* Abanico visual de cartas usando las imágenes que subiste */}
+            {/* Abanico visual de cartas usando las imágenes que subiste (.jpg en minúscula y unoptimized) */}
             <div className="flex justify-center items-center -space-x-12 md:-space-x-8 mb-12 scale-75 md:scale-100">
                 {[1, 2, 3, 4, 5].map((num, idx) => (
                     <div 
                         key={num} 
                         className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
                     >
-                        {/* Usamos las imágenes reales que subiste */}
                         <Image
-                            src={`/images/cards/${num}.JPG`}
+                            src={`/images/cards/${num}.jpg`}
                             alt={`Card Preview ${num}`}
                             fill
                             unoptimized 
