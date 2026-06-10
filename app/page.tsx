@@ -271,9 +271,10 @@ export default function HomePage() {
                     >
                         {/* Usamos las imágenes reales que subiste */}
                         <Image
-                            src={`/images/cards/${num}.jpg`}
+                            src={`/images/cards/${num}.JPG`}
                             alt={`Card Preview ${num}`}
                             fill
+                            unoptimized 
                             className="object-cover"
                         />
                     </div>
