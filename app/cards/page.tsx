@@ -12,7 +12,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Lock // <-- Añadido el ícono de candado para las cartas en espera
+  Lock,
+  Info // <-- Ícono añadido para el comunicado
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -51,7 +52,7 @@ export default function CardsPage() {
   const handlePrevCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
-    const revealedList = allCards.filter(c => c.isRevealed) // Filtramos solo las reveladas
+    const revealedList = allCards.filter(c => c.isRevealed)
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
     setSelectedCard(revealedList[prevIdx])
@@ -66,7 +67,7 @@ export default function CardsPage() {
     setSelectedCard(revealedList[nextIdx])
   }
 
-  // Atajos de teclado para el Inspector (Flechas y Escape)
+  // Atajos de teclado para el Inspector
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedCard) return
@@ -94,7 +95,7 @@ export default function CardsPage() {
         </Link>
 
         {/* --- CABECERA DE LA PÁGINA --- */}
-        <div className="mb-12 border-b border-white/10 pb-8">
+        <div className="mb-8 border-b border-white/10 pb-8">
           <div className="flex items-center gap-2 text-red-500 mb-3">
             <Sparkles className="w-4 h-4" />
             <span className="text-xs font-bold uppercase tracking-widest font-mono">Set Alpha</span>
@@ -107,6 +108,21 @@ export default function CardsPage() {
               ? `Explora las cartas reveladas hasta ahora de la primera edición de Vestigios. Mantente alerta para descubrir los espacios oscuros que aún aguardan.` 
               : `Explore the currently revealed cards from the first edition of Vestigios. Stay vigilant to uncover the dark spaces that still await.`}
           </p>
+        </div>
+
+        {/* --- COMUNICADO PROFESIONAL DE DESARROLLO --- */}
+        <div className="mb-12 p-5 md:p-6 bg-zinc-900/40 border border-white/10 rounded-sm flex items-start gap-4">
+          <Info className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+          <div className="space-y-1.5">
+            <h3 className="text-sm font-bold text-white tracking-wide uppercase font-mono">
+              {language === "es" ? "Aviso de Desarrollo" : "Development Notice"}
+            </h3>
+            <p className="text-sm text-gray-400 leading-relaxed text-pretty">
+              {language === "es" 
+                ? "Los nombres, textos y el arte de las cartas presentadas en esta galería están sujetos a cambios y balances continuos. Las ilustraciones actuales han sido generadas mediante IA para servir como referencia visual temporal en esta fase de pruebas. Nuestro objetivo y compromiso final es que cada pieza sea ilustrada por artistas humanos, dotando al universo de Vestigios del alma y el detalle genuino que merece." 
+                : "The names, text, and artwork of the cards featured in this gallery are subject to ongoing changes and balancing. Current illustrations are AI-generated and serve strictly as temporary visual references during this testing phase. Our ultimate goal and commitment is for every piece to be illustrated by human artists, giving the Vestigios universe the genuine soul and detail it deserves."}
+            </p>
+          </div>
         </div>
 
         {/* --- BARRA DE FILTROS --- */}
@@ -138,10 +154,9 @@ export default function CardsPage() {
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => card.isRevealed && setSelectedCard(card)} // Solo abre si está revelada
+                onClick={() => card.isRevealed && setSelectedCard(card)}
                 className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden flex flex-col ${card.isRevealed ? 'cursor-pointer transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)]' : 'opacity-60'}`}
               >
-                {/* Contenedor de la carta */}
                 <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
                   {card.isRevealed && card.image ? (
                     <>
@@ -157,7 +172,6 @@ export default function CardsPage() {
                       <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </>
                   ) : (
-                    /* Diseño de Carta No Revelada / Bloqueada */
                     <div className="absolute inset-0 bg-zinc-900/50 flex flex-col items-center justify-center border border-dashed border-white/10 m-3 rounded-sm">
                       <Lock className="w-8 h-8 text-white/10 mb-3" />
                       <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest px-4 text-center">
@@ -167,7 +181,6 @@ export default function CardsPage() {
                   )}
                 </div>
 
-                {/* Pie de la carta */}
                 <div className="p-3 bg-zinc-950 border-t border-white/5 flex items-center justify-between mt-auto">
                   <span className={`text-xs font-serif font-medium ${card.isRevealed ? 'text-gray-300 group-hover:text-red-400 transition-colors' : 'text-gray-600'}`}>
                     {card.name}
@@ -180,7 +193,6 @@ export default function CardsPage() {
             ))}
           </div>
         ) : (
-          /* --- ESTADO SIN RESULTADOS --- */
           <div className="text-center py-24 border border-dashed border-white/10 rounded-sm">
             <p className="text-gray-500 font-mono text-sm mb-2">
               {language === "es" ? "No se encontraron fragmentos de sangre con ese número." : "No blood shards found with that number."}
@@ -193,7 +205,6 @@ export default function CardsPage() {
             </button>
           </div>
         )}
-
       </div>
 
       {/* --- INSPECTOR OVERLAY --- */}
