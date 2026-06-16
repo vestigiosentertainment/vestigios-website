@@ -11,7 +11,8 @@ import {
   Eye,
   X,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Lock // <-- Añadido el ícono de candado para las cartas en espera
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -19,18 +20,26 @@ export default function CardsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   
   // Estado para el Inspector de Cartas
-  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string } | null>(null)
+  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string | null; isRevealed: boolean } | null>(null)
 
   // --- CONFIGURACIÓN DEL SET ---
-  const totalCards = 230 // Total de cartas que tendrá la expansión
-  const revealedCards = 174 // Cartas que quieres mostrar por ahora
+  const totalCards = 230
+  const revealedCards = 174
 
-  // Generamos el array SOLO hasta la carta 174
-  const allCards = Array.from({ length: revealedCards }, (_, i) => ({
-    id: i + 1,
-    name: language === "es" ? `Carta #${i + 1}` : `Card #${i + 1}`,
-    image: `/images/cards/${i + 1}.jpg`
-  }))
+  // Generamos el array completo de 230, pero marcamos cuáles están reveladas
+  const allCards = Array.from({ length: totalCards }, (_, i) => {
+    const id = i + 1;
+    const isRevealed = id <= revealedCards;
+    
+    return {
+      id,
+      isRevealed,
+      name: isRevealed 
+        ? (language === "es" ? `Carta #${id}` : `Card #${id}`) 
+        : (language === "es" ? "En espera..." : "Pending..."),
+      image: isRevealed ? `/images/cards/${id}.jpg` : null
+    }
+  })
 
   // Filtro funcional por número de carta
   const filteredCards = allCards.filter(card => {
@@ -38,21 +47,23 @@ export default function CardsPage() {
     return card.id.toString().includes(searchQuery)
   })
 
-  // Funciones para navegar dentro del Inspector
+  // Funciones para navegar dentro del Inspector (SOLO cartas reveladas)
   const handlePrevCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
-    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
-    const prevIdx = currentIdx === 0 ? allCards.length - 1 : currentIdx - 1
-    setSelectedCard(allCards[prevIdx])
+    const revealedList = allCards.filter(c => c.isRevealed) // Filtramos solo las reveladas
+    const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
+    const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
+    setSelectedCard(revealedList[prevIdx])
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
-    const currentIdx = allCards.findIndex(c => c.id === selectedCard.id)
-    const nextIdx = currentIdx === allCards.length - 1 ? 0 : currentIdx + 1
-    setSelectedCard(allCards[nextIdx])
+    const revealedList = allCards.filter(c => c.isRevealed)
+    const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
+    const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
+    setSelectedCard(revealedList[nextIdx])
   }
 
   // Atajos de teclado para el Inspector (Flechas y Escape)
@@ -69,7 +80,6 @@ export default function CardsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white pt-28 pb-24">
-      {/* Fondo decorativo sutil */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-red-950/10 via-transparent to-transparent pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -94,14 +104,13 @@ export default function CardsPage() {
           </h1>
           <p className="text-gray-400 max-w-2xl text-pretty font-light">
             {language === "es" 
-              ? `Explora las ${revealedCards} cartas reveladas hasta ahora de la primera edición de Vestigios. Examina cada una de ellas para sumergirte en la estrategia y el horror victoriano.` 
-              : `Explore the ${revealedCards} currently revealed cards from the first edition of Vestigios. Examine each one to immerse yourself in strategy and Victorian horror.`}
+              ? `Explora las cartas reveladas hasta ahora de la primera edición de Vestigios. Mantente alerta para descubrir los espacios oscuros que aún aguardan.` 
+              : `Explore the currently revealed cards from the first edition of Vestigios. Stay vigilant to uncover the dark spaces that still await.`}
           </p>
         </div>
 
         {/* --- BARRA DE FILTROS --- */}
         <div className="bg-zinc-950 border border-white/5 p-4 rounded-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between shadow-2xl">
-          {/* Buscador */}
           <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input 
@@ -113,12 +122,11 @@ export default function CardsPage() {
             />
           </div>
 
-          {/* Contador de resultados */}
           <div className="text-xs font-mono text-gray-400 uppercase tracking-wider flex items-center gap-4">
             <div className="flex items-center gap-1.5">
               <Eye className="w-4 h-4 text-red-500" />
               <span>
-                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{filteredCards.length}</strong> / {totalCards}
+                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{revealedCards}</strong> / {totalCards}
               </span>
             </div>
           </div>
@@ -130,30 +138,41 @@ export default function CardsPage() {
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => setSelectedCard(card)}
-                className="group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] flex flex-col cursor-pointer"
+                onClick={() => card.isRevealed && setSelectedCard(card)} // Solo abre si está revelada
+                className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden flex flex-col ${card.isRevealed ? 'cursor-pointer transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)]' : 'opacity-60'}`}
               >
                 {/* Contenedor de la carta */}
-                <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950">
-                  <Image
-                    src={card.image}
-                    alt={card.name}
-                    fill
-                    unoptimized
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                  {/* Capa de brillo sutil en hover */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
+                  {card.isRevealed && card.image ? (
+                    <>
+                      <Image
+                        src={card.image}
+                        alt={card.name}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    </>
+                  ) : (
+                    /* Diseño de Carta No Revelada / Bloqueada */
+                    <div className="absolute inset-0 bg-zinc-900/50 flex flex-col items-center justify-center border border-dashed border-white/10 m-3 rounded-sm">
+                      <Lock className="w-8 h-8 text-white/10 mb-3" />
+                      <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest px-4 text-center">
+                        {language === "es" ? "Próximamente" : "Coming Soon"}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Pie de la carta */}
                 <div className="p-3 bg-zinc-950 border-t border-white/5 flex items-center justify-between mt-auto">
-                  <span className="text-xs font-serif font-medium text-gray-300 group-hover:text-red-400 transition-colors">
+                  <span className={`text-xs font-serif font-medium ${card.isRevealed ? 'text-gray-300 group-hover:text-red-400 transition-colors' : 'text-gray-600'}`}>
                     {card.name}
                   </span>
-                  <span className="text-[10px] font-mono text-gray-500 tracking-wider">
+                  <span className={`text-[10px] font-mono tracking-wider ${card.isRevealed ? 'text-gray-500' : 'text-gray-700'}`}>
                     {card.id.toString().padStart(3, '0')}/{totalCards}
                   </span>
                 </div>
@@ -178,12 +197,11 @@ export default function CardsPage() {
       </div>
 
       {/* --- INSPECTOR OVERLAY --- */}
-      {selectedCard && (
+      {selectedCard && selectedCard.image && (
         <div 
           onClick={() => setSelectedCard(null)}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
         >
-          {/* Botón de cerrar X */}
           <button 
             onClick={() => setSelectedCard(null)}
             className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors bg-zinc-900/50 rounded-full border border-white/10"
@@ -191,10 +209,7 @@ export default function CardsPage() {
             <X className="w-6 h-6" />
           </button>
 
-          {/* Contenedor central del Inspector */}
           <div className="relative flex items-center justify-center max-w-4xl w-full">
-            
-            {/* Flecha Izquierda */}
             <button 
               onClick={handlePrevCard}
               className="absolute left-2 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
@@ -202,7 +217,6 @@ export default function CardsPage() {
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
             </button>
 
-            {/* Visualizador de la Carta Ampliada */}
             <div 
               onClick={(e) => e.stopPropagation()} 
               className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.25)] flex flex-col"
@@ -218,7 +232,6 @@ export default function CardsPage() {
                 />
               </div>
               
-              {/* Barra informativa inferior dentro del inspector */}
               <div className="bg-zinc-950 px-6 py-4 border-t border-white/10 flex items-center justify-between">
                 <span className="font-serif text-lg font-bold text-white tracking-wide">
                   {selectedCard.name}
@@ -229,18 +242,15 @@ export default function CardsPage() {
               </div>
             </div>
 
-            {/* Flecha Derecha */}
             <button 
               onClick={handleNextCard}
               className="absolute right-2 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
             >
               <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
             </button>
-
           </div>
         </div>
       )}
-
     </div>
   )
 }
