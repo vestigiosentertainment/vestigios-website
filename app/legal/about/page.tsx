@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context"
 import Link from "next/link"
-import { ArrowLeft, Crown, Palette, Gamepad2, Feather, Scale, TrendingUp } from "lucide-react"
+import { ArrowLeft, Crown, Palette, Feather, Scale, TrendingUp } from "lucide-react"
 
 export default function AboutPage() {
   const { language } = useLanguage()
@@ -24,14 +24,6 @@ export default function AboutPage() {
         ? "Responsable de la identidad visual de Vestigios Entertainment, dirección de ilustración, estilo artístico, diseño de cartas, escenarios y estética general del universo." 
         : "Leads the visual identity of Vestigios Entertainment, including illustration, card design, environments and overall artistic style.",
       icon: <Palette className="w-6 h-6 text-purple-500" />
-    },
-    {
-      name: "Jonathan Garrido",
-      role: language === "es" ? "Director de Juego" : "Game Director",
-      desc: language === "es" 
-        ? "Encargado del diseño de mecánicas, reglas, sistemas de juego y dirección general de la jugabilidad en todos los títulos del universo Vestigios." 
-        : "Responsible for game systems, mechanics, rules, and overall gameplay direction across all Vestigios titles.",
-      icon: <Gamepad2 className="w-6 h-6 text-blue-500" />
     },
     {
       name: "Meliza Castillo",

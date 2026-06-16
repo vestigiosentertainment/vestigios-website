@@ -12,8 +12,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  AlertTriangle,
-  Lock // <-- Nuevo ícono para las cartas en espera
+  Lock,
+  Info // <-- Ícono añadido para el comunicado
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -21,18 +21,26 @@ export default function CardsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   
   // Estado para el Inspector de Cartas
-  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string; isReleased: boolean } | null>(null)
+  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string | null; isRevealed: boolean } | null>(null)
 
-  // Configuración de liberación de cartas
+  // --- CONFIGURACIÓN DEL SET ---
   const totalCards = 230
-  const releasedCardsCount = 80 // <-- Cambia este número en el futuro para liberar más cartas
+  const revealedCards = 174
 
-  const allCards = Array.from({ length: totalCards }, (_, i) => ({
-    id: i + 1,
-    name: language === "es" ? `Carta #${i + 1}` : `Card #${i + 1}`,
-    image: `/images/cards/${i + 1}.jpg`,
-    isReleased: i < releasedCardsCount // <-- Propiedad que define si la carta es visible
-  }))
+  // Generamos el array completo de 230, pero marcamos cuáles están reveladas
+  const allCards = Array.from({ length: totalCards }, (_, i) => {
+    const id = i + 1;
+    const isRevealed = id <= revealedCards;
+    
+    return {
+      id,
+      isRevealed,
+      name: isRevealed 
+        ? (language === "es" ? `Carta #${id}` : `Card #${id}`) 
+        : (language === "es" ? "En espera..." : "Pending..."),
+      image: isRevealed ? `/images/cards/${id}.jpg` : null
+    }
+  })
 
   // Filtro funcional por número de carta
   const filteredCards = allCards.filter(card => {
@@ -40,23 +48,23 @@ export default function CardsPage() {
     return card.id.toString().includes(searchQuery)
   })
 
-  // Funciones para navegar dentro del Inspector (solo entre cartas liberadas)
+  // Funciones para navegar dentro del Inspector (SOLO cartas reveladas)
   const handlePrevCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
-    const releasedCards = allCards.filter(c => c.isReleased)
-    const currentIdx = releasedCards.findIndex(c => c.id === selectedCard.id)
-    const prevIdx = currentIdx === 0 ? releasedCards.length - 1 : currentIdx - 1
-    setSelectedCard(releasedCards[prevIdx])
+    const revealedList = allCards.filter(c => c.isRevealed)
+    const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
+    const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
+    setSelectedCard(revealedList[prevIdx])
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
-    const releasedCards = allCards.filter(c => c.isReleased)
-    const currentIdx = releasedCards.findIndex(c => c.id === selectedCard.id)
-    const nextIdx = currentIdx === releasedCards.length - 1 ? 0 : currentIdx + 1
-    setSelectedCard(releasedCards[nextIdx])
+    const revealedList = allCards.filter(c => c.isRevealed)
+    const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
+    const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
+    setSelectedCard(revealedList[nextIdx])
   }
 
   // Atajos de teclado para el Inspector
@@ -73,7 +81,6 @@ export default function CardsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white pt-28 pb-24">
-      {/* Fondo decorativo sutil */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-red-950/10 via-transparent to-transparent pointer-events-none z-0" />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -88,7 +95,7 @@ export default function CardsPage() {
         </Link>
 
         {/* --- CABECERA DE LA PÁGINA --- */}
-        <div className="mb-12 border-b border-white/10 pb-8">
+        <div className="mb-8 border-b border-white/10 pb-8">
           <div className="flex items-center gap-2 text-red-500 mb-3">
             <Sparkles className="w-4 h-4" />
             <span className="text-xs font-bold uppercase tracking-widest font-mono">Set Alpha</span>
@@ -96,26 +103,30 @@ export default function CardsPage() {
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
             {language === "es" ? "Spoiler Visual Base" : "Base Visual Spoiler"}
           </h1>
-          <p className="text-gray-400 max-w-2xl text-pretty font-light mb-6">
+          <p className="text-gray-400 max-w-2xl text-pretty font-light">
             {language === "es" 
-              ? `Explora la colección de la primera edición de Vestigios. Actualmente hemos revelado ${releasedCardsCount} de las ${totalCards} cartas que conformarán este set estratégico de horror victoriano.` 
-              : `Explore the collection of the first edition of Vestigios. We have currently revealed ${releasedCardsCount} of the ${totalCards} cards that will make up this strategic Victorian horror set.`}
+              ? `Explora las cartas reveladas hasta ahora de la primera edición de Vestigios. Mantente alerta para descubrir los espacios oscuros que aún aguardan.` 
+              : `Explore the currently revealed cards from the first edition of Vestigios. Stay vigilant to uncover the dark spaces that still await.`}
           </p>
+        </div>
 
-          {/* --- AVISO DE IMÁGENES DE REFERENCIA --- */}
-          <div className="flex items-start gap-3 bg-red-950/20 border border-red-900/40 p-4 rounded-sm max-w-2xl backdrop-blur-sm">
-            <AlertTriangle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-            <p className="text-sm text-red-200/80 font-mono leading-relaxed">
-              {language === "es"
-                ? "Nota importante: Las imágenes mostradas en esta galería son provisionales y sirven únicamente como referencia actual. El arte final está sujeto a cambios."
-                : "Important note: The images shown in this gallery are placeholders and serve only as a current reference. Final artwork is subject to change."}
+        {/* --- COMUNICADO PROFESIONAL DE DESARROLLO --- */}
+        <div className="mb-12 p-5 md:p-6 bg-zinc-900/40 border border-white/10 rounded-sm flex items-start gap-4">
+          <Info className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+          <div className="space-y-1.5">
+            <h3 className="text-sm font-bold text-white tracking-wide uppercase font-mono">
+              {language === "es" ? "Aviso de Desarrollo" : "Development Notice"}
+            </h3>
+            <p className="text-sm text-gray-400 leading-relaxed text-pretty">
+              {language === "es" 
+                ? "Los nombres, textos y el arte de las cartas presentadas en esta galería están sujetos a cambios y balances continuos. Las ilustraciones actuales han sido generadas mediante IA para servir como referencia visual temporal en esta fase de pruebas. Nuestro objetivo y compromiso final es que cada pieza sea ilustrada por artistas humanos, dotando al universo de Vestigios del alma y el detalle genuino que merece." 
+                : "The names, text, and artwork of the cards featured in this gallery are subject to ongoing changes and balancing. Current illustrations are AI-generated and serve strictly as temporary visual references during this testing phase. Our ultimate goal and commitment is for every piece to be illustrated by human artists, giving the Vestigios universe the genuine soul and detail it deserves."}
             </p>
           </div>
         </div>
 
         {/* --- BARRA DE FILTROS --- */}
         <div className="bg-zinc-950 border border-white/5 p-4 rounded-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between shadow-2xl">
-          {/* Buscador */}
           <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input 
@@ -127,33 +138,27 @@ export default function CardsPage() {
             />
           </div>
 
-          {/* Contador de resultados */}
           <div className="text-xs font-mono text-gray-400 uppercase tracking-wider flex items-center gap-4">
             <div className="flex items-center gap-1.5">
               <Eye className="w-4 h-4 text-red-500" />
               <span>
-                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{releasedCardsCount}</strong> / {totalCards}
+                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{revealedCards}</strong> / {totalCards}
               </span>
             </div>
           </div>
         </div>
 
-        {/* --- CUADRÍCULA DE CARTAS (4 COLUMNAS) --- */}
+        {/* --- CUADRÍCULA DE CARTAS --- */}
         {filteredCards.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-12">
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => card.isReleased && setSelectedCard(card)}
-                className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 flex flex-col ${
-                  card.isReleased 
-                    ? "hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)] cursor-pointer" 
-                    : "opacity-40 grayscale cursor-not-allowed"
-                }`}
+                onClick={() => card.isRevealed && setSelectedCard(card)}
+                className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden flex flex-col ${card.isRevealed ? 'cursor-pointer transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)]' : 'opacity-60'}`}
               >
-                {/* Contenedor de la carta */}
                 <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
-                  {card.isReleased ? (
+                  {card.isRevealed && card.image ? (
                     <>
                       <Image
                         src={card.image}
@@ -167,22 +172,20 @@ export default function CardsPage() {
                       <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </>
                   ) : (
-                    // Estado Bloqueado
-                    <div className="flex flex-col items-center gap-3 text-zinc-600">
-                      <Lock className="w-8 h-8" />
-                      <span className="text-xs font-mono uppercase tracking-widest">
-                        {language === "es" ? "En Espera" : "On Hold"}
+                    <div className="absolute inset-0 bg-zinc-900/50 flex flex-col items-center justify-center border border-dashed border-white/10 m-3 rounded-sm">
+                      <Lock className="w-8 h-8 text-white/10 mb-3" />
+                      <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest px-4 text-center">
+                        {language === "es" ? "Próximamente" : "Coming Soon"}
                       </span>
                     </div>
                   )}
                 </div>
 
-                {/* Pie de la carta */}
                 <div className="p-3 bg-zinc-950 border-t border-white/5 flex items-center justify-between mt-auto">
-                  <span className={`text-xs font-serif font-medium transition-colors ${card.isReleased ? "text-gray-300 group-hover:text-red-400" : "text-gray-600"}`}>
-                    {card.isReleased ? card.name : "???"}
+                  <span className={`text-xs font-serif font-medium ${card.isRevealed ? 'text-gray-300 group-hover:text-red-400 transition-colors' : 'text-gray-600'}`}>
+                    {card.name}
                   </span>
-                  <span className={`text-[10px] font-mono tracking-wider ${card.isReleased ? "text-gray-500" : "text-gray-700"}`}>
+                  <span className={`text-[10px] font-mono tracking-wider ${card.isRevealed ? 'text-gray-500' : 'text-gray-700'}`}>
                     {card.id.toString().padStart(3, '0')}/{totalCards}
                   </span>
                 </div>
@@ -190,7 +193,6 @@ export default function CardsPage() {
             ))}
           </div>
         ) : (
-          /* --- ESTADO SIN RESULTADOS --- */
           <div className="text-center py-24 border border-dashed border-white/10 rounded-sm">
             <p className="text-gray-500 font-mono text-sm mb-2">
               {language === "es" ? "No se encontraron fragmentos de sangre con ese número." : "No blood shards found with that number."}
@@ -203,13 +205,12 @@ export default function CardsPage() {
             </button>
           </div>
         )}
-
       </div>
 
-      {/* --- INSPECTOR OVERLAY (MODAL INTERACTIVO) --- */}
-      {selectedCard && (
+      {/* --- INSPECTOR OVERLAY --- */}
+      {selectedCard && selectedCard.image && (
         <div 
-          onClick={() => setSelectedCard(null)} 
+          onClick={() => setSelectedCard(null)}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
         >
           <button 
@@ -220,8 +221,6 @@ export default function CardsPage() {
           </button>
 
           <div className="relative flex items-center justify-center max-w-4xl w-full">
-            
-            {/* Flecha Izquierda */}
             <button 
               onClick={handlePrevCard}
               className="absolute left-2 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
@@ -229,9 +228,8 @@ export default function CardsPage() {
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
             </button>
 
-            {/* Visualizador de la Carta */}
             <div 
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()} 
               className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.25)] flex flex-col"
             >
               <div className="relative flex-1 w-full h-full">
@@ -241,7 +239,7 @@ export default function CardsPage() {
                   fill
                   unoptimized
                   className="object-cover"
-                  priority 
+                  priority
                 />
               </div>
               
@@ -255,18 +253,15 @@ export default function CardsPage() {
               </div>
             </div>
 
-            {/* Flecha Derecha */}
             <button 
               onClick={handleNextCard}
               className="absolute right-2 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
             >
               <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
             </button>
-
           </div>
         </div>
       )}
-
     </div>
   )
 }
