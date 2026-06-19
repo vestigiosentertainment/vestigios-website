@@ -13,7 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Lock,
-  Info // <-- Ícono añadido para el comunicado
+  Info
 } from "lucide-react"
 
 export default function CardsPage() {
@@ -25,7 +25,8 @@ export default function CardsPage() {
 
   // --- CONFIGURACIÓN DEL SET ---
   const totalCards = 230
-  const revealedCards = 174
+  // Al poner esto en 0, todas las cartas quedan ocultas (estado de candado)
+  const revealedCards = 0 
 
   // Generamos el array completo de 230, pero marcamos cuáles están reveladas
   const allCards = Array.from({ length: totalCards }, (_, i) => {
@@ -53,6 +54,7 @@ export default function CardsPage() {
     if (e) e.stopPropagation()
     if (!selectedCard) return
     const revealedList = allCards.filter(c => c.isRevealed)
+    if (revealedList.length === 0) return // Prevención de errores si no hay cartas
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
     setSelectedCard(revealedList[prevIdx])
@@ -62,6 +64,7 @@ export default function CardsPage() {
     if (e) e.stopPropagation()
     if (!selectedCard) return
     const revealedList = allCards.filter(c => c.isRevealed)
+    if (revealedList.length === 0) return // Prevención de errores si no hay cartas
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
     setSelectedCard(revealedList[nextIdx])
