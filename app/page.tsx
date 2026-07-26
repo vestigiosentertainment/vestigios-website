@@ -13,13 +13,13 @@ import {
   Beaker,
   Play,
   Layers,
-  Download // <-- Añadido el ícono de descarga
+  Download
 } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
 
-  // NOTICIAS ACTUALIZADAS
+  // NOTICIAS ACTUALIZADAS (Con el enlace -CEO corregido)
   const latestNews = [
     {
       id: 0,
@@ -35,7 +35,7 @@ export default function HomePage() {
       title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
       date: "2026-01-27",
       image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
-      href: "/legal/discover/articles/interview-jonathan-torres" 
+      href: "/legal/discover/articles/interview-jonathan-torres-CEO" // <-- RUTA CORREGIDA
     },
     {
       id: 2,
@@ -170,7 +170,6 @@ export default function HomePage() {
 
       {/* --- NUEVO: SECCIÓN DE DESCARGA ÉPICA --- */}
       <section className="relative py-32 px-4 overflow-hidden border-t border-red-900/30">
-        {/* Fondo animado épico */}
         <div className="absolute inset-0 bg-[url('/dark-gothic-trading-card-game-cards-blood-and-shad.jpg')] bg-cover bg-center opacity-20 scale-105" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-radial-gradient from-red-900/20 to-transparent pointer-events-none" />
@@ -309,6 +308,7 @@ export default function HomePage() {
                         className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
                     >
                         <Image
+                            // 👇 MAGIA APLICADA: Ahora busca las ds-001.jpg en vez de las 1.jpg viejas 👇
                             src={`/images/cards/ds-${fileId}.jpg`}
                             alt={`Card Preview ${num}`}
                             fill
