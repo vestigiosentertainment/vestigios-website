@@ -19,23 +19,23 @@ import {
 export default function HomePage() {
   const { t, language } = useLanguage()
 
-  // NOTICIAS ACTUALIZADAS (Con el enlace -CEO corregido)
+  // NOTICIAS ACTUALIZADAS (Jonathan de primero y fechas corregidas)
   const latestNews = [
     {
       id: 0,
+      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      date: "2026-07-26",
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
+      href: "/legal/discover/articles/interview-jonathan-torres-CEO"
+    },
+    {
+      id: 1,
       tag: language === "es" ? "Diseño y Balance" : "Design & Balance",
       title: language === "es" ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" : "Ruki: «We don't create cards to define a meta, we create a world»",
       date: "2026-03-03",
       image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
       href: "/legal/discover/articles/interview-ruki" 
-    },
-    {
-      id: 1,
-      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
-      date: "2026-01-27",
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
-      href: "/legal/discover/articles/interview-jonathan-torres-CEO" // <-- RUTA CORREGIDA
     },
     {
       id: 2,
@@ -308,7 +308,6 @@ export default function HomePage() {
                         className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
                     >
                         <Image
-                            // 👇 MAGIA APLICADA: Ahora busca las ds-001.jpg en vez de las 1.jpg viejas 👇
                             src={`/images/cards/ds-${fileId}.jpg`}
                             alt={`Card Preview ${num}`}
                             fill
