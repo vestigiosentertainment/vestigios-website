@@ -24,7 +24,6 @@ export default function ArticlesPage() {
   }
 
   // --- LISTA COMPLETA DE ARTÍCULOS ---
-  // Jonathan pasa a ser el primero de la lista normal
   const articles = [
     {
       id: 0, 
@@ -38,7 +37,7 @@ export default function ArticlesPage() {
       author: "Editorial",
       image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
       category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      href: "/legal/discover/articles/interview-jonathan-torres" 
+      href: "/legal/discover/articles/interview-jonathan-torres-CEO" // <-- Ruta corregida aquí
     },
     {
       id: 1, 
