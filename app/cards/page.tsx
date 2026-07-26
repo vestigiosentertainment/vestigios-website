@@ -23,7 +23,7 @@ interface CardData {
   id: number
   name: string
   isRevealed: boolean
-  image: string | null
+  basePath: string | null
   variants: {
     normal: string
     fa: string
@@ -32,29 +32,61 @@ interface CardData {
   } | null
 }
 
+// COMPONENTE INTELIGENTE PARA LA GRILLA: Intenta JPG y si falla usa PNG
+const GridImage = ({ basePath, alt, className }: { basePath: string, alt: string, className?: string }) => {
+  const [ext, setExt] = useState('.jpg')
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900 border border-dashed border-white/10 m-3 rounded-sm">
+        <span className="text-[10px] font-mono text-white/30 text-center px-2">Sin Imagen<br/>{alt}</span>
+      </div>
+    )
+  }
+
+  return (
+    <Image
+      src={`${basePath}${ext}`}
+      alt={alt}
+      fill
+      unoptimized
+      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+      className={className}
+      loading="lazy"
+      onError={() => {
+        // Si falló el JPG, intentamos con PNG. Si también falla, mostramos error.
+        if (ext === '.jpg') {
+          setExt('.png')
+        } else {
+          setFailed(true)
+        }
+      }}
+    />
+  )
+}
+
 export default function CardsPage() {
   const { language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
   
-  // Estados para el Inspector de Cartas
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
   const [activeVariant, setActiveVariant] = useState<CardVariant>("normal")
   
-  // Estado para guardar qué variantes existen realmente para la carta seleccionada
-  const [validVariants, setValidVariants] = useState<CardVariant[]>(["normal"])
+  // Guardamos las variantes válidas y su URL exacta (JPG o PNG)
+  const [validVariants, setValidVariants] = useState<CardVariant[]>([])
+  const [variantUrls, setVariantUrls] = useState<Record<string, string>>({})
 
   // --- CONFIGURACIÓN DEL SET ---
-  const totalCards = 318
-  const revealedCards = 318 
+  const totalCards = 230
+  const revealedCards = 230 
 
-  // Generamos el array de cartas con el nuevo formato de nombres (ds-XXX)
+  // Generamos el array con el basePath sin extensión
   const allCards: CardData[] = Array.from({ length: totalCards }, (_, i) => {
     const id = i + 1;
     const isRevealed = id <= revealedCards;
-    
-    // NOTA: Si tus primeras cartas se llaman ds-001.jpg en vez de ds-1.jpg, 
-    // cambia la siguiente línea a: const fileId = id.toString().padStart(3, '0');
-    const fileId = id.toString(); 
+    const fileId = id.toString().padStart(3, '0'); 
+    const basePath = `/images/cards/ds-${fileId}`;
     
     return {
       id,
@@ -62,50 +94,61 @@ export default function CardsPage() {
       name: isRevealed 
         ? (language === "es" ? `Carta #${id}` : `Card #${id}`) 
         : (language === "es" ? "En espera..." : "Pending..."),
-      image: isRevealed ? `/images/cards/ds-${fileId}.jpg` : null,
+      basePath: isRevealed ? basePath : null,
       variants: isRevealed ? {
-        normal: `/images/cards/ds-${fileId}.jpg`,
-        fa: `/images/cards/ds-${fileId}.fa.jpg`,
-        fd: `/images/cards/ds-${fileId}.fd.jpg`,
-        fv: `/images/cards/ds-${fileId}.fv.jpg`,
+        normal: basePath,
+        fa: `${basePath}.fa`,
+        fd: `${basePath}.fd`,
+        fv: `${basePath}.fv`,
       } : null
     }
   })
 
-  // Filtro funcional por número de carta
   const filteredCards = allCards.filter(card => {
     if (!searchQuery) return true
     return card.id.toString().includes(searchQuery)
   })
 
-  // --- DETECTOR DINÁMICO DE VARIANTES ---
-  // Esta función revisa en tiempo real si las imágenes existen en el servidor
+  // --- DETECTOR DINÁMICO DE VARIANTES (Busca JPG y PNG) ---
   const checkVariants = (card: CardData) => {
-    setValidVariants(["normal"]) // Siempre asumimos que la normal existe
+    setValidVariants([]) 
+    setVariantUrls({})
+
     if (!card.variants) return
 
-    const check = (url: string, type: CardVariant) => {
-      const img = new window.Image()
-      img.onload = () => {
-        setValidVariants(prev => {
-          if (!prev.includes(type)) return [...prev, type]
-          return prev
-        })
+    const check = (basePath: string, type: CardVariant) => {
+      const imgJpg = new window.Image()
+      
+      // 1. Probamos JPG
+      imgJpg.onload = () => {
+        setValidVariants(prev => prev.includes(type) ? prev : [...prev, type])
+        setVariantUrls(prev => ({ ...prev, [type]: `${basePath}.jpg` }))
       }
-      img.src = url
+      
+      // 2. Si falla el JPG, probamos PNG
+      imgJpg.onerror = () => {
+        const imgPng = new window.Image()
+        imgPng.onload = () => {
+          setValidVariants(prev => prev.includes(type) ? prev : [...prev, type])
+          setVariantUrls(prev => ({ ...prev, [type]: `${basePath}.png` }))
+        }
+        imgPng.src = `${basePath}.png`
+      }
+      
+      imgJpg.src = `${basePath}.jpg`
     }
 
+    check(card.variants.normal, "normal")
     check(card.variants.fa, "fa")
     check(card.variants.fd, "fd")
     check(card.variants.fv, "fv")
   }
 
-  // --- FUNCIONES DEL INSPECTOR ---
   const openInspector = (card: CardData) => {
     if (!card.isRevealed) return
     setSelectedCard(card)
     setActiveVariant("normal") 
-    checkVariants(card) // Revisamos qué botones mostrar
+    checkVariants(card) 
   }
 
   const handlePrevCard = (e?: React.MouseEvent) => {
@@ -118,7 +161,7 @@ export default function CardsPage() {
     const newCard = revealedList[prevIdx]
     setSelectedCard(newCard)
     setActiveVariant("normal")
-    checkVariants(newCard) // Revisamos qué botones mostrar de la nueva carta
+    checkVariants(newCard) 
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
@@ -127,14 +170,15 @@ export default function CardsPage() {
     const revealedList = allCards.filter(c => c.isRevealed)
     if (revealedList.length === 0) return
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
-    const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
-    const newCard = revealedList[nextIdx]
+    const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx - 1
+    // Corrección del Next (estaba yendo hacia atrás en caso extremo)
+    const safeNextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
+    const newCard = revealedList[safeNextIdx]
     setSelectedCard(newCard)
     setActiveVariant("normal")
-    checkVariants(newCard) // Revisamos qué botones mostrar de la nueva carta
+    checkVariants(newCard) 
   }
 
-  // Atajos de teclado
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedCard) return
@@ -152,7 +196,6 @@ export default function CardsPage() {
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         
-        {/* --- BOTÓN VOLVER --- */}
         <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors uppercase tracking-wider font-mono mb-8 group"
@@ -161,7 +204,6 @@ export default function CardsPage() {
           {language === "es" ? "Volver al Inicio" : "Back to Home"}
         </Link>
 
-        {/* --- CABECERA --- */}
         <div className="mb-8 border-b border-white/10 pb-8">
           <div className="flex items-center gap-2 text-red-500 mb-3">
             <Sparkles className="w-4 h-4" />
@@ -177,7 +219,6 @@ export default function CardsPage() {
           </p>
         </div>
 
-        {/* --- AVISO DESARROLLO --- */}
         <div className="mb-12 p-5 md:p-6 bg-zinc-900/40 border border-white/10 rounded-sm flex items-start gap-4">
           <Info className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
           <div className="space-y-1.5">
@@ -192,7 +233,6 @@ export default function CardsPage() {
           </div>
         </div>
 
-        {/* --- BARRA DE FILTROS --- */}
         <div className="bg-zinc-950 border border-white/5 p-4 rounded-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between shadow-2xl">
           <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
@@ -215,7 +255,6 @@ export default function CardsPage() {
           </div>
         </div>
 
-        {/* --- CUADRÍCULA DE CARTAS --- */}
         {filteredCards.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-12">
             {filteredCards.map((card) => (
@@ -225,16 +264,12 @@ export default function CardsPage() {
                 className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden flex flex-col ${card.isRevealed ? 'cursor-pointer transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)]' : 'opacity-60'}`}
               >
                 <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
-                  {card.isRevealed && card.image ? (
+                  {card.isRevealed && card.basePath ? (
                     <>
-                      <Image
-                        src={card.image}
-                        alt={card.name}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        loading="lazy"
+                      <GridImage 
+                        basePath={card.basePath} 
+                        alt={card.name} 
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" 
                       />
                       <div className="absolute inset-0 bg-gradient-to-tr from-red-900/0 via-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     </>
@@ -274,7 +309,7 @@ export default function CardsPage() {
         )}
       </div>
 
-      {/* --- INSPECTOR OVERLAY CON SELECTOR DE VARIANTES --- */}
+      {/* --- INSPECTOR OVERLAY --- */}
       {selectedCard && selectedCard.variants && (
         <div 
           onClick={() => setSelectedCard(null)}
@@ -314,14 +349,22 @@ export default function CardsPage() {
                 }}
               >
                 <div className="relative flex-1 w-full h-full">
-                  <Image
-                    src={selectedCard.variants[activeVariant]}
-                    alt={`${selectedCard.name} - ${activeVariant}`}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                    priority
-                  />
+                  {variantUrls[activeVariant] ? (
+                    <Image
+                      src={variantUrls[activeVariant]}
+                      alt={`${selectedCard.name} - ${activeVariant}`}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                      priority
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-mono text-gray-500 uppercase tracking-widest animate-pulse">
+                        {language === "es" ? "Buscando..." : "Loading..."}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -333,8 +376,7 @@ export default function CardsPage() {
               </button>
             </div>
 
-            {/* Selector de Rarezas / Variantes (SOLO MUESTRA LAS QUE EXISTEN) */}
-            {validVariants.length > 1 && ( // Solo mostramos si hay más de 1 variante (es decir, normal + algo más)
+            {validVariants.length > 1 && (
               <div 
                 onClick={(e) => e.stopPropagation()} 
                 className="mt-8 flex items-center gap-3 bg-zinc-900/50 p-2 rounded-full border border-white/10 backdrop-blur-sm"
@@ -345,7 +387,6 @@ export default function CardsPage() {
                   { id: "fd", label: language === "es" ? "Dorada" : "Golden", color: "hover:text-yellow-400 hover:bg-yellow-950/30" },
                   { id: "fv", label: language === "es" ? "Vitral" : "Stained Glass", color: "hover:text-purple-400 hover:bg-purple-950/30" }
                 ].map((variant) => {
-                  // Magia: Solo renderizamos el botón si la imagen de verdad existe en tu servidor
                   if (!validVariants.includes(variant.id as CardVariant)) return null;
 
                   return (
