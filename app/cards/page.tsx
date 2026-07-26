@@ -39,18 +39,21 @@ export default function CardsPage() {
   // Estados para el Inspector de Cartas
   const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
   const [activeVariant, setActiveVariant] = useState<CardVariant>("normal")
+  
+  // Estado para guardar qué variantes existen realmente para la carta seleccionada
+  const [validVariants, setValidVariants] = useState<CardVariant[]>(["normal"])
 
   // --- CONFIGURACIÓN DEL SET ---
   const totalCards = 318
-  const revealedCards = 318 // Mantén esto en 318 para mostrar todas
+  const revealedCards = 318 
 
   // Generamos el array de cartas con el nuevo formato de nombres (ds-XXX)
   const allCards: CardData[] = Array.from({ length: totalCards }, (_, i) => {
     const id = i + 1;
     const isRevealed = id <= revealedCards;
     
-    // Asumiendo que el ID en el nombre del archivo no lleva ceros a la izquierda según tu ejemplo (ds-143.jpg)
-    // Si llevara ceros (ej: ds-001.jpg), usaríamos: id.toString().padStart(3, '0')
+    // NOTA: Si tus primeras cartas se llaman ds-001.jpg en vez de ds-1.jpg, 
+    // cambia la siguiente línea a: const fileId = id.toString().padStart(3, '0');
     const fileId = id.toString(); 
     
     return {
@@ -75,11 +78,34 @@ export default function CardsPage() {
     return card.id.toString().includes(searchQuery)
   })
 
+  // --- DETECTOR DINÁMICO DE VARIANTES ---
+  // Esta función revisa en tiempo real si las imágenes existen en el servidor
+  const checkVariants = (card: CardData) => {
+    setValidVariants(["normal"]) // Siempre asumimos que la normal existe
+    if (!card.variants) return
+
+    const check = (url: string, type: CardVariant) => {
+      const img = new window.Image()
+      img.onload = () => {
+        setValidVariants(prev => {
+          if (!prev.includes(type)) return [...prev, type]
+          return prev
+        })
+      }
+      img.src = url
+    }
+
+    check(card.variants.fa, "fa")
+    check(card.variants.fd, "fd")
+    check(card.variants.fv, "fv")
+  }
+
   // --- FUNCIONES DEL INSPECTOR ---
   const openInspector = (card: CardData) => {
     if (!card.isRevealed) return
     setSelectedCard(card)
-    setActiveVariant("normal") // Siempre abrimos en la versión normal por defecto
+    setActiveVariant("normal") 
+    checkVariants(card) // Revisamos qué botones mostrar
   }
 
   const handlePrevCard = (e?: React.MouseEvent) => {
@@ -89,8 +115,10 @@ export default function CardsPage() {
     if (revealedList.length === 0) return
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
-    setSelectedCard(revealedList[prevIdx])
+    const newCard = revealedList[prevIdx]
+    setSelectedCard(newCard)
     setActiveVariant("normal")
+    checkVariants(newCard) // Revisamos qué botones mostrar de la nueva carta
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
@@ -100,8 +128,10 @@ export default function CardsPage() {
     if (revealedList.length === 0) return
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
-    setSelectedCard(revealedList[nextIdx])
+    const newCard = revealedList[nextIdx]
+    setSelectedCard(newCard)
     setActiveVariant("normal")
+    checkVariants(newCard) // Revisamos qué botones mostrar de la nueva carta
   }
 
   // Atajos de teclado
@@ -303,31 +333,38 @@ export default function CardsPage() {
               </button>
             </div>
 
-            {/* Selector de Rarezas / Variantes */}
-            <div 
-              onClick={(e) => e.stopPropagation()} 
-              className="mt-8 flex items-center gap-3 bg-zinc-900/50 p-2 rounded-full border border-white/10 backdrop-blur-sm"
-            >
-              {[
-                { id: "normal", label: language === "es" ? "Normal" : "Standard", color: "hover:text-red-400 hover:bg-red-950/30" },
-                { id: "fa", label: "Full Art", color: "hover:text-gray-300 hover:bg-zinc-800" },
-                { id: "fd", label: language === "es" ? "Dorada" : "Golden", color: "hover:text-yellow-400 hover:bg-yellow-950/30" },
-                { id: "fv", label: language === "es" ? "Vitral" : "Stained Glass", color: "hover:text-purple-400 hover:bg-purple-950/30" }
-              ].map((variant) => (
-                <button
-                  key={variant.id}
-                  onClick={() => setActiveVariant(variant.id as CardVariant)}
-                  className={`px-4 py-2 text-xs font-mono tracking-wider rounded-full transition-all duration-200 ${
-                    activeVariant === variant.id 
-                      ? 'bg-white text-black font-bold shadow-lg' 
-                      : `text-gray-400 ${variant.color}`
-                  }`}
-                >
-                  {variant.label}
-                </button>
-              ))}
-            </div>
+            {/* Selector de Rarezas / Variantes (SOLO MUESTRA LAS QUE EXISTEN) */}
+            {validVariants.length > 1 && ( // Solo mostramos si hay más de 1 variante (es decir, normal + algo más)
+              <div 
+                onClick={(e) => e.stopPropagation()} 
+                className="mt-8 flex items-center gap-3 bg-zinc-900/50 p-2 rounded-full border border-white/10 backdrop-blur-sm"
+              >
+                {[
+                  { id: "normal", label: language === "es" ? "Normal" : "Standard", color: "hover:text-red-400 hover:bg-red-950/30" },
+                  { id: "fa", label: "Full Art", color: "hover:text-gray-300 hover:bg-zinc-800" },
+                  { id: "fd", label: language === "es" ? "Dorada" : "Golden", color: "hover:text-yellow-400 hover:bg-yellow-950/30" },
+                  { id: "fv", label: language === "es" ? "Vitral" : "Stained Glass", color: "hover:text-purple-400 hover:bg-purple-950/30" }
+                ].map((variant) => {
+                  // Magia: Solo renderizamos el botón si la imagen de verdad existe en tu servidor
+                  if (!validVariants.includes(variant.id as CardVariant)) return null;
 
+                  return (
+                    <button
+                      key={variant.id}
+                      onClick={() => setActiveVariant(variant.id as CardVariant)}
+                      className={`px-4 py-2 text-xs font-mono tracking-wider rounded-full transition-all duration-200 ${
+                        activeVariant === variant.id 
+                          ? 'bg-white text-black font-bold shadow-lg' 
+                          : `text-gray-400 ${variant.color}`
+                      }`}
+                    >
+                      {variant.label}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+            
           </div>
         </div>
       )}
