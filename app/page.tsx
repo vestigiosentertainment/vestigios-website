@@ -12,7 +12,8 @@ import {
   Image as ImageIcon, 
   Beaker,
   Play,
-  Layers
+  Layers,
+  Download // <-- Añadido el ícono de descarga
 } from "lucide-react"
 
 export default function HomePage() {
@@ -167,6 +168,44 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* --- NUEVO: SECCIÓN DE DESCARGA ÉPICA --- */}
+      <section className="relative py-32 px-4 overflow-hidden border-t border-red-900/30">
+        {/* Fondo animado épico */}
+        <div className="absolute inset-0 bg-[url('/dark-gothic-trading-card-game-cards-blood-and-shad.jpg')] bg-cover bg-center opacity-20 scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-radial-gradient from-red-900/20 to-transparent pointer-events-none" />
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+            <Sparkles className="w-8 h-8 text-red-500 mx-auto mb-6 animate-pulse" />
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)] tracking-tight">
+                {language === "es" ? "EL ABISMO SE HA ABIERTO" : "THE ABYSS HAS OPENED"}
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto text-pretty">
+                {language === "es" 
+                 ? "La espera ha terminado. Descarga la versión oficial y adéntrate en las sombras de Vestigios. ¿Tienes lo necesario para sobrevivir?" 
+                 : "The wait is over. Download the official release and step into the shadows of Vestigios. Do you have what it takes to survive?"}
+            </p>
+            
+            <div className="flex justify-center">
+                <a 
+                    href="/Vestigios_de_Sangre.rar" 
+                    download
+                    className="group relative inline-flex items-center justify-center px-12 py-6 font-bold text-white transition-all duration-300 bg-red-800 hover:bg-red-700 rounded-sm overflow-hidden border border-red-500 shadow-[0_0_40px_rgba(220,38,38,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.7)] hover:-translate-y-1"
+                >
+                    <span className="absolute inset-0 w-full h-full -mt-1 rounded-sm opacity-30 bg-gradient-to-b from-transparent via-transparent to-black" />
+                    <span className="relative flex items-center gap-4 uppercase tracking-[0.2em] text-sm md:text-base">
+                        <Download className="w-5 h-5 group-hover:animate-bounce" />
+                        {language === "es" ? "Descargar Cliente Oficial" : "Download Official Client"}
+                    </span>
+                </a>
+            </div>
+            
+            <p className="text-xs text-gray-500 font-mono mt-6 uppercase tracking-widest">
+                {language === "es" ? "Versión 1.0 (BETA) — Disponible para Windows" : "Version 1.0 (BETA) — Available for Windows"}
+            </p>
+        </div>
+      </section>
+
       {/* --- 4. SECCIÓN: LORE / GÉNESIS --- */}
       <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
@@ -218,7 +257,7 @@ export default function HomePage() {
                         <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Facciones" : "Factions"}</p>
                     </div>
                     <div>
-                        <p className="text-3xl font-bold text-white">200+</p>
+                        <p className="text-3xl font-bold text-white">230</p>
                         <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Cartas Base" : "Base Cards"}</p>
                     </div>
                 </div>
@@ -244,9 +283,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- 6. GALERÍA DE CARTAS (ESTILO MAGIC SPOILER) --- */}
+      {/* --- 6. GALERÍA DE CARTAS --- */}
       <section className="relative py-24 border-t border-white/10 overflow-hidden bg-black">
-        {/* Decoración de fondo */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-full bg-gradient-to-b from-red-900/5 to-transparent pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
@@ -262,22 +300,23 @@ export default function HomePage() {
                     : "Explore the full visual spoiler. Study synergies, discover the dark art, and prepare to build your ultimate deck with the 230 cards of the base set."}
             </p>
 
-            {/* Abanico visual de cartas usando las imágenes que subiste (.jpg en minúscula y unoptimized) */}
             <div className="flex justify-center items-center -space-x-12 md:-space-x-8 mb-12 scale-75 md:scale-100">
-                {[1, 2, 3, 4, 5].map((num, idx) => (
+                {[1, 2, 3, 4, 5].map((num, idx) => {
+                    const fileId = num.toString().padStart(3, '0');
+                    return (
                     <div 
                         key={num} 
                         className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
                     >
                         <Image
-                            src={`/images/cards/${num}.jpg`}
+                            src={`/images/cards/ds-${fileId}.jpg`}
                             alt={`Card Preview ${num}`}
                             fill
                             unoptimized 
                             className="object-cover"
                         />
                     </div>
-                ))}
+                )})}
             </div>
 
             <Link 
