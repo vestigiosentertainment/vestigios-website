@@ -13,25 +13,45 @@ import {
   ChevronLeft,
   ChevronRight,
   Lock,
-  Info
+  Info,
+  Layers
 } from "lucide-react"
+
+type CardVariant = "normal" | "fa" | "fd" | "fv"
+
+interface CardData {
+  id: number
+  name: string
+  isRevealed: boolean
+  image: string | null
+  variants: {
+    normal: string
+    fa: string
+    fd: string
+    fv: string
+  } | null
+}
 
 export default function CardsPage() {
   const { language } = useLanguage()
   const [searchQuery, setSearchQuery] = useState("")
   
-  // Estado para el Inspector de Cartas
-  const [selectedCard, setSelectedCard] = useState<{ id: number; name: string; image: string | null; isRevealed: boolean } | null>(null)
+  // Estados para el Inspector de Cartas
+  const [selectedCard, setSelectedCard] = useState<CardData | null>(null)
+  const [activeVariant, setActiveVariant] = useState<CardVariant>("normal")
 
   // --- CONFIGURACIÓN DEL SET ---
-  const totalCards = 230
-  // Al poner esto en 0, todas las cartas quedan ocultas (estado de candado)
-  const revealedCards = 0 
+  const totalCards = 318
+  const revealedCards = 318 // Mantén esto en 318 para mostrar todas
 
-  // Generamos el array completo de 230, pero marcamos cuáles están reveladas
-  const allCards = Array.from({ length: totalCards }, (_, i) => {
+  // Generamos el array de cartas con el nuevo formato de nombres (ds-XXX)
+  const allCards: CardData[] = Array.from({ length: totalCards }, (_, i) => {
     const id = i + 1;
     const isRevealed = id <= revealedCards;
+    
+    // Asumiendo que el ID en el nombre del archivo no lleva ceros a la izquierda según tu ejemplo (ds-143.jpg)
+    // Si llevara ceros (ej: ds-001.jpg), usaríamos: id.toString().padStart(3, '0')
+    const fileId = id.toString(); 
     
     return {
       id,
@@ -39,7 +59,13 @@ export default function CardsPage() {
       name: isRevealed 
         ? (language === "es" ? `Carta #${id}` : `Card #${id}`) 
         : (language === "es" ? "En espera..." : "Pending..."),
-      image: isRevealed ? `/images/cards/${id}.jpg` : null
+      image: isRevealed ? `/images/cards/ds-${fileId}.jpg` : null,
+      variants: isRevealed ? {
+        normal: `/images/cards/ds-${fileId}.jpg`,
+        fa: `/images/cards/ds-${fileId}.fa.jpg`,
+        fd: `/images/cards/ds-${fileId}.fd.jpg`,
+        fv: `/images/cards/ds-${fileId}.fv.jpg`,
+      } : null
     }
   })
 
@@ -49,28 +75,36 @@ export default function CardsPage() {
     return card.id.toString().includes(searchQuery)
   })
 
-  // Funciones para navegar dentro del Inspector (SOLO cartas reveladas)
+  // --- FUNCIONES DEL INSPECTOR ---
+  const openInspector = (card: CardData) => {
+    if (!card.isRevealed) return
+    setSelectedCard(card)
+    setActiveVariant("normal") // Siempre abrimos en la versión normal por defecto
+  }
+
   const handlePrevCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
     const revealedList = allCards.filter(c => c.isRevealed)
-    if (revealedList.length === 0) return // Prevención de errores si no hay cartas
+    if (revealedList.length === 0) return
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const prevIdx = currentIdx === 0 ? revealedList.length - 1 : currentIdx - 1
     setSelectedCard(revealedList[prevIdx])
+    setActiveVariant("normal")
   }
 
   const handleNextCard = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
     if (!selectedCard) return
     const revealedList = allCards.filter(c => c.isRevealed)
-    if (revealedList.length === 0) return // Prevención de errores si no hay cartas
+    if (revealedList.length === 0) return
     const currentIdx = revealedList.findIndex(c => c.id === selectedCard.id)
     const nextIdx = currentIdx === revealedList.length - 1 ? 0 : currentIdx + 1
     setSelectedCard(revealedList[nextIdx])
+    setActiveVariant("normal")
   }
 
-  // Atajos de teclado para el Inspector
+  // Atajos de teclado
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedCard) return
@@ -97,7 +131,7 @@ export default function CardsPage() {
           {language === "es" ? "Volver al Inicio" : "Back to Home"}
         </Link>
 
-        {/* --- CABECERA DE LA PÁGINA --- */}
+        {/* --- CABECERA --- */}
         <div className="mb-8 border-b border-white/10 pb-8">
           <div className="flex items-center gap-2 text-red-500 mb-3">
             <Sparkles className="w-4 h-4" />
@@ -113,7 +147,7 @@ export default function CardsPage() {
           </p>
         </div>
 
-        {/* --- COMUNICADO PROFESIONAL DE DESARROLLO --- */}
+        {/* --- AVISO DESARROLLO --- */}
         <div className="mb-12 p-5 md:p-6 bg-zinc-900/40 border border-white/10 rounded-sm flex items-start gap-4">
           <Info className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
           <div className="space-y-1.5">
@@ -134,7 +168,7 @@ export default function CardsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input 
               type="text"
-              placeholder={language === "es" ? "Buscar por número (ej: 42)..." : "Search by number (e.g., 42)..."}
+              placeholder={language === "es" ? "Buscar por número (ej: 143)..." : "Search by number (e.g., 143)..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-black border border-white/10 rounded-sm py-2.5 pl-10 pr-4 text-sm font-mono text-white focus:outline-none focus:border-red-700 transition-colors placeholder:text-gray-600"
@@ -143,9 +177,9 @@ export default function CardsPage() {
 
           <div className="text-xs font-mono text-gray-400 uppercase tracking-wider flex items-center gap-4">
             <div className="flex items-center gap-1.5">
-              <Eye className="w-4 h-4 text-red-500" />
+              <Layers className="w-4 h-4 text-red-500" />
               <span>
-                {language === "es" ? "Reveladas:" : "Revealed:"} <strong className="text-white">{revealedCards}</strong> / {totalCards}
+                {language === "es" ? "Total Cartas:" : "Total Cards:"} <strong className="text-white">{totalCards}</strong>
               </span>
             </div>
           </div>
@@ -157,7 +191,7 @@ export default function CardsPage() {
             {filteredCards.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => card.isRevealed && setSelectedCard(card)}
+                onClick={() => openInspector(card)}
                 className={`group relative bg-zinc-900/20 border border-white/5 rounded-lg overflow-hidden flex flex-col ${card.isRevealed ? 'cursor-pointer transition-all duration-300 hover:border-red-900/40 hover:shadow-[0_0_30px_rgba(153,27,27,0.15)]' : 'opacity-60'}`}
               >
                 <div className="relative aspect-[1/1.4] w-full overflow-hidden bg-zinc-950 flex items-center justify-center">
@@ -189,7 +223,7 @@ export default function CardsPage() {
                     {card.name}
                   </span>
                   <span className={`text-[10px] font-mono tracking-wider ${card.isRevealed ? 'text-gray-500' : 'text-gray-700'}`}>
-                    {card.id.toString().padStart(3, '0')}/{totalCards}
+                    DS-{card.id.toString().padStart(3, '0')}
                   </span>
                 </div>
               </div>
@@ -210,11 +244,11 @@ export default function CardsPage() {
         )}
       </div>
 
-      {/* --- INSPECTOR OVERLAY --- */}
-      {selectedCard && selectedCard.image && (
+      {/* --- INSPECTOR OVERLAY CON SELECTOR DE VARIANTES --- */}
+      {selectedCard && selectedCard.variants && (
         <div 
           onClick={() => setSelectedCard(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-fade-in animate-duration-200"
         >
           <button 
             onClick={() => setSelectedCard(null)}
@@ -223,45 +257,77 @@ export default function CardsPage() {
             <X className="w-6 h-6" />
           </button>
 
-          <div className="relative flex items-center justify-center max-w-4xl w-full">
-            <button 
-              onClick={handlePrevCard}
-              className="absolute left-2 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
-            >
-              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-            </button>
+          <div className="relative flex flex-col items-center justify-center max-w-4xl w-full">
+            
+            <div className="flex items-center justify-center w-full relative">
+              <button 
+                onClick={handlePrevCard}
+                className="absolute left-0 md:-left-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
+              >
+                <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+              </button>
 
-            <div 
-              onClick={(e) => e.stopPropagation()} 
-              className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden border-2 border-red-900/50 shadow-[0_0_50px_rgba(220,38,38,0.25)] flex flex-col"
-            >
-              <div className="relative flex-1 w-full h-full">
-                <Image
-                  src={selectedCard.image}
-                  alt={selectedCard.name}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                  priority
-                />
+              <div 
+                onClick={(e) => e.stopPropagation()} 
+                className="relative w-[340px] h-[476px] sm:w-[420px] sm:h-[588px] md:w-[460px] md:h-[644px] bg-zinc-950 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col transition-all duration-300"
+                style={{
+                  borderColor: 
+                    activeVariant === 'fa' ? 'rgba(200,200,200,0.3)' : 
+                    activeVariant === 'fd' ? 'rgba(234, 179, 8, 0.4)' : 
+                    activeVariant === 'fv' ? 'rgba(168, 85, 247, 0.4)' : 
+                    'rgba(220,38,38,0.25)',
+                  borderWidth: '2px',
+                  boxShadow: 
+                    activeVariant === 'fd' ? '0 0 50px rgba(234, 179, 8, 0.15)' : 
+                    activeVariant === 'fv' ? '0 0 50px rgba(168, 85, 247, 0.15)' : 
+                    '0 0 50px rgba(220,38,38,0.25)'
+                }}
+              >
+                <div className="relative flex-1 w-full h-full">
+                  <Image
+                    src={selectedCard.variants[activeVariant]}
+                    alt={`${selectedCard.name} - ${activeVariant}`}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
-              
-              <div className="bg-zinc-950 px-6 py-4 border-t border-white/10 flex items-center justify-between">
-                <span className="font-serif text-lg font-bold text-white tracking-wide">
-                  {selectedCard.name}
-                </span>
-                <span className="font-mono text-xs text-red-500 tracking-widest bg-red-950/40 px-3 py-1 rounded-sm border border-red-900/30">
-                  ID: {selectedCard.id.toString().padStart(3, '0')} / {totalCards}
-                </span>
-              </div>
+
+              <button 
+                onClick={handleNextCard}
+                className="absolute right-0 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
+              >
+                <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+              </button>
             </div>
 
-            <button 
-              onClick={handleNextCard}
-              className="absolute right-2 md:-right-16 z-10 p-3 bg-zinc-900/80 border border-white/10 hover:border-red-800 text-white rounded-full hover:bg-red-950/30 transition-all shadow-2xl group"
+            {/* Selector de Rarezas / Variantes */}
+            <div 
+              onClick={(e) => e.stopPropagation()} 
+              className="mt-8 flex items-center gap-3 bg-zinc-900/50 p-2 rounded-full border border-white/10 backdrop-blur-sm"
             >
-              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-            </button>
+              {[
+                { id: "normal", label: language === "es" ? "Normal" : "Standard", color: "hover:text-red-400 hover:bg-red-950/30" },
+                { id: "fa", label: "Full Art", color: "hover:text-gray-300 hover:bg-zinc-800" },
+                { id: "fd", label: language === "es" ? "Dorada" : "Golden", color: "hover:text-yellow-400 hover:bg-yellow-950/30" },
+                { id: "fv", label: language === "es" ? "Vitral" : "Stained Glass", color: "hover:text-purple-400 hover:bg-purple-950/30" }
+              ].map((variant) => (
+                <button
+                  key={variant.id}
+                  onClick={() => setActiveVariant(variant.id as CardVariant)}
+                  className={`px-4 py-2 text-xs font-mono tracking-wider rounded-full transition-all duration-200 ${
+                    activeVariant === variant.id 
+                      ? 'bg-white text-black font-bold shadow-lg' 
+                      : `text-gray-400 ${variant.color}`
+                  }`}
+                >
+                  {variant.label}
+                </button>
+              ))}
+            </div>
+
           </div>
         </div>
       )}
