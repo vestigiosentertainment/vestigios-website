@@ -13,29 +13,29 @@ import {
   Beaker,
   Play,
   Layers,
-  Download // <-- Añadido el ícono de descarga
+  Download
 } from "lucide-react"
 
 export default function HomePage() {
   const { t, language } = useLanguage()
 
-  // NOTICIAS ACTUALIZADAS
+  // NOTICIAS ACTUALIZADAS (Jonathan de primero y fechas corregidas)
   const latestNews = [
     {
       id: 0,
+      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      date: "2026-07-26",
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
+      href: "/legal/discover/articles/interview-jonathan-torres-CEO"
+    },
+    {
+      id: 1,
       tag: language === "es" ? "Diseño y Balance" : "Design & Balance",
       title: language === "es" ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" : "Ruki: «We don't create cards to define a meta, we create a world»",
       date: "2026-03-03",
       image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
       href: "/legal/discover/articles/interview-ruki" 
-    },
-    {
-      id: 1,
-      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
-      date: "2026-01-27",
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
-      href: "/legal/discover/articles/interview-jonathan-torres" 
     },
     {
       id: 2,
@@ -170,7 +170,6 @@ export default function HomePage() {
 
       {/* --- NUEVO: SECCIÓN DE DESCARGA ÉPICA --- */}
       <section className="relative py-32 px-4 overflow-hidden border-t border-red-900/30">
-        {/* Fondo animado épico */}
         <div className="absolute inset-0 bg-[url('/dark-gothic-trading-card-game-cards-blood-and-shad.jpg')] bg-cover bg-center opacity-20 scale-105" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-radial-gradient from-red-900/20 to-transparent pointer-events-none" />

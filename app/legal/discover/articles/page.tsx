@@ -8,37 +8,36 @@ import { Calendar, User, ArrowRight, Feather } from "lucide-react"
 export default function ArticlesPage() {
   const { t, language } = useLanguage()
 
-  // --- ARTÍCULO DESTACADO DE LA SEMANA (RUKI) ---
+  // --- ARTÍCULO DESTACADO DE LA SEMANA (JONATHAN TORRES - ALPHA LAUNCH) ---
   const featuredArticle = {
     title: language === "es" 
-        ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" 
-        : "Ruki: «We don't create cards to define a meta, we create a world»",
+      ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" 
+      : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
     excerpt: language === "es" 
-        ? "Nuestro Director de Diseño y Balance habla sobre llevar el juego al límite, el poder de la comunidad y la evolución del meta." 
-        : "Our Director of Design and Balance talks about pushing the game to the limit, community power, and the evolution of the meta.",
-    date: "2026-03-03", 
+      ? "El fundador de Vestigios rompe el silencio en el lanzamiento de la Alpha. Un manifiesto sobre la justicia al jugador, la oscuridad necesaria y por qué pensar debe valer más que pagar." 
+      : "The founder of Vestigios breaks the silence on the Alpha launch. A manifesto on player justice, necessary darkness, and why thinking must be worth more than paying.",
+    date: "2026-07-26", 
     author: "Editorial",
-    image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
-    category: language === "es" ? "Diseño y Balance" : "Design & Balance",
-    href: "/legal/discover/articles/interview-ruki" 
+    image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
+    category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
+    href: "/legal/discover/articles/interview-jonathan-torres-CEO" 
   }
 
   // --- LISTA COMPLETA DE ARTÍCULOS ---
-  // Jonathan pasa a ser el primero de la lista normal
   const articles = [
     {
       id: 0, 
       title: language === "es" 
-        ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" 
-        : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+          ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" 
+          : "Ruki: «We don't create cards to define a meta, we create a world»",
       excerpt: language === "es" 
-        ? "El fundador de Vestigios rompe el silencio. Un manifiesto sobre la justicia al jugador, la oscuridad necesaria y por qué pensar debe valer más que pagar." 
-        : "The founder of Vestigios breaks the silence. A manifesto on player justice, necessary darkness, and why thinking must be worth more than paying.",
-      date: "2026-01-27", 
+          ? "Nuestro Director de Diseño y Balance habla sobre llevar el juego al límite, el poder de la comunidad y la evolución del meta." 
+          : "Our Director of Design and Balance talks about pushing the game to the limit, community power, and the evolution of the meta.",
+      date: "2026-03-03", 
       author: "Editorial",
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
-      category: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      href: "/legal/discover/articles/interview-jonathan-torres" 
+      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
+      category: language === "es" ? "Diseño y Balance" : "Design & Balance",
+      href: "/legal/discover/articles/interview-ruki" 
     },
     {
       id: 1, 
@@ -137,20 +136,20 @@ export default function ArticlesPage() {
           <div className="h-0.5 w-full bg-gradient-to-r from-red-900 via-red-900/20 to-transparent opacity-50" />
         </div>
 
-        {/* DESTACADO (RUKI) */}
+        {/* DESTACADO */}
         <div className="relative h-[400px] md:h-[500px] w-full rounded-sm overflow-hidden group mb-20 border border-red-900/30 shadow-[0_0_50px_rgba(127,29,29,0.2)]">
             <Image
                 src={featuredArticle.image}
                 alt="Featured Article"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                className="object-cover object-top transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-50"
+                className="object-cover object-center transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-50"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             
             <div className="absolute top-8 left-8">
                  <span className="animate-pulse px-3 py-1 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-lg shadow-red-900/50">
-                    {language === "es" ? "Nota de Portada" : "Cover Story"}
+                    {language === "es" ? "Lanzamiento Alpha" : "Alpha Launch"}
                  </span>
             </div>
 
@@ -181,7 +180,7 @@ export default function ArticlesPage() {
             </div>
         </div>
 
-        {/* GRID SECUNDARIA (RESTO DEL EQUIPO Y LORE) */}
+        {/* GRID SECUNDARIA */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <article 
