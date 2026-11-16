@@ -42,14 +42,14 @@ export function FactionShowcase() {
 
         <TabList
           label={es ? "Facciones" : "Factions"}
-          className="mx-auto mb-12 flex max-w-4xl snap-x gap-2 overflow-x-auto pb-2 [scrollbar-width:none] md:justify-center"
+          className="mx-auto mb-12 flex max-w-5xl flex-wrap gap-2 [justify-content:safe_center]"
         >
           {FACTIONS.map((f, i) => (
             <button
               key={f.key}
               {...tab(i)}
               style={{ "--accent": f.accent } as React.CSSProperties}
-              className="shrink-0 snap-start rounded-sm border border-white/10 px-5 py-3 font-serif text-sm font-bold uppercase tracking-wider text-gray-400 transition hover:border-white/30 hover:text-white aria-selected:border-[var(--accent)] aria-selected:bg-[color-mix(in_oklch,var(--accent)_18%,transparent)] aria-selected:text-white"
+              className="rounded-sm border border-white/10 px-3 py-2 font-serif text-xs sm:px-5 sm:py-3 sm:text-sm font-bold uppercase tracking-wider text-gray-400 transition hover:border-white/30 hover:text-white aria-selected:border-[var(--accent)] aria-selected:bg-[color-mix(in_oklch,var(--accent)_18%,transparent)] aria-selected:text-white"
             >
               {t(`project.factions.${f.key}.title`)}
             </button>

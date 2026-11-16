@@ -69,7 +69,7 @@ export function HowItWorks() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[18rem_1fr]">
-          <TabList label={es ? "Modos de juego" : "Game modes"} className="flex gap-2 overflow-x-auto [scrollbar-width:none] lg:flex-col">
+          <TabList label={es ? "Modos de juego" : "Game modes"} className="flex flex-wrap gap-2 lg:flex-col lg:flex-nowrap">
             {modes.map((m, i) => (
               <button
                 key={m.label}
