@@ -3,13 +3,15 @@
 import { useLanguage } from "@/lib/language-context"
 // CAMBIO: Usamos BookOpen para las historias y Globe para el multiverso
 import { CheckCircle2, Clock, Globe, BookOpen } from "lucide-react"
+import { BetaRoadmap } from "@/components/beta/beta-roadmap"
+import { BETA } from "@/lib/beta"
 
 export default function StatusPage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   return (
     <div className="min-h-screen py-12 px-4 bg-black text-white selection:bg-red-900 selection:text-white">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         
         {/* Header */}
         <div className="mb-16 text-center">
@@ -20,6 +22,14 @@ export default function StatusPage() {
             {t("status.subtitle")}
           </p>
         </div>
+
+        {/* --- ROADMAP BETA --- */}
+        <section aria-labelledby="roadmap-title" className="mb-20">
+          <h2 id="roadmap-title" className="text-2xl font-serif font-bold text-white mb-8 border-l-4 border-blood-bright pl-4">
+            {language === "es" ? `Camino a la Beta ${BETA.year}` : `Road to the ${BETA.year} Beta`}
+          </h2>
+          <BetaRoadmap />
+        </section>
 
         {/* --- SECCIÓN 1: PROYECTO PRINCIPAL (TCG) --- */}
         <div className="space-y-8 mb-20">
@@ -67,9 +77,9 @@ export default function StatusPage() {
 
         {/* --- SECCIÓN 2: EXPANSIÓN DEL UNIVERSO --- */}
         <div className="mb-16">
-            <h3 className="text-2xl font-serif font-bold text-white mb-8 border-l-4 border-indigo-500 pl-4 flex items-center gap-3">
+            <h2 className="text-2xl font-serif font-bold text-white mb-8 border-l-4 border-indigo-500 pl-4 flex items-center gap-3">
                 {t("status.future.title")}
-            </h3>
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
@@ -78,9 +88,9 @@ export default function StatusPage() {
                     <div className="mb-6 p-3 bg-black/50 w-fit rounded-full border border-white/10 group-hover:border-indigo-500/50 transition-colors">
                         <Globe className="w-8 h-8 text-indigo-400" />
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-3 font-serif">
+                    <h3 className="text-xl font-bold text-white mb-3 font-serif">
                         {t("status.mmo.title")}
-                    </h4>
+                    </h3>
                     <div className="inline-block px-3 py-1 bg-indigo-950/40 text-indigo-300 border border-indigo-900/50 mb-4 text-[10px] font-bold uppercase tracking-widest rounded-sm">
                         {t("status.mmo.status")}
                     </div>
@@ -94,9 +104,9 @@ export default function StatusPage() {
                     <div className="mb-6 p-3 bg-black/50 w-fit rounded-full border border-white/10 group-hover:border-fuchsia-500/50 transition-colors">
                         <BookOpen className="w-8 h-8 text-fuchsia-400" />
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-3 font-serif">
+                    <h3 className="text-xl font-bold text-white mb-3 font-serif">
                         {t("status.secret.title")}
-                    </h4>
+                    </h3>
                     <div className="inline-block px-3 py-1 bg-fuchsia-950/40 text-fuchsia-300 border border-fuchsia-900/50 mb-4 text-[10px] font-bold uppercase tracking-widest rounded-sm">
                         {t("status.secret.status")}
                     </div>

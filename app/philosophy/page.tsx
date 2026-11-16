@@ -10,17 +10,17 @@ export default function PhilosophyPage() {
     {
       title: t("philosophy.respect.title"),
       description: t("philosophy.respect.description"),
-      image: "01.jpg",
+      image: "/01.jpg",
     },
     {
       title: t("philosophy.narrative.title"),
       description: t("philosophy.narrative.description"),
-      image: "02.jpg",
+      image: "/02.jpg",
     },
     {
       title: t("philosophy.consequence.title"),
       description: t("philosophy.consequence.description"),
-      image: "03.jpg",
+      image: "/03.jpg",
     },
   ]
 
@@ -56,6 +56,7 @@ export default function PhilosophyPage() {
                   src={principle.image || "/placeholder.svg"}
                   alt={principle.title}
                   fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   className="object-contain transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />

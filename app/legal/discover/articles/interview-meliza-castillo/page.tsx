@@ -45,6 +45,7 @@ export default function MelizaInterviewPage() {
                 src="/ancient-book-open-with-mystical-light-dark-library.jpg" // Usamos la imagen de "libros/lore" como referencia a su trabajo
                 alt="Meliza Castillo Lore"
                 fill
+            sizes="100vw"
                 className="object-cover"
                 priority
             />

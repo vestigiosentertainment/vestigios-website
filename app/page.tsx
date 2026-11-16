@@ -1,372 +1,326 @@
 "use client"
 
-import { useLanguage } from "@/lib/language-context"
 import Image from "next/image"
 import Link from "next/link"
-import { 
-  ArrowRight, 
-  Calendar, 
-  Sparkles, 
-  Shield, 
-  Scroll, 
-  Image as ImageIcon, 
-  Beaker,
-  Play,
-  Layers,
-  Download
-} from "lucide-react"
+import { ArrowRight, Calendar, Beaker, Layers, Download, Swords, Users, Bug, Feather, Crosshair, Moon, Monitor } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
+import { BETA, pick } from "@/lib/beta"
+import { BetaCountdown } from "@/components/beta/beta-countdown"
+import { BetaRoadmap } from "@/components/beta/beta-roadmap"
+import { BetaFaq } from "@/components/beta/beta-faq"
+import { LiteYouTube } from "@/components/lite-youtube"
+import { FactionShowcase } from "@/components/home/faction-showcase"
+import { HowItWorks } from "@/components/home/how-it-works"
+
+function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: string }) {
+  return (
+    <div className="mb-12 text-center">
+      <span className="eyebrow mb-3 block">{eyebrow}</span>
+      <h2 id={id} className="font-serif text-4xl font-bold text-white md:text-5xl">
+        {title}
+      </h2>
+      <div className="mx-auto mt-5 h-px w-24 bg-gradient-to-r from-transparent via-blood-bright to-transparent" />
+    </div>
+  )
+}
 
 export default function HomePage() {
   const { t, language } = useLanguage()
+  const es = language === "es"
 
-  // NOTICIAS ACTUALIZADAS (Jonathan de primero y fechas corregidas)
   const latestNews = [
     {
-      id: 0,
-      tag: language === "es" ? "Entrevista Fundador" : "Founder Interview",
-      title: language === "es" ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»" : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
+      tag: es ? "Entrevista Fundador" : "Founder Interview",
+      title: es
+        ? "Jonathan Torres: «No estamos haciendo un juego, estamos creando un legado»"
+        : "Jonathan Torres: «We are not making a game, we are creating a legacy»",
       date: "2026-07-26",
-      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg", 
-      href: "/legal/discover/articles/interview-jonathan-torres-CEO"
+      image: "/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg",
+      href: "/legal/discover/articles/interview-jonathan-torres-CEO",
     },
     {
-      id: 1,
-      tag: language === "es" ? "Diseño y Balance" : "Design & Balance",
-      title: language === "es" ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»" : "Ruki: «We don't create cards to define a meta, we create a world»",
+      tag: es ? "Diseño y Balance" : "Design & Balance",
+      title: es
+        ? "Ruki: «No creamos cartas para definir un meta, creamos un mundo»"
+        : "Ruki: «We don't create cards to define a meta, we create a world»",
       date: "2026-03-03",
-      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg", 
-      href: "/legal/discover/articles/interview-ruki" 
+      image: "/dark-gothic-trading-card-game-cards-blood-and-shad.jpg",
+      href: "/legal/discover/articles/interview-ruki",
     },
     {
-      id: 2,
-      tag: language === "es" ? "Entrevista Narrativa" : "Narrative Interview",
-      title: language === "es" ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»" : "Meliza Castillo: «Horror is not death, but what you become»",
+      tag: es ? "Entrevista Narrativa" : "Narrative Interview",
+      title: es
+        ? "Meliza Castillo: «El horror no es la muerte, sino en lo que te conviertes»"
+        : "Meliza Castillo: «Horror is not death, but what you become»",
       date: "2026-01-10",
       image: "/ancient-book-open-with-mystical-light-dark-library.jpg",
-      href: "/legal/discover/articles/interview-meliza-castillo"
-    }
+      href: "/legal/discover/articles/interview-meliza-castillo",
+    },
+  ]
+
+  const pillars = [
+    { icon: Feather, title: t("project.features.narrative.title"), text: t("project.features.narrative.desc"), stat: "5", statLabel: es ? "Facciones" : "Factions" },
+    { icon: Crosshair, title: t("project.features.strategic.title"), text: t("project.features.strategic.desc"), stat: "230", statLabel: es ? "Cartas en el set base" : "Base set cards" },
+    { icon: Moon, title: t("project.features.gothic.title"), text: t("project.features.gothic.desc"), stat: "1880", statLabel: es ? "Era victoriana gótica" : "Gothic Victorian era" },
+  ]
+
+  const betaPerks = [
+    { icon: Swords, title: es ? "Juega antes que nadie" : "Play before anyone else", text: es ? "Acceso a la Beta cerrada y a las nuevas cartas antes del lanzamiento." : "Closed Beta access and new cards before launch." },
+    { icon: Bug, title: es ? "Moldea el juego" : "Shape the game", text: es ? "Tus reportes y partidas definen el balance final del set base." : "Your reports and matches shape the final balance of the base set." },
+    { icon: Users, title: es ? "Comunidad fundadora" : "Founding community", text: es ? "Contacto directo con el equipo de diseño y narrativa." : "Direct contact with the design and narrative team." },
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white">
-      
-      {/* --- 1. HERO SECTION --- */}
-      <section className="relative h-[95vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/dark-gothic-castle-shrouded-in-mist-and-fog-atmosp.jpg" 
-            alt="Vestigios Universe Atmosphere"
-            fill
-            className="object-cover opacity-60 animate-pulse-slow" 
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
-        </div>
+    <div className="bg-black text-white">
+      {/* --- HERO: BETA 2027 --- */}
+      <section className="relative -mt-20 flex min-h-[100svh] items-center justify-center overflow-hidden">
+        <Image src="/dark-gothic-castle-shrouded-in-mist-and-fog-atmosp.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,black_95%)]" />
 
-        <div className="relative z-10 text-center px-4 max-w-6xl mt-20">
-          <p className="text-red-500 font-bold tracking-[0.3em] uppercase mb-4 text-sm md:text-base animate-fade-in-up">
-            {language === "es" ? "Estrategia Gótica TCG" : "Gothic Strategy TCG"}
+        <div className="relative z-10 mx-auto max-w-6xl px-4 pb-16 pt-28 text-center">
+          <p className="mb-6 inline-flex animate-fade-in-up items-center gap-2 rounded-full border border-blood/50 bg-blood/15 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.25em] text-blood-bright backdrop-blur-sm">
+            <span className="size-1.5 animate-pulse rounded-full bg-blood-bright" aria-hidden />
+            {es ? `Beta cerrada · ${BETA.year}` : `Closed Beta · ${BETA.year}`}
           </p>
-          
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-8 text-white font-serif drop-shadow-2xl">
-            {t("home.hero.title")}
+
+          <h1 className="mb-6 animate-fade-in-up font-serif text-5xl font-bold tracking-tight text-white drop-shadow-2xl [animation-delay:100ms] sm:text-7xl lg:text-8xl">
+            {t("project.title")}
           </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-300 font-light tracking-wide max-w-3xl mx-auto mb-10 text-pretty">
-            {t("home.hero.subtitle")}
+
+          <p className="mx-auto mb-10 max-w-2xl animate-fade-in-up text-xl text-gray-300 [animation-delay:200ms] md:text-2xl">
+            {es
+              ? "Un TCG de estrategia gótica. Cinco facciones, 230 cartas y una guerra por la sangre. Prepárate para la Beta."
+              : "A gothic strategy TCG. Five factions, 230 cards and a war for blood. Get ready for the Beta."}
           </p>
 
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-             <Link 
-               href="/project"
-               className="px-10 py-4 bg-red-800 hover:bg-red-700 text-white font-bold uppercase tracking-widest text-sm transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)]"
-             >
-               {t("nav.project")}
-             </Link>
-             <Link 
-               href="/legal/discover/rules"
-               className="px-10 py-4 border border-white/30 hover:bg-white/10 text-white font-bold uppercase tracking-widest text-sm transition-all backdrop-blur-sm"
-             >
-               {language === "es" ? "Aprender a Jugar" : "Learn to Play"}
-             </Link>
+          <div className="mb-12 flex animate-fade-in-up flex-col items-center justify-center gap-4 [animation-delay:300ms] sm:flex-row">
+            <Link
+              href="/join-tester"
+              className="group inline-flex items-center gap-3 rounded-sm bg-blood px-10 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_0_30px_oklch(0.5_0.19_25/0.45)] transition hover:bg-blood-bright hover:shadow-[0_0_50px_oklch(0.62_0.21_25/0.6)]"
+            >
+              {es ? "Únete a la Beta" : "Join the Beta"}
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </Link>
+            <Link
+              href="/legal/discover/rules"
+              className="rounded-sm border border-white/30 px-10 py-4 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-sm transition hover:bg-white/10"
+            >
+              {es ? "Aprender a jugar" : "Learn to Play"}
+            </Link>
+          </div>
+
+          <div className="animate-fade-in-up [animation-delay:400ms]">
+            <BetaCountdown />
           </div>
         </div>
       </section>
 
-      {/* --- 2. LATEST NEWS --- */}
-      <section className="py-24 px-4 max-w-7xl mx-auto border-t border-white/10">
-         <div className="flex items-end justify-between mb-12">
-            <div>
-                <h2 className="text-4xl font-serif font-bold text-white mb-2">
-                    {language === "es" ? "Últimas Noticias" : "Latest News"}
-                </h2>
-                <div className="h-1 w-20 bg-red-800" />
-            </div>
-            <Link href="/legal/discover/articles" className="hidden md:flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm uppercase font-bold tracking-wider">
-                {language === "es" ? "Ver todo" : "View All"} <ArrowRight className="w-4 h-4" />
-            </Link>
-         </div>
+      {/* --- FACCIONES (pestañas) --- */}
+      <FactionShowcase />
 
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {latestNews.map((news) => (
-                <Link key={news.id} href={news.href} className="group block bg-zinc-900/50 border border-white/5 hover:border-red-900/50 transition-all duration-300 rounded-sm overflow-hidden">
-                    <div className="relative h-56 w-full overflow-hidden">
-                        <Image 
-                            src={news.image} 
-                            alt={news.title} 
-                            fill 
-                            className="object-cover object-top group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute top-4 left-4 bg-black/80 px-3 py-1 text-xs font-mono text-white border border-white/10 uppercase tracking-wider">
-                            {news.tag}
-                        </div>
-                    </div>
-                    <div className="p-6">
-                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-3 font-mono">
-                            <Calendar className="w-3 h-3" /> {news.date}
-                        </div>
-                        <h3 className="text-xl font-bold font-serif text-white group-hover:text-red-400 transition-colors leading-tight text-balance">
-                            {news.title}
-                        </h3>
-                    </div>
-                </Link>
-            ))}
-         </div>
-         
-         <div className="mt-8 text-center md:hidden">
-            <Link href="/legal/discover/articles" className="text-sm text-gray-400 underline decoration-red-900 underline-offset-4">
-                {language === "es" ? "Ver todos los artículos" : "View all articles"}
-            </Link>
-         </div>
-      </section>
+      {/* --- CÓMO FUNCIONA (modos de juego) --- */}
+      <HowItWorks />
 
-      {/* --- 3. SECCIÓN: TRAILER / VIDEO --- */}
-      <section className="py-24 px-4 bg-zinc-950/50 border-t border-white/10 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-12">
-                <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
-                    {language === "es" ? "Universo Vestigios" : "Vestigios Universe"}
-                </span>
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-                    {language === "es" ? "Descubre la Oscuridad" : "Discover the Darkness"}
-                </h2>
-                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
-            </div>
-
-            <div className="max-w-5xl mx-auto relative w-full aspect-video rounded-sm overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(220,38,38,0.15)] group">
-                <iframe 
-                    src="https://www.youtube.com/embed/77APjIIEGmc?si=f29VTMOA4qNmX21G&rel=0&modestbranding=1" 
-                    title="Vestigios — Official Universe Introduction"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                    className="absolute top-0 left-0 w-full h-full grayscale-[20%] transition-all duration-700 group-hover:grayscale-0"
-                ></iframe>
-            </div>
-        </div>
-      </section>
-
-      {/* --- NUEVO: SECCIÓN DE DESCARGA ÉPICA --- */}
-      <section className="relative py-32 px-4 overflow-hidden border-t border-red-900/30">
-        <div className="absolute inset-0 bg-[url('/dark-gothic-trading-card-game-cards-blood-and-shad.jpg')] bg-cover bg-center opacity-20 scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-radial-gradient from-red-900/20 to-transparent pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-            <Sparkles className="w-8 h-8 text-red-500 mx-auto mb-6 animate-pulse" />
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)] tracking-tight">
-                {language === "es" ? "EL ABISMO SE HA ABIERTO" : "THE ABYSS HAS OPENED"}
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto text-pretty">
-                {language === "es" 
-                 ? "La espera ha terminado. Descarga la versión oficial y adéntrate en las sombras de Vestigios. ¿Tienes lo necesario para sobrevivir?" 
-                 : "The wait is over. Download the official release and step into the shadows of Vestigios. Do you have what it takes to survive?"}
-            </p>
-            
-            <div className="flex justify-center">
-                <a 
-                    href="/Vestigios_de_Sangre.rar" 
-                    download
-                    className="group relative inline-flex items-center justify-center px-12 py-6 font-bold text-white transition-all duration-300 bg-red-800 hover:bg-red-700 rounded-sm overflow-hidden border border-red-500 shadow-[0_0_40px_rgba(220,38,38,0.4)] hover:shadow-[0_0_60px_rgba(220,38,38,0.7)] hover:-translate-y-1"
-                >
-                    <span className="absolute inset-0 w-full h-full -mt-1 rounded-sm opacity-30 bg-gradient-to-b from-transparent via-transparent to-black" />
-                    <span className="relative flex items-center gap-4 uppercase tracking-[0.2em] text-sm md:text-base">
-                        <Download className="w-5 h-5 group-hover:animate-bounce" />
-                        {language === "es" ? "Descargar Cliente Oficial" : "Download Official Client"}
-                    </span>
-                </a>
-            </div>
-            
-            <p className="text-xs text-gray-500 font-mono mt-6 uppercase tracking-widest">
-                {language === "es" ? "Versión 1.0 (BETA) — Disponible para Windows" : "Version 1.0 (BETA) — Available for Windows"}
-            </p>
-        </div>
-      </section>
-
-      {/* --- 4. SECCIÓN: LORE / GÉNESIS --- */}
-      <section className="relative py-32 px-4 border-t border-white/10 bg-gradient-to-b from-black via-zinc-950 to-black">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/5 blur-[100px] rounded-full pointer-events-none" />
-
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
-            <div className="mb-12">
-                <span className="text-red-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">
-                    Lore
-                </span>
-                <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-8 leading-tight">
-                    {language === "es" ? "Génesis: La Fractura Primordial" : "Genesis: The Primordial Fracture"}
-                </h2>
-                <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-red-800 to-transparent mx-auto" />
-            </div>
-
-            <div className="flex justify-center">
-                <Link 
-                    href="/lore/genesis" 
-                    className="group inline-flex items-center gap-3 text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-900/10 px-10 py-5 rounded-sm uppercase tracking-widest text-xs font-bold transition-all duration-300"
-                >
-                    {language === "es" ? "Leer Historia Completa" : "Read Full Story"}
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 text-red-500" />
-                </Link>
-            </div>
-        </div>
-      </section>
-
-      {/* --- 5. PROJECT SHOWCASE --- */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden border-t border-white/5">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-900/5 blur-[120px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
-            
-            <div className="order-2 md:order-1">
-                <div className="flex items-center gap-2 text-red-500 mb-4">
-                    <Sparkles className="w-5 h-5" />
-                    <span className="text-xs font-bold uppercase tracking-widest">{t("nav.project")}</span>
-                </div>
-                <h2 className="text-4xl md:text-6xl font-bold font-serif text-white mb-6 leading-none">
-                    {t("project.title")}
-                </h2>
-                <p className="text-lg text-gray-400 mb-8 font-light leading-relaxed">
-                    {t("home.intro.text")}
+      {/* --- PILARES --- */}
+      <section className="cv-auto border-t border-white/10 px-4 py-24">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeading eyebrow={es ? "Por qué Vestigios" : "Why Vestigios"} title={es ? "Un TCG con alma" : "A TCG with a soul"} />
+          <ul className="grid gap-px overflow-hidden rounded-sm border border-white/10 bg-white/10 md:grid-cols-3">
+            {pillars.map(({ icon: Icon, title, text, stat, statLabel }) => (
+              <li key={title} className="reveal flex flex-col bg-black p-8 md:p-10">
+                <Icon className="mb-6 size-8 text-blood-bright" aria-hidden />
+                <h3 className="mb-3 font-serif text-2xl font-bold text-white">{title}</h3>
+                <p className="mb-8 flex-1 leading-relaxed text-gray-400">{text}</p>
+                <p className="border-t border-white/10 pt-6">
+                  <span className="block font-serif text-4xl font-bold text-white">{stat}</span>
+                  <span className="font-mono text-xs uppercase tracking-widest text-gray-500">{statLabel}</span>
                 </p>
-                
-                <div className="grid grid-cols-2 gap-6 mb-10 border-t border-white/10 pt-8">
-                    <div>
-                        <p className="text-3xl font-bold text-white">5</p>
-                        <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Facciones" : "Factions"}</p>
-                    </div>
-                    <div>
-                        <p className="text-3xl font-bold text-white">230</p>
-                        <p className="text-xs text-gray-500 uppercase tracking-widest">{language === "es" ? "Cartas Base" : "Base Cards"}</p>
-                    </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* --- ROADMAP HACIA LA BETA --- */}
+      <section className="border-t border-white/10 bg-zinc-950 px-4 py-24" aria-labelledby="roadmap-title">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className="eyebrow mb-3 block">{es ? "Camino a la Beta" : "Road to Beta"}</span>
+              <h2 id="roadmap-title" className="font-serif text-4xl font-bold text-white md:text-5xl">
+                {es ? `Hoja de ruta ${BETA.year}` : `${BETA.year} Roadmap`}
+              </h2>
+            </div>
+            <Link href="/status" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 transition-colors hover:text-white">
+              {es ? "Estado de desarrollo" : "Development status"} <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+          <BetaRoadmap />
+        </div>
+      </section>
+
+      {/* --- PROGRAMA BETA + FAQ --- */}
+      <section className="relative overflow-hidden border-t border-white/10 px-4 py-28" aria-labelledby="beta-title">
+        <div aria-hidden className="pointer-events-none absolute -right-40 top-0 size-[600px] rounded-full bg-blood/10 blur-[120px]" />
+        <div className="relative mx-auto grid max-w-7xl items-start gap-16 lg:grid-cols-[1.1fr_1fr]">
+          <div>
+            <span className="eyebrow mb-3 block">{es ? "Programa de testers" : "Tester program"}</span>
+            <h2 id="beta-title" className="mb-6 font-serif text-4xl font-bold leading-tight text-white md:text-6xl">
+              {es ? "La Beta se forja con su comunidad" : "The Beta is forged by its community"}
+            </h2>
+            <p className="mb-10 max-w-xl text-lg text-gray-400">
+              {es
+                ? "Estamos reclutando estrategas, cazadores de bugs y amantes del lore para la Beta cerrada. Las invitaciones se envían por oleadas."
+                : "We are recruiting strategists, bug hunters and lore lovers for the Closed Beta. Invites are sent in waves."}
+            </p>
+
+            <ul className="mb-10 grid gap-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {betaPerks.map(({ icon: Icon, title, text }) => (
+                <li key={title} className="reveal">
+                  <Icon className="mb-3 size-7 text-blood-bright" aria-hidden />
+                  <h3 className="mb-1 font-serif font-bold text-white">{title}</h3>
+                  <p className="text-sm text-gray-400">{text}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/join-tester"
+                className="inline-flex items-center gap-3 rounded-sm bg-blood px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-blood-bright"
+              >
+                <Beaker className="size-4" aria-hidden />
+                {es ? "Postular como tester" : "Apply as a tester"}
+              </Link>
+              <a
+                href={BETA.currentBuild.href}
+                download
+                className="inline-flex items-center gap-3 rounded-sm border border-white/20 px-6 py-4 text-sm font-bold uppercase tracking-widest text-gray-300 transition hover:border-white/40 hover:text-white"
+              >
+                <Download className="size-4" aria-hidden />
+                <span>
+                  {pick(BETA.currentBuild.label, language)}
+                  <span className="ml-2 font-mono text-[10px] text-gray-500">{BETA.currentBuild.platform}</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-6 font-serif text-2xl font-bold text-white">{es ? "Preguntas frecuentes" : "FAQ"}</h3>
+            <BetaFaq />
+          </div>
+        </div>
+      </section>
+
+      {/* --- TRAILER --- */}
+      <section className="cv-auto relative overflow-hidden border-t border-white/10 bg-zinc-950/50 px-4 py-24">
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <SectionHeading eyebrow={es ? "Universo Vestigios" : "Vestigios Universe"} title={es ? "Descubre la oscuridad" : "Discover the Darkness"} />
+          <div className="relative mx-auto aspect-video w-full max-w-5xl overflow-hidden rounded-sm border border-white/10 shadow-[0_0_40px_oklch(0.5_0.19_25/0.15)]">
+            <LiteYouTube id="77APjIIEGmc" title="Vestigios — Official Universe Introduction" playLabel={es ? "Reproducir" : "Play"} />
+          </div>
+        </div>
+      </section>
+
+      {/* --- GALERÍA DE CARTAS --- */}
+      <section className="cv-auto relative overflow-hidden border-t border-white/10 bg-black py-24">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center">
+          <Layers className="mx-auto mb-4 size-6 text-blood-bright" aria-hidden />
+          <h2 className="mb-4 font-serif text-4xl font-bold text-white md:text-5xl">{es ? "Galería de cartas" : "Card Gallery"}</h2>
+          <p className="mx-auto mb-12 max-w-2xl text-gray-400">
+            {es
+              ? "Explora el spoiler visual completo. Estudia las sinergias, descubre el arte oscuro y prepara tu mazo para la Beta con las 230 cartas del set base."
+              : "Explore the full visual spoiler. Study synergies, discover the dark art, and prepare your deck for the Beta with the 230 cards of the base set."}
+          </p>
+
+          <div className="mb-12 flex scale-75 items-center justify-center -space-x-12 md:scale-100 md:-space-x-8" aria-hidden>
+            {[1, 2, 3, 4, 5].map((num, idx) => (
+              <div
+                key={num}
+                className={`relative h-64 w-48 overflow-hidden rounded-lg border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:z-50 hover:-translate-y-6 md:h-80 md:w-56 ${idx === 2 ? "z-40 scale-110" : idx === 1 || idx === 3 ? "z-30 mt-8" : "z-20 mt-16 scale-90 opacity-70"}`}
+              >
+                <Image src={`/images/cards/ds-${String(num).padStart(3, "0")}.jpg`} alt="" fill sizes="224px" className="object-cover" />
+              </div>
+            ))}
+          </div>
+
+          <Link
+            href="/cards"
+            className="inline-flex items-center gap-3 border border-white/20 bg-white/5 px-12 py-5 text-sm font-bold uppercase tracking-widest text-white transition hover:border-blood-bright hover:bg-white/10"
+          >
+            {es ? "Ver las 230 cartas" : "View all 230 cards"}
+          </Link>
+        </div>
+      </section>
+
+      {/* --- NOTICIAS --- */}
+      <section className="cv-auto border-t border-white/10 px-4 py-24" aria-labelledby="news-title">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <h2 id="news-title" className="mb-2 font-serif text-4xl font-bold text-white">
+                {es ? "Últimas noticias" : "Latest News"}
+              </h2>
+              <div className="h-1 w-20 bg-blood" />
+            </div>
+            <Link href="/legal/discover/articles" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 transition-colors hover:text-white">
+              {es ? "Ver todo" : "View all"} <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {latestNews.map((news) => (
+              <Link
+                key={news.href}
+                href={news.href}
+                className="reveal group block overflow-hidden rounded-sm border border-white/5 bg-zinc-900/50 transition-colors duration-300 hover:border-blood/60"
+              >
+                <div className="relative h-56 w-full overflow-hidden">
+                  <Image src={news.image} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover object-top transition-transform duration-700 group-hover:scale-110" />
+                  <span className="absolute left-4 top-4 border border-white/10 bg-black/80 px-3 py-1 font-mono text-xs uppercase tracking-wider text-white">
+                    {news.tag}
+                  </span>
                 </div>
-
-                <Link 
-                   href="/project"
-                   className="inline-flex items-center gap-3 text-white border-b border-red-600 pb-1 hover:text-red-500 transition-colors font-bold uppercase text-sm tracking-widest"
-                >
-                    {language === "es" ? "Explorar el Universo" : "Explore the Universe"} <ArrowRight className="w-4 h-4" />
-                </Link>
-            </div>
-
-            <div className="order-1 md:order-2 flex justify-center relative group">
-                 <div className="absolute inset-0 bg-red-600/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                 <Image
-                   src="/dark-gothic-trading-card-game-cards-blood-and-shad.jpg"
-                   alt="Card Preview"
-                   width={400}
-                   height={600}
-                   className="object-contain relative z-10 drop-shadow-2xl transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-1"
-                 />
-            </div>
+                <div className="p-6">
+                  <time dateTime={news.date} className="mb-3 flex items-center gap-2 font-mono text-xs text-gray-500">
+                    <Calendar className="size-3" aria-hidden />
+                    {new Date(news.date + "T12:00:00").toLocaleDateString(es ? "es-CL" : "en-US", { dateStyle: "long" })}
+                  </time>
+                  <h3 className="font-serif text-xl font-bold leading-tight text-white transition-colors group-hover:text-blood-bright">{news.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* --- 6. GALERÍA DE CARTAS --- */}
-      <section className="relative py-24 border-t border-white/10 overflow-hidden bg-black">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-full bg-gradient-to-b from-red-900/5 to-transparent pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-            <div className="flex items-center justify-center gap-2 text-red-500 mb-4">
-                <Layers className="w-6 h-6" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-                {language === "es" ? "Galería de Cartas" : "Card Image Gallery"}
-            </h2>
-            <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
-                {language === "es" 
-                    ? "Explora el spoiler visual completo. Estudia las sinergias, descubre el arte oscuro y prepárate para construir tu mazo definitivo con las 230 cartas del set base." 
-                    : "Explore the full visual spoiler. Study synergies, discover the dark art, and prepare to build your ultimate deck with the 230 cards of the base set."}
-            </p>
-
-            <div className="flex justify-center items-center -space-x-12 md:-space-x-8 mb-12 scale-75 md:scale-100">
-                {[1, 2, 3, 4, 5].map((num, idx) => {
-                    const fileId = num.toString().padStart(3, '0');
-                    return (
-                    <div 
-                        key={num} 
-                        className={`relative w-48 h-64 md:w-56 md:h-80 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-transform duration-500 hover:-translate-y-6 hover:z-50 ${idx === 2 ? 'z-40 scale-110' : idx === 1 || idx === 3 ? 'z-30 scale-100 mt-8' : 'z-20 scale-90 mt-16 opacity-70'}`}
-                    >
-                        <Image
-                            src={`/images/cards/ds-${fileId}.jpg`}
-                            alt={`Card Preview ${num}`}
-                            fill
-                            unoptimized 
-                            className="object-cover"
-                        />
-                    </div>
-                )})}
-            </div>
-
-            <Link 
-                href="/cards" 
-                className="inline-flex items-center gap-3 px-12 py-5 bg-white/5 border border-white/20 hover:bg-white/10 hover:border-red-500 text-white font-bold uppercase tracking-widest text-sm transition-all shadow-lg hover:shadow-red-900/20"
-            >
-                {language === "es" ? "Ver las 230 Cartas" : "View all 230 Cards"}
-            </Link>
+      {/* --- CTA FINAL --- */}
+      <section className="relative overflow-hidden border-t border-blood/40 px-4 py-28 text-center">
+        <Image src="/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" alt="" fill sizes="100vw" className="object-cover opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/70 to-black" />
+        <div className="relative mx-auto max-w-3xl">
+          <h2 className="mb-6 font-serif text-4xl font-bold text-white drop-shadow-[0_0_20px_oklch(0.5_0.19_25/0.6)] md:text-6xl">
+            {es ? `El abismo se abrirá en ${BETA.year}` : `The abyss opens in ${BETA.year}`}
+          </h2>
+          <p className="mx-auto mb-10 max-w-xl text-xl text-gray-300">
+            {es
+              ? "Reserva tu lugar en la Beta cerrada y sé de los primeros en pisar las sombras de Vestigios."
+              : "Reserve your spot in the Closed Beta and be among the first to step into the shadows of Vestigios."}
+          </p>
+          <Link
+            href="/join-tester"
+            className="inline-flex items-center gap-3 rounded-sm bg-blood px-12 py-5 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-[0_0_40px_oklch(0.5_0.19_25/0.5)] transition hover:-translate-y-0.5 hover:bg-blood-bright"
+          >
+            <Beaker className="size-5" aria-hidden />
+            {es ? "Únete a la Beta" : "Join the Beta"}
+          </Link>
+          <p className="mt-6 flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-widest text-gray-500">
+            <Monitor className="size-4" aria-hidden /> Windows · {es ? "más plataformas por anunciar" : "more platforms TBA"}
+          </p>
         </div>
       </section>
-
-      {/* --- 7. QUICK LINKS --- */}
-      <section className="py-24 px-4 border-t border-white/5 bg-zinc-950">
-        <div className="max-w-7xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-serif font-bold text-white mb-4">
-                {language === "es" ? "Comienza tu Viaje" : "Start Your Journey"}
-            </h2>
-            <p className="text-gray-400">
-                {language === "es" ? "Todo lo que necesitas para dominar la oscuridad." : "Everything you need to master the darkness."}
-            </p>
-        </div>
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <Link href="/legal/discover/formats" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
-                <Shield className="w-10 h-10 text-gray-400 group-hover:text-red-500 mx-auto mb-4 transition-colors" />
-                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Formatos" : "Formats"}</h3>
-                <p className="text-sm text-gray-500">{language === "es" ? "Competitivo y Sellado" : "Competitive & Sealed"}</p>
-            </Link>
-            
-            <Link href="/legal/discover/rules" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
-                <Scroll className="w-10 h-10 text-gray-400 group-hover:text-amber-500 mx-auto mb-4 transition-colors" />
-                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Reglas" : "Rules"}</h3>
-                <p className="text-sm text-gray-500">{language === "es" ? "Aprende lo básico" : "Learn the basics"}</p>
-            </Link>
-
-            <Link href="/legal/discover/wallpapers" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
-                <ImageIcon className="w-10 h-10 text-gray-400 group-hover:text-purple-500 mx-auto mb-4 transition-colors" />
-                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Galería" : "Gallery"}</h3>
-                <p className="text-sm text-gray-500">{language === "es" ? "Arte y Wallpapers" : "Art & Wallpapers"} </p>
-            </Link>
-
-            <Link href="/join-tester" className="group bg-white/5 border border-white/10 p-8 rounded-sm hover:bg-white/10 hover:border-red-500/30 transition-all text-center">
-                <Beaker className="w-10 h-10 text-gray-400 group-hover:text-green-500 mx-auto mb-4 transition-colors" />
-                <h3 className="text-xl font-bold text-white font-serif mb-2">{language === "es" ? "Beta Tester" : "Beta Tester"}</h3>
-                <p className="text-sm text-gray-500">{language === "es" ? "Solicitar acceso" : "Request access"} </p>
-            </Link>
-
-        </div>
-      </section>
-
     </div>
   )
 }

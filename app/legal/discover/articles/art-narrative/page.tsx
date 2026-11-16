@@ -17,6 +17,7 @@ export default function ArtArticlePage() {
           src="/ancient-book-open-with-mystical-light-dark-library.jpg" // Imagen de Arte/Libro
           alt="Art as Narrative"
           fill
+            sizes="100vw"
           className="object-cover opacity-60"
           priority
         />

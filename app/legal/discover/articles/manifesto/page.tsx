@@ -18,6 +18,7 @@ export default function ManifestoArticlePage() {
             src="/dark-gothic-castle-shrouded-in-mist-and-fog-atmosp.jpg" 
             alt="Vestigios Manifesto"
             fill
+            sizes="100vw"
             className="object-cover opacity-50"
             priority
         />

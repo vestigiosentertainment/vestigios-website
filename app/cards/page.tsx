@@ -354,6 +354,7 @@ export default function CardsPage() {
                       src={variantUrls[activeVariant]}
                       alt={`${selectedCard.name} - ${activeVariant}`}
                       fill
+            sizes="100vw"
                       unoptimized
                       className="object-cover"
                       priority

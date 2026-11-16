@@ -344,6 +344,7 @@ export default function InterviewJonathanTorres() {
             src="/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
             alt="Vestigios Atmosphere"
             fill
+            sizes="100vw"
             className="object-cover opacity-40 scale-105"
             priority
           />

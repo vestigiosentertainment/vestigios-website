@@ -1,8 +1,9 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react"
 
-type Language = "en" | "es"
+import { LANGUAGE_COOKIE, type Language } from "./i18n-config"
+export type { Language }
 
 interface LanguageContextType {
   language: Language
@@ -128,7 +129,7 @@ const translations = {
     "status.pvp.title": "PVP Mode",
     "status.pvp.status": "In Development",
     "status.pvp.description": "Our player-versus-player system is currently in active development, designed to bring strategic depth to competitive play.",
-    "status.disclaimer": "We do not provide release dates or marketing timelines. Development is complete when quality meets our standards, not when pressure demands it.",
+    "status.disclaimer": "We are targeting a Beta opening in 2027. We will only publish concrete dates once quality meets our standards, not when pressure demands it.",
     
     // Status - Future Universes (UPDATED)
     "status.future.title": "Expanding Universes",
@@ -255,7 +256,7 @@ const translations = {
     "status.pvp.title": "Modo JcJ",
     "status.pvp.status": "En Desarrollo",
     "status.pvp.description": "Nuestro sistema jugador contra jugador está actualmente en desarrollo activo, diseñado para aportar profundidad estratégica al juego competitivo.",
-    "status.disclaimer": "No damos fechas de lanzamiento ni plazos de marketing. El desarrollo termina cuando la calidad cumple nuestros estándares, no cuando la presión lo exige.",
+    "status.disclaimer": "Nuestro objetivo es abrir la Beta en 2027. Publicaremos fechas concretas solo cuando la calidad cumpla nuestros estándares, no cuando la presión lo exija.",
     
     // Status - Future Universes (ACTUALIZADO)
     "status.future.title": "Universos en Desarrollo",
@@ -268,30 +269,41 @@ const translations = {
   },
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en")
+export function LanguageProvider({
+  children,
+  initialLanguage = "es",
+}: {
+  children: ReactNode
+  initialLanguage?: Language
+}) {
+  const [language, setLanguageState] = useState<Language>(initialLanguage)
 
+  // Migración: si el usuario tenía el idioma en localStorage (versión anterior), lo respetamos.
   useEffect(() => {
-    const saved = localStorage.getItem("language") as Language
-    if (saved === "en" || saved === "es") {
-      setLanguage(saved)
-    }
+    try {
+      const saved = localStorage.getItem(LANGUAGE_COOKIE)
+      if ((saved === "en" || saved === "es") && saved !== initialLanguage) {
+        setLanguage(saved)
+      }
+      localStorage.removeItem(LANGUAGE_COOKIE)
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang)
-    localStorage.setItem("language", lang)
-  }
+  const setLanguage = useCallback((lang: Language) => {
+    setLanguageState(lang)
+    document.documentElement.lang = lang
+    document.cookie = `${LANGUAGE_COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`
+  }, [])
 
-  const t = (key: string): string => {
-    return translations[language][key as keyof (typeof translations)["en"]] || key
-  }
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
+  const t = useCallback(
+    (key: string): string => translations[language][key as keyof (typeof translations)["en"]] || key,
+    [language],
   )
+
+  const value = useMemo(() => ({ language, setLanguage, t }), [language, setLanguage, t])
+
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
 }
 
 export function useLanguage() {

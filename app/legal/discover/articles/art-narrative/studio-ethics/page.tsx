@@ -17,6 +17,7 @@ export default function EthicsArticlePage() {
           src="/respectful-handshake-dark-atmosphere-gothic.jpg" // Imagen de comunidad/respeto
           alt="Studio Ethics"
           fill
+            sizes="100vw"
           className="object-cover opacity-60"
           priority
         />

@@ -4,51 +4,44 @@ import { useLanguage } from "@/lib/language-context"
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Beaker, Send, CheckCircle, AlertTriangle } from "lucide-react"
+import { BETA } from "@/lib/beta"
 
 export default function JoinTesterPage() {
   const { language } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  // Función de envío real conectada a tu correo
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+    setError(null)
     const formData = new FormData(e.currentTarget)
 
     try {
-        // Usamos FormSubmit con su endpoint AJAX para no redirigir la página
-        // y mantener tu diseño de éxito personalizado.
-        const response = await fetch("https://formsubmit.co/ajax/contacto@vestigiosentertainment.com", {
-            method: "POST",
-            body: formData,
-            headers: { 
-                'Accept': 'application/json' 
-            }
-        })
-
-        if (response.ok) {
-            setIsSubmitting(false)
-            setIsSuccess(true)
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-        } else {
-            // Si falla el servicio, mostramos éxito igual en esta demo o manejamos error
-            console.error("Error en el envío")
-            setIsSubmitting(false)
-            setIsSuccess(true) // Fallback visual para no frustrar al usuario en demo
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-
-    } catch (error) {
-        console.error(error)
-        setIsSubmitting(false)
-        setIsSuccess(true)
+      const response = await fetch("https://formsubmit.co/ajax/contacto@vestigiosentertainment.com", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      setIsSuccess(true)
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    } catch (err) {
+      console.error(err)
+      // Antes se mostraba "éxito" aunque el envío fallara: ahora se informa el error real.
+      setError(
+        language === "es"
+          ? "No pudimos enviar tu solicitud. Revisa tu conexión e inténtalo de nuevo, o escríbenos a contacto@vestigiosentertainment.com."
+          : "We couldn't send your application. Check your connection and try again, or email contacto@vestigiosentertainment.com.",
+      )
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-red-900 selection:text-white pt-32 pb-24 px-4">
+    <div className="min-h-screen bg-black text-white pt-16 pb-24 px-4">
       
       {/* --- ESTADO DE ÉXITO (MENSAJE POST-ENVÍO) --- */}
       {isSuccess ? (
@@ -88,7 +81,7 @@ export default function JoinTesterPage() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">
-              {language === "es" ? "Programa Beta Tester" : "Beta Tester Program"}
+              {language === "es" ? `Beta Tester ${BETA.year}` : `${BETA.year} Beta Tester`}
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
               {language === "es" 
@@ -128,7 +121,8 @@ export default function JoinTesterPage() {
              <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 p-8 md:p-10 rounded-sm space-y-8 backdrop-blur-sm">
                 
                 {/* Campos ocultos de configuración para FormSubmit */}
-                <input type="hidden" name="_subject" value="Nueva Solicitud: Beta Tester Vestigios" />
+                <input type="hidden" name="_subject" value="Nueva Solicitud: Beta Tester Vestigios 2027" />
+                <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
 
@@ -140,25 +134,25 @@ export default function JoinTesterPage() {
                    
                    <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                         <label className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                         <label htmlFor="tester-name" className="text-xs font-bold uppercase tracking-wider text-gray-400">
                            {language === "es" ? "Nombre / Nickname" : "Name / Nickname"}
                          </label>
                          <input 
                            required 
                            type="text" 
-                           name="name" // IMPORTANTE: name agregado
+                           name="name" id="tester-name" autoComplete="nickname"
                            className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm"
                            placeholder="user"
                          />
                       </div>
                       <div className="space-y-2">
-                         <label className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                         <label htmlFor="tester-discord" className="text-xs font-bold uppercase tracking-wider text-gray-400">
                            Discord User
                          </label>
                          <input 
                            required 
                            type="text" 
-                           name="discord" // IMPORTANTE: name agregado
+                           name="discord" id="tester-discord"
                            className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm"
                            placeholder="user#0000"
                          />
@@ -166,13 +160,13 @@ export default function JoinTesterPage() {
                    </div>
 
                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                      <label htmlFor="tester-email" className="text-xs font-bold uppercase tracking-wider text-gray-400">
                         Email
                       </label>
                       <input 
                         required 
                         type="email" 
-                        name="email" // IMPORTANTE: name agregado
+                        name="email" id="tester-email" autoComplete="email"
                         className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm"
                         placeholder="tu@email.com"
                       />
@@ -186,31 +180,36 @@ export default function JoinTesterPage() {
                    </h3>
                    
                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                      <label htmlFor="tester-games" className="text-xs font-bold uppercase tracking-wider text-gray-400">
                         {language === "es" ? "¿Qué juegos juegas o has jugado?" : "What games do you play or have played?"}
                       </label>
                       <input 
                         required 
                         type="text" 
-                        name="games_played" // IMPORTANTE: name agregado
+                        name="games_played" id="tester-games"
                         className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm"
                         placeholder="Magic, Yu-Gi-Oh!, Hearthstone, Lorcana..."
                       />
                    </div>
 
                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                      <label htmlFor="tester-reason" className="text-xs font-bold uppercase tracking-wider text-gray-400">
                         {language === "es" ? "¿Por qué quieres ser tester?" : "Why do you want to be a tester?"}
                       </label>
                       <textarea 
                         required 
-                        rows={4}
-                        name="reason" // IMPORTANTE: name agregado
-                        className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm resize-none"
+                        name="reason" id="tester-reason"
+                        className="w-full bg-black border border-white/20 p-3 text-white focus:border-red-500 focus:outline-none transition-colors rounded-sm resize-y"
                         placeholder={language === "es" ? "Cuéntanos brevemente..." : "Tell us briefly..."}
                       />
                    </div>
                 </div>
+
+                {error && (
+                  <p role="alert" className="border border-red-500/40 bg-red-950/40 p-4 text-sm text-red-200 rounded-sm">
+                    {error}
+                  </p>
+                )}
 
                 {/* Submit Button */}
                 <button 

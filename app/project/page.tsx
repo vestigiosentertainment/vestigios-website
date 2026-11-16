@@ -94,7 +94,8 @@ export default function ProjectPage() {
           <Image 
             src="/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
             alt="Vestigios of Blood Universe" 
-            fill 
+            fill
+            sizes="100vw" 
             className="object-contain"
             priority
           />
@@ -199,6 +200,7 @@ export default function ProjectPage() {
                         src={faction.image}
                         alt={faction.title}
                         fill
+            sizes="100vw"
                         className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)] rounded-lg group-hover:scale-[1.02] transition-transform duration-700 ease-out"
                       />
                     </div>

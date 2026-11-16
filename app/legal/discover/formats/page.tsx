@@ -97,7 +97,8 @@ export default function FormatsPage() {
                <Image 
                  src={format.image} 
                  alt={format.title} 
-                 fill 
+                 fill
+            sizes="100vw" 
                  className="object-cover opacity-30 group-hover:opacity-20 group-hover:scale-105 transition-all duration-1000" 
                />
                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
@@ -177,7 +178,8 @@ export default function FormatsPage() {
                         <Image 
                             src={format.image} 
                             alt={format.title} 
-                            fill 
+                            fill
+            sizes="100vw" 
                             className="object-cover group-hover:scale-110 transition-transform duration-700" 
                         />
                         <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">

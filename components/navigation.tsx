@@ -1,100 +1,129 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useLanguage } from "@/lib/language-context"
-import { Button } from "@/components/ui/button"
+import { BETA } from "@/lib/beta"
 import { Menu, X } from "lucide-react"
 
 export function Navigation() {
   const { language, setLanguage, t } = useLanguage()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Cierra el menú móvil al navegar.
+  useEffect(() => {
+    const menu = menuRef.current
+    if (menu?.matches?.(":popover-open")) menu.hidePopover()
+  }, [pathname])
 
   const navItems = [
     { href: "/", label: t("nav.home") },
     { href: "/project", label: t("nav.project") },
-    { href: "/status", label: t("nav.status") },
+    { href: "/cards", label: language === "es" ? "Cartas" : "Cards" },
+    { href: "/status", label: language === "es" ? "Roadmap" : "Roadmap" },
     { href: "/philosophy", label: t("nav.philosophy") },
     { href: "/contact", label: t("nav.contact") },
   ]
 
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href))
+  const betaLabel = language === "es" ? `Beta ${BETA.year}` : `${BETA.year} Beta`
+
+  const LangSwitch = () => (
+    <div role="group" aria-label={language === "es" ? "Idioma" : "Language"} className="flex rounded-sm border border-white/15 p-0.5">
+      {(["es", "en"] as const).map((lang) => (
+        <button
+          key={lang}
+          type="button"
+          onClick={() => setLanguage(lang)}
+          aria-pressed={language === lang}
+          lang={lang}
+          className="px-2.5 py-1 text-xs font-mono uppercase tracking-wider text-gray-400 transition-colors hover:text-white aria-pressed:bg-blood aria-pressed:text-white"
+        >
+          {lang}
+        </button>
+      ))}
+    </div>
+  )
+
   return (
-    // CAMBIO: bg-black/90 para asegurar fondo negro con ligera transparencia
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+    <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md supports-[backdrop-filter]:bg-black/60">
+      <nav aria-label={language === "es" ? "Principal" : "Main"} className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="font-serif text-xl font-bold tracking-wider text-white transition-colors hover:text-blood-bright">
+          VESTIGIOS
+        </Link>
+
+        <ul className="hidden items-center gap-7 lg:flex">
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className="relative py-2 text-sm uppercase tracking-wide text-gray-400 transition-colors hover:text-white aria-[current=page]:text-white after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-blood-bright after:transition-transform aria-[current=page]:after:scale-x-100"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block">
+            <LangSwitch />
+          </div>
           <Link
-            href="/"
-            // CAMBIO: text-white y hover rojo
-            className="text-xl font-bold tracking-wider text-white hover:text-red-500 transition-colors font-serif"
+            href="/join-tester"
+            className="hidden items-center gap-2 rounded-sm bg-blood px-4 py-2 text-xs font-bold uppercase tracking-widest text-white shadow-[0_0_20px_oklch(0.5_0.19_25/0.35)] transition hover:bg-blood-bright md:inline-flex"
           >
-            VESTIGIOS
+            <span className="size-1.5 animate-pulse rounded-full bg-white" aria-hidden />
+            {betaLabel}
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                // CAMBIO: Texto blanco/gris con hover blanco brillante
-                className="text-sm uppercase tracking-wide text-gray-400 hover:text-white transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Language Switcher & Mobile Menu */}
-          <div className="flex items-center gap-4">
-            <div className="flex gap-2">
-              <Button
-                // Lógica para botones: Rojo si está activo, Gris si no
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage("en")}
-                className={`text-xs uppercase tracking-wider ${language === "en" ? "bg-red-900/50 text-white hover:bg-red-900" : "text-gray-500 hover:text-white hover:bg-white/10"}`}
-              >
-                EN
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLanguage("es")}
-                className={`text-xs uppercase tracking-wider ${language === "es" ? "bg-red-900/50 text-white hover:bg-red-900" : "text-gray-500 hover:text-white hover:bg-white/10"}`}
-              >
-                ES
-              </Button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-white hover:text-red-500 transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <button
+            type="button"
+            popoverTarget="mobile-menu"
+            className="grid size-11 place-items-center text-white transition-colors hover:text-blood-bright lg:hidden"
+            aria-label={language === "es" ? "Abrir menú" : "Open menu"}
+          >
+            <Menu size={24} aria-hidden />
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/10 bg-black">
-            {navItems.map((item) => (
+      <div id="mobile-menu" ref={menuRef} popover="auto" className="nav-popover lg:hidden">
+        <div className="mb-4 flex items-center justify-between">
+          <LangSwitch />
+          <button
+            type="button"
+            popoverTarget="mobile-menu"
+            popoverTargetAction="hide"
+            className="grid size-11 place-items-center text-white"
+            aria-label={language === "es" ? "Cerrar menú" : "Close menu"}
+          >
+            <X size={24} aria-hidden />
+          </button>
+        </div>
+        <ul>
+          {navItems.map((item) => (
+            <li key={item.href}>
               <Link
-                key={item.href}
                 href={item.href}
-                className="block py-3 text-sm uppercase tracking-wide text-gray-400 hover:text-white hover:bg-white/5 px-4 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className="block border-l-2 border-transparent px-4 py-3 text-sm uppercase tracking-wide text-gray-300 transition-colors hover:bg-white/5 hover:text-white aria-[current=page]:border-blood-bright aria-[current=page]:text-white"
               >
                 {item.label}
               </Link>
-            ))}
-          </div>
-        )}
+            </li>
+          ))}
+        </ul>
+        <Link
+          href="/join-tester"
+          className="mt-4 block rounded-sm bg-blood px-4 py-3 text-center text-sm font-bold uppercase tracking-widest text-white"
+        >
+          {language === "es" ? `Únete a la Beta ${BETA.year}` : `Join the ${BETA.year} Beta`}
+        </Link>
       </div>
-    </nav>
+    </header>
   )
 }

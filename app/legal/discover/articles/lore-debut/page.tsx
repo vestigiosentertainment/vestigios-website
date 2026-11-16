@@ -28,6 +28,7 @@ export default function LoreDebutNewsPage() {
                 src="/ancient-book-open-with-mystical-light-dark-library.jpg"
                 alt="Lore Book Opening"
                 fill
+            sizes="100vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 priority
             />

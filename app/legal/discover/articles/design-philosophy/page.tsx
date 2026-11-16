@@ -17,6 +17,7 @@ export default function DesignArticlePage() {
           src="/chess-pieces-on-board-strategic-thinking-dark-goth.jpg" // Imagen de Estrategia
           alt="Design Philosophy"
           fill
+            sizes="100vw"
           className="object-cover opacity-60"
           priority
         />
