@@ -451,7 +451,7 @@ export default function InterviewJonathanTorres() {
                 : "Join Jonathan and thousands of players in the first official test of Vestigios. The client is now available for download."}
             </p>
             <a 
-              href="/Vestigios_de_Sangre.rar" 
+              href="/Vestigios.rar" 
               download
               className="inline-flex items-center gap-3 px-8 py-4 bg-red-800 hover:bg-red-700 text-white font-bold uppercase tracking-widest text-sm transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)]"
             >

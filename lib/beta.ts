@@ -29,7 +29,7 @@ export const BETA = {
   currentBuild: {
     label: { es: "Build de prueba actual", en: "Current test build" },
     platform: "Windows",
-    href: "/Vestigios_de_Sangre.rar",
+    href: "/Vestigios.rar",
   },
   discordUrl: null as string | null,
 } as const

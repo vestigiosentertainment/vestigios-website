@@ -8,6 +8,12 @@ const nextConfig = {
     // Transiciones animadas entre rutas con la View Transitions API.
     viewTransition: true,
   },
+  async redirects() {
+    return [
+      // El juego pasó a llamarse «Vestigios»: los enlaces antiguos a la descarga siguen funcionando.
+      { source: "/Vestigios_de_Sangre.rar", destination: "/Vestigios.rar", permanent: true },
+    ]
+  },
   async headers() {
     return [
       {
