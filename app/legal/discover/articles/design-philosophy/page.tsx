@@ -44,8 +44,8 @@ export default function DesignArticlePage() {
         <section>
             <p className="text-xl md:text-2xl text-white font-light mb-8">
                 {language === "es" 
-                 ? "En muchos juegos de cartas, las expansiones existen para cambiar el meta. En Vestigios de Sangre, los bloques existen para hacer avanzar un mundo." 
-                 : "In many card games, expansions exist to change the meta. In Vestigios de Sangre, blocks exist to advance a world."}
+                 ? "En muchos juegos de cartas, las expansiones existen para cambiar el meta. En Vestigios, los bloques existen para hacer avanzar un mundo." 
+                 : "In many card games, expansions exist to change the meta. In Vestigios, blocks exist to advance a world."}
             </p>
             <p className="text-gray-400">
                 {language === "es"

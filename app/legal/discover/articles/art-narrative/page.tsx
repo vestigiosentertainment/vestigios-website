@@ -44,8 +44,8 @@ export default function ArtArticlePage() {
         <section>
             <p className="text-xl md:text-2xl text-white font-light mb-8">
                 {language === "es" 
-                 ? "En muchos juegos de cartas, el arte existe para decorar. En Vestigios de Sangre, el arte existe para contar lo que las palabras no dicen." 
-                 : "In many card games, art exists to decorate. In Vestigios de Sangre, art exists to tell what words do not say."}
+                 ? "En muchos juegos de cartas, el arte existe para decorar. En Vestigios, el arte existe para contar lo que las palabras no dicen." 
+                 : "In many card games, art exists to decorate. In Vestigios, art exists to tell what words do not say."}
             </p>
             <p className="text-gray-400 border-l-2 border-white/10 pl-6 italic">
                 {language === "es"

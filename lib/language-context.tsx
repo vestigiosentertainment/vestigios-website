@@ -29,9 +29,9 @@ const translations = {
     "home.intro.text": "We are an independent creative studio dedicated to crafting narrative-driven experiences...",
 
     // Project General
-    "project.title": "Vestigios of Blood",
+    "project.title": "Vestigios",
     "project.subtitle": "A world forged in shadow and strategy",
-    "project.description": "Vestigios of Blood is our flagship project...",
+    "project.description": "Vestigios is our flagship project...",
     
     // Features
     "project.features.narrative.title": "Narrative Depth",
@@ -156,9 +156,9 @@ const translations = {
     "home.intro.text": "Somos un estudio creativo independiente dedicado a crear experiencias narrativas...",
 
     // Project General
-    "project.title": "Vestigios de Sangre",
+    "project.title": "Vestigios",
     "project.subtitle": "Un mundo forjado en sombra y estrategia",
-    "project.description": "Vestigios de Sangre es nuestro proyecto insignia...",
+    "project.description": "Vestigios es nuestro proyecto insignia...",
 
     // Features
     "project.features.narrative.title": "Profundidad Narrativa",

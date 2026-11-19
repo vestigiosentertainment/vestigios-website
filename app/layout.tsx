@@ -16,32 +16,32 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 
 const SITE_URL = "https://www.vestigiosentertainment.com"
 const description =
-  "Estudio independiente chileno de videojuegos y TCG gótico. Vestigios de Sangre: Beta en 2027. Regístrate como tester."
+  "Estudio independiente chileno de videojuegos y TCG gótico. Vestigios: Beta en 2027. Regístrate como tester."
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Vestigios Entertainment — Vestigios de Sangre · Beta 2027",
+    default: "Vestigios — TCG gótico · Beta 2027",
     template: "%s · Vestigios Entertainment",
   },
   description,
   applicationName: "Vestigios Entertainment",
-  keywords: ["Vestigios de Sangre", "TCG", "trading card game", "juego de cartas", "gótico", "beta 2027", "Chile"],
+  keywords: ["Vestigios", "TCG", "trading card game", "juego de cartas", "gótico", "beta 2027", "Chile"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "Vestigios Entertainment",
     url: SITE_URL,
-    title: "Vestigios de Sangre — Beta 2027",
+    title: "Vestigios — Beta 2027",
     description,
-    images: [{ url: "/portada-home.jpg", alt: "Vestigios de Sangre" }],
+    images: [{ url: "/portada-home.jpg", alt: "Vestigios" }],
     locale: "es_CL",
     alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
     site: "@vestigiosent",
-    title: "Vestigios de Sangre — Beta 2027",
+    title: "Vestigios — Beta 2027",
     description,
     images: ["/portada-home.jpg"],
   },

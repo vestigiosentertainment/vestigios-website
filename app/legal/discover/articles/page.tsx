@@ -81,7 +81,7 @@ export default function ArticlesPage() {
     },
     {
         id: 4,
-        title: language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha",
+        title: language === "es" ? "Vestigios no es un Gacha" : "Vestigios is Not a Gacha",
         excerpt: language === "es" 
             ? "No queremos que ganes porque pagaste, queremos que ganes porque jugaste mejor. Descubre nuestro sistema de economía ética." 
             : "We don't want you to win because you paid; we want you to win because you played better. Discover our ethical economy system.",

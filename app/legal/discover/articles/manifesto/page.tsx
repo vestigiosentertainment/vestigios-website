@@ -31,7 +31,7 @@ export default function ManifestoArticlePage() {
                 {language === "es" ? "Volver a Artículos" : "Back to Articles"}
             </Link>
             <h1 className="text-4xl md:text-7xl font-bold font-serif text-white leading-tight mb-4">
-                {language === "es" ? "Vestigios de Sangre no es un Gacha" : "Vestigios of Blood is Not a Gacha"}
+                {language === "es" ? "Vestigios no es un Gacha" : "Vestigios is Not a Gacha"}
             </h1>
             <p className="text-xl md:text-2xl text-red-100 font-light italic">
                 {language === "es" ? "Es un juego de estrategia con alma." : "It is a strategy game with a soul."}
@@ -54,8 +54,8 @@ export default function ManifestoArticlePage() {
             </p>
             <p>
                 {language === "es"
-                 ? "Muchos juegos dicen ser “free-to-play”, pero en la práctica solo son pay-to-compete. Vestigios de Sangre nace para romper esa lógica."
-                 : "Many games claim to be “free-to-play”, but in practice they are just pay-to-compete. Vestigios of Blood is born to break that logic."}
+                 ? "Muchos juegos dicen ser “free-to-play”, pero en la práctica solo son pay-to-compete. Vestigios nace para romper esa lógica."
+                 : "Many games claim to be “free-to-play”, but in practice they are just pay-to-compete. Vestigios is born to break that logic."}
             </p>
         </section>
 

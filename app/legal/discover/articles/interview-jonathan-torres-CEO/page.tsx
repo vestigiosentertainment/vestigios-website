@@ -14,8 +14,8 @@ export default function InterviewJonathanTorres() {
   const interviewData = [
     {
       q: {
-        es: "Jonathan, primero que todo, felicidades. Después de tantos años de trabajo finalmente llega la Alpha de Vestigios de Sangre Online. ¿Qué significa este momento para ti?",
-        en: "Jonathan, first of all, congratulations. After so many years of work, the Alpha of Vestigios de Sangre Online is finally here. What does this moment mean to you?"
+        es: "Jonathan, primero que todo, felicidades. Después de tantos años de trabajo finalmente llega la Alpha de Vestigios. ¿Qué significa este momento para ti?",
+        en: "Jonathan, first of all, congratulations. After so many years of work, the Alpha of Vestigios is finally here. What does this moment mean to you?"
       },
       a: {
         es: [
@@ -34,28 +34,28 @@ export default function InterviewJonathanTorres() {
     },
     {
       q: {
-        es: "¿Cómo nació Vestigios de Sangre?",
-        en: "How was Vestigios de Sangre born?"
+        es: "¿Cómo nació Vestigios?",
+        en: "How was Vestigios born?"
       },
       a: {
         es: [
           "Siempre me apasionaron los mundos que se sienten vivos. Crecí admirando franquicias como Final Fantasy, Assassin's Creed, Metal Gear Solid o JoJo's Bizarre Adventure. Más que sus mecánicas, me fascinaba cómo construían universos donde cada personaje tenía un propósito.",
           "Con Vestigios quise hacer lo mismo.",
           "No quería crear solamente un juego de cartas. Quería crear un universo que pudiera convertirse en novelas, videojuegos, series, juegos de mesa... un mundo donde cada historia tuviera sentido.",
-          "Vestigios de Sangre simplemente fue la primera puerta para entrar a ese universo."
+          "Vestigios simplemente fue la primera puerta para entrar a ese universo."
         ],
         en: [
           "I have always been passionate about worlds that feel alive. I grew up admiring franchises like Final Fantasy, Assassin's Creed, Metal Gear Solid, or JoJo's Bizarre Adventure. More than their mechanics, I was fascinated by how they built universes where every character had a purpose.",
           "With Vestigios I wanted to do the same.",
           "I didn't want to just create a card game. I wanted to create a universe that could become novels, video games, series, board games... a world where every story made sense.",
-          "Vestigios de Sangre was simply the first door to enter that universe."
+          "Vestigios was simply the first door to enter that universe."
         ]
       }
     },
     {
       q: {
-        es: "¿Qué es exactamente Vestigios de Sangre?",
-        en: "What exactly is Vestigios de Sangre?"
+        es: "¿Qué es exactamente Vestigios?",
+        en: "What exactly is Vestigios?"
       },
       a: {
         es: [
@@ -314,21 +314,21 @@ export default function InterviewJonathanTorres() {
       a: {
         es: [
           "Quiero invitarlos personalmente.",
-          "Vestigios de Sangre entra oficialmente en su fase Alpha y, desde hoy, ustedes pueden ser parte de este proyecto.",
+          "Vestigios entra oficialmente en su fase Alpha y, desde hoy, ustedes pueden ser parte de este proyecto.",
           "No queremos que simplemente descarguen un juego. Queremos que nos acompañen desde el principio, que descubran este mundo, que lo pongan a prueba y que nos ayuden a convertirlo en algo mucho más grande.",
           "Cada partida que jueguen, cada error que reporten, cada comentario que nos dejen, nos acerca un poco más a la versión que soñamos construir.",
           "Esta Alpha no es el final del desarrollo. Es el comienzo de una comunidad.",
           "Gracias a todos los que han esperado durante estos años, a quienes recién nos conocen y a quienes decidan darnos una oportunidad.",
-          "Nos vemos muy pronto en el campo de batalla. Bienvenidos a Vestigios de Sangre."
+          "Nos vemos muy pronto en el campo de batalla. Bienvenidos a Vestigios."
         ],
         en: [
           "I want to invite you personally.",
-          "Vestigios de Sangre officially enters its Alpha phase, and starting today, you can be part of this project.",
+          "Vestigios officially enters its Alpha phase, and starting today, you can be part of this project.",
           "We don't want you to simply download a game. We want you to join us from the beginning, to discover this world, to test it, and to help us turn it into something much bigger.",
           "Every match you play, every bug you report, every comment you leave us, brings us a little closer to the version we dream of building.",
           "This Alpha is not the end of development. It is the beginning of a community.",
           "Thank you to everyone who has waited over these years, to those who are just getting to know us, and to those who decide to give us a chance.",
-          "See you very soon on the battlefield. Welcome to Vestigios de Sangre."
+          "See you very soon on the battlefield. Welcome to Vestigios."
         ]
       }
     }

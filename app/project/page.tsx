@@ -93,7 +93,7 @@ export default function ProjectPage() {
         <div className="relative h-[50vh] md:h-[70vh] mb-24 rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-black">
           <Image 
             src="/dark-gothic-fantasy-world-blood-moon-castle-ruins-.jpg" 
-            alt="Vestigios of Blood Universe" 
+            alt="Vestigios Universe" 
             fill
             sizes="100vw" 
             className="object-contain"

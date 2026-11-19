@@ -21,7 +21,7 @@ export default function FanContentPage() {
         {
           title: "2. Attribution Requirements",
           content:
-            "All fan content must include clear attribution stating that Vestigios of Blood and all related properties are owned by Vestigios Entertainment SpA. You must include a disclaimer that your work is unofficial and not endorsed by the Company.",
+            "All fan content must include clear attribution stating that Vestigios and all related properties are owned by Vestigios Entertainment SpA. You must include a disclaimer that your work is unofficial and not endorsed by the Company.",
         },
         {
           title: "3. Non-Commercial Use",
@@ -74,7 +74,7 @@ export default function FanContentPage() {
         {
           title: "2. Requisitos de Atribución",
           content:
-            "Todo el contenido de fans debe incluir atribución clara declarando que Vestigios de Sangre y todas las propiedades relacionadas son propiedad de Vestigios Entertainment SpA. Debe incluir un descargo de responsabilidad de que su trabajo no es oficial y no está respaldado por la Empresa.",
+            "Todo el contenido de fans debe incluir atribución clara declarando que Vestigios y todas las propiedades relacionadas son propiedad de Vestigios Entertainment SpA. Debe incluir un descargo de responsabilidad de que su trabajo no es oficial y no está respaldado por la Empresa.",
         },
         {
           title: "3. Uso No Comercial",

@@ -36,8 +36,8 @@ export default function EthicsArticlePage() {
         <section>
             <p className="text-xl md:text-3xl text-white font-serif mb-8 leading-snug">
                 {language === "es" 
-                 ? "Vestigios de Sangre no fue creado por un departamento de marketing. Fue creado por jugadores." 
-                 : "Vestigios of Blood was not created by a marketing department. It was created by players."}
+                 ? "Vestigios no fue creado por un departamento de marketing. Fue creado por jugadores." 
+                 : "Vestigios was not created by a marketing department. It was created by players."}
             </p>
             <p className="text-gray-400 mb-6">
                 {language === "es"

@@ -16,7 +16,7 @@ export default function GenesisLorePage() {
             <ArrowLeft className="w-4 h-4" /> 
             {language === "es" ? "Volver al Inicio" : "Back to Home"}
         </Link>
-        <span className="text-red-600 font-bold tracking-widest text-xs uppercase">Vestigios de Sangre Lore</span>
+        <span className="text-red-600 font-bold tracking-widest text-xs uppercase">Vestigios Lore</span>
       </nav>
 
       {/* CONTENIDO PRINCIPAL */}
@@ -297,7 +297,7 @@ export default function GenesisLorePage() {
                         {language === "es" ? "Directora Narrativa y Lore" : "Narrative & Lore Director"}
                     </p>
                     <p className="text-[10px] text-gray-600 font-sans uppercase tracking-widest mt-1">
-                        Vestigios de Sangre
+                        Vestigios
                     </p>
                 </div>
             </div>
